@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Account Transactions{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/admin.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+  
+    <div class="section-header"><h1>Account Transactions</h1></div>
+    <div class="section-header"><h6>Acount Number: {{ account.accountNumber }}</h6></div>
+    <div  style="display: block; overflow: auto;">
+        <div id='left_admin'>
+            {% for trans in transactions %}
+                <section><div id='one'><a href="{{ path('adminTransactionsShow', {'id' : trans.id})  }}">{{trans.transactionNumber}}</a></div><div id='two_admin'><span style="width: 110px; display: inline-block;">{{trans.createdAt|date('M d Y')|upper}}</span>  <span style="width: 75px; display: inline-block;">{{trans.type|upper}}</span>  <span style="width: 120px; display: inline-block;">{{trans.description|upper}}</span>  ${{trans.amount|number_format(2, '.', ',') }}</div></section>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,141 @@
+/* 
+    web/css
+    Created on : Oct 27, 2015, 9:11:52 AM
+    Author     : Patrick
+*/
+/*.plant div{
+    display: inline-block;
+    width: 100%;
+}*/
+label{
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    padding: 5px 10px;
+}
+/*label[for=plant_summary], label[for=plant_propagation], label[for=plant_planting], label[for=plant_care]{
+    vertical-align: top;
+    margin-top: 35px;
+}*/
+/*label[for^='plant_pictures_']{
+    vertical-align: top;
+    margin-top: 35px;
+}
+label[for=plantResistsDeer]{
+    margin-top: 14px;
+}*/
+input[type="email"]{
+    width: 400px;
+    padding: 3px 3px;
+    margin: 5px 5px;
+}
+input[type="text"]{
+    width: 400px;
+    padding: 3px 3px;
+    margin: 5px 5px;
+}
+input[type="number"]{
+    width: 45px;
+    padding: 3px 3px;
+    margin: 5px 5px;
+}
+input[type="password"]{
+    width: 200px;
+    padding: 3px 3px;
+    margin: 5px 5px;
+    display: inline-block;
+}
+input[type="submit"]{
+    padding: 5px 5px;
+    margin-left: 175px;
+    margin-top: 5px;
+}
+button[type="submit"]{
+    padding: 5px 5px;
+    margin-left: 175px;
+    margin-top: 5px;
+}
+select{
+    width: auto;
+    padding: 3px 3px;
+    margin: 5px 5px;
+}
+textarea{
+    width: 522px;
+    padding: 3px 3px;
+    margin: 5px 5px;
+    height: 75px;
+}
+.same_line div{
+    display: inline !important;
+}
+.group {
+    /*background-color: #eee;*/
+    width: 75%;
+    float: right;
+    display: inline-block;
+    /*border: 1px solid #ccc;*/
+/*    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px 0px;
+    margin-right: 5px;*/
+    padding: 0px;
+    margin: 0px;
+}
+.checkboxes{
+    height: 20px;
+    padding: 0px;
+    margin: 0px;
+}
+.group li{
+    display: inline-block;
+    position: relative;
+}
+.group li label{
+    width: 6px;
+    text-align: right;
+}
+input[type="checkbox"]{
+    width: auto;
+    float: right;
+    margin-top: 1px;
+}
+.add_picture_link, .delete_picture_link{
+    margin-left: 178px;
+    line-height: 20px;
+}
+
+#_submit{
+    margin-left: 180px;
+}
+
+label[for=remember_me]{
+    vertical-align: top;
+    float: left !important;
+}
+#remember_me{
+    float: left !important;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.block{
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+
+.dates select{
+    margin-top: 0;
+    margin-left: 0;
+}
+.dates div:nth-child(2){
+    float: right;
+    width: 187px;
+    margin-right: 343px;
+    padding: 0;
+}
+.dates {
+    height: 25px;
+    padding: 5px;
+}

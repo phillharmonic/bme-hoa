@@ -1,0 +1,62 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'MainBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Admin - Roless{% endblock %}
+{% block sidebar %}
+    {% render controller("MainBundle:Sidebar:admin") %}
+{% endblock %}
+
+{% block body %}    
+ <style>
+ul { 
+   list-style-type: disc; 
+   list-style-position: inside; 
+}
+ol { 
+   list-style-type: decimal; 
+   list-style-position: inside; 
+}
+ul ul, ol ul { 
+   list-style-type: circle; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+ol ol, ul ol { 
+   list-style-type: lower-latin; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+</style>  
+    <div class="section-header"><h1>Admin - Roles</h1></div>
+    <ul>
+        <li>Superadmin - webmaster</li>
+        <ul>
+            <li>Has complete authority over everything on the site</li>
+        </ul>
+        <li>Admin - SBS Manager</li>
+        <ul>
+            <li>Has administrative privleges</li>
+            <li>Cannot access private data of homeowners</li>
+            <li>Cannot access user accounts</li>
+        </ul>
+        <li>Homeowner</li>
+        <ul>
+            <li>Has privledges to view other homeowner's 'public' details</li>
+            <li>Can view edit delete their own personal account/user data</li>
+            <li>Is a registered and authenticated user that is assigned to a property</li>
+        </ul>
+        <li>Trustee</li>
+        <li>President</li>
+        <li>Secretary</li>
+        <li>Treasurer</li>
+        <li>Forum Moderator</li>
+        <li>Accountant - SBS Accountant</li>
+        <li>ROLE_GUEST</li>
+        <ul>
+            <li>Is only an authenticated user and has no other privleges other than that. </li>
+            <li>To gain additional privleges, an administrator must assign a registered and authenticated user to a property.</li>
+        </ul>
+    </ul>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/jgallery.min.css?v=1.5.5') }}" media="all" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" media="all" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jquery-2.0.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jgallery.min.js?v=1.5.5') }}"></script>
+{% endblock %}
+{% block title %}Homeowner Summary{% endblock %}
+{% block sidebar %}
+    <ul>
+        <li>Helpful links</li>
+        <li>Utilitiy Providers & Options</li>
+    </ul>
+{% endblock %}
+
+{% block body %}   
+<style>
+    .content .left{
+        float: left;
+        width: 50%;
+    }
+    .content .right{
+        float: left;
+        width: 50%;
+    }
+</style>
+    <div class="section-header"><h1>Homeowner</h1></div>
+    <div class="section-header"><h6>Summary</h6></div>
+    <div class='content'>
+        <div class="left">
+            <div class="typeface_courier">
+                <p>{{ homeowner.honorific }} {{ homeowner.firstname }} {{ homeowner.lastname }}</p>
+                <p>{{ homeowner.housenumber }} {{ homeowner.street }}</p>
+                <p>Etna, Ohio 43062</p>
+            </div>
+            
+        </div>
+        <div class="right">
+            <div class="typeface_courier">
+                {% if spouse is not null%}                           
+                    <p>{{spouse.type}}:  {{spouse.firstname}} {{spouse.lastname}}</p>
+                {% endif %}
+                {% if dependents is not null%}  
+                    {% for dependent in dependents %}
+                        <p>{{dependent.type}}:  {{dependent.firstname}} </p>
+                    {% endfor %}
+                {% endif %}
+                {% if pets is not null%}  
+                    {% for pet in pets %}
+                        <p>{{pet.type}}:  {{pet.name}} </p>
+                    {% endfor %}
+                {% endif %}
+                {% if vehicles is not null%}  
+                    {% for vehicle in vehicles %}
+                        <p>Vehicle: {{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</p>
+                    {% endfor %}
+                {% endif %}
+            </div> 
+        </div>
+        
+    </div>
+    <div class="section-header"><h6>Property Photos</h6></div>
+    <div>
+        {% if property.photos is not empty %}
+                <div style='width: 100%; position: relative;' >
+                    <div id="property_{{property.id}}">
+                        {% for pic in property.photos %}
+                            <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $( function() {
+                        $( '#property_{{property.id}}' ).jGallery({ 
+                            mode: 'slider',                                    
+                            width: '92%'
+                        });
+                    } );
+                </script>   
+                <div style='padding-bottom: 30px;  width: 100%'></div>   
+            {% endif %}
+    </div>
+    
+                
+{% endblock %}

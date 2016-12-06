@@ -1,0 +1,105 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Transactions Index{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/admin.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+    <style>
+        .list_wrapper{
+            width: 100%;
+            height: 25px;
+        }
+        .div1{
+            width: 18%;
+            float: left;
+            padding-left: 10px;
+        }
+        .div2{
+            width: 20%;
+            float: left;
+        }
+        .div3{
+            width: 30%;
+            float: left;
+        }
+        .div4{
+            width: 15%;
+            float: left;
+        }
+        .div5{
+            width: 10%;
+            float: left;
+        }
+        .wrap{
+            background-color: lightgray;
+            font-size: 12pt;
+            height: 16px;
+            padding: 5px 0px;
+            margin: 8px 0px;
+        }
+        .blue{
+            color: blue;
+        }
+        .red{
+            color: red;
+        }
+        .black{
+            color: black;
+        }
+    </style>
+    <div class="section-header"><h1>Transactions</h1><ul class="page-nav"><li><a href="{{path('adminTransactionsNew')}}">New</a></li></ul></div>
+    <div class="section-header">
+        <div class='wrap'>
+            <div class='div1'>
+                Trans. No.
+            </div>
+            <div class='div2'>  
+                Homeowner
+            </div>
+            <div class='div3'>
+                Property
+            </div>
+            <div class='div4'>
+                Date
+            </div>
+            <div class='div5'>
+                Amount
+            </div>
+        </div>
+    </div>
+    {% for transaction in transactions %}
+        <div class="list_wrapper">  
+            <div class='div1'>
+                <a href="{{ path('adminTransactionsShow', {'id' : transaction.id}) }}">{{transaction.createdAt|date('Y')}}-{{transaction.createdAt|date('m')}}{{ transaction.id }}-{{transaction.createdAt|date('d')}}{{transaction.createdAt|date('H')}} </a> 
+            </div>
+            <div class='div2'>  
+                {{transaction.account.users.0.fullname}} 
+            </div>
+            <div class='div3'>
+                {{transaction.account.property.0.housenumber}} {{transaction.account.property.0.street}} 
+            </div>
+            <div class='div4'>
+                {{transaction.createdAt|date('m-d-y')}}
+            </div>
+            {% if transaction.type == 'credit' %}
+                <div class='div5'>
+                    <span class='blue'>+ ${{transaction.amount|number_format('2', '.', ',')}}</span>
+                </div>
+            {% elseif transaction.type == 'debit' %}
+                <div class='div5'>
+                    <span class='red'>- ${{transaction.amount|number_format('2', '.', ',')}}</span>
+                </div>
+            {% else %}
+                <div class='div5'>
+                    <span class='black'>* ${{transaction.amount|number_format('2', '.', ',')}}</span>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    
+{% endblock %}

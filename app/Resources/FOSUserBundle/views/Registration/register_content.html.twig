@@ -1,0 +1,20 @@
+{% block stylesheets %}
+    <link href="{{ asset('bundles/main/css/forms.css') }}" type="text/css" rel="stylesheet" />
+{% endblock%}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+        
+<div class="section-header"><h1>Register</h1></div>
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.email, { 'label': 'Email' }) }}
+    {{ form_row(form.username, { 'label': 'Username' }) }}
+    {{ form_row(form.plainPassword.first, { 'label': 'Password' }) }}
+    {{ form_row(form.plainPassword.second, { 'label': 'Confirm' }) }}
+    {{ form_rest(form) }} 
+    <div>
+        <input type="submit" value="{{ 'Submit'|trans }}" />
+    </div>
+{{ form_end(form) }}

@@ -1,0 +1,56 @@
+{# empty Twig template #}
+
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" media="all" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/jgallery.min.css?v=1.5.5') }}" media="all" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jquery-2.0.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jgallery.min.js?v=1.5.5') }}"></script>
+{% endblock %}
+{% block title %}Welcome!{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/home.html.twig') }}
+{% endblock %}
+{% block photo_scroll %}
+    <div id="gallery">
+        <img src="{{ asset('bundles/main/images/sign.jpg') }}" alt="Brandy Mill Estates Neighborhood Sign" />
+        <img src="{{ asset('bundles/main/images/bme_home_1.jpg') }}" alt="Brandy Mill Estates Home: The Dorskey's" />
+        <img src="{{ asset('bundles/main/images/family_1.jpg') }}" alt="The Weekly's" />
+        <img src="{{ asset('bundles/main/images/blockparty.jpg') }}" alt="2015 Neighborhood Annual Block Party" />
+        <img src="{{ asset('bundles/main/images/bme_home_2.jpg') }}" alt="Brandy Mill Estates Home: The Hollis'" />
+        <img src="{{ asset('bundles/main/images/2016_garden_winner.jpg') }}" alt="2016 Garden & Landscape Design Winner" />
+    </div>
+    <script type="text/javascript">
+        $( function() {
+            $( '#gallery' ).jGallery({ mode: 'slider' });
+        } );
+    </script>
+    <div style='padding-bottom: 30px;  width: 100%'></div>
+{% endblock %} 
+{% block body %}
+    <div class="section-header"><h1>Homepage</h1></div>
+    <div class="section-header"><h6>Summary</h6></div>
+    <div class='content'>
+        <div class='typeface_standard'>
+            <p>
+                "Welcome Home" to Brandy Mill Estates (BME) Homeowners Association's (HOA) official website and your home to all the happenings in and around the neighborhood.  Here you will find everything you need to know regarding official HOA business, legal matters, financial status, contracts, neighborhood announcements, gossip, your own personal account status, pay a bill, submit a permit or complaint, and general need to know information.  Or, if you just want to learn more about your neighbors from the comfort of your home... it can all be done right here!  
+            </p><p>
+                Start each visit to the official BME HOA website by visiting the 'Announcements' page, where you will be kept up to date with all the offical annoucements that have come through the Board of Directors and SBS Management.  
+            </p><p>
+                If you're looking for general neighborhood chatter, head on over to the Community Forum, which is monitored, but is much less formal.  There you can idly chat about whatever the neighborhood might find of interest - or better yet: discuss issues you would like to have the Board of Director address.  
+            </p><p>
+                In your Account section, you can find up-to-date information regarding your account, current account balance, past balances, notices that have been sent, etc... you can even pay your bill!  
+            </p><p>
+                Your Board of Directors is eagerly trying be as transparent and as accessible to the members of the neighborhood as possible.  Please feel free to contact us for whatever reason to help improve the communication or transparecency with members.  
+            </p>
+            <p>
+                Your lucky number for today is: {{ number }}
+            </p>
+        </div>
+    </div>
+{% endblock %}

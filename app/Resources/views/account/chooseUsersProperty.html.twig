@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/account.html.twig') }}
+{% endblock %}
+{% block title %}Property Details{% endblock %}
+
+{% block body %}
+    Result:{{result}}
+    
+    <div>Sorry for the added step... however, it is possible for a mortgage holder to own more than one property within the association; therefore, it becomes necessary to choose which property the homeowner wishes to view.</div>
+    <div>For the vast majority of us, just choose the only property listed in the dropdown menu:</div>
+    
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}   
+    
+{% endblock %}

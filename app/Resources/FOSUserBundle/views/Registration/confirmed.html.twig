@@ -1,0 +1,25 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <header>
+        <h1>Registration Confirmed</h1>
+    </header>
+  
+    <table class="standard_table">
+        <tr>
+            <td class="c1">Username:</td>
+            <td class="c2">{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td class="c1">Email:</td>
+            <td class="c2">{{ user.email }}</td>
+        </tr>
+    </table>
+    
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
+    {% endif %}
+{% endblock fos_user_content %}

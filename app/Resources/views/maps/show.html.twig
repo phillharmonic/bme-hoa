@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/jgallery.min.css?v=1.5.5') }}" media="all" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" media="all" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jquery-2.0.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jgallery.min.js?v=1.5.5') }}"></script>
+{% endblock %}
+{% block title %}Homeowner Summary{% endblock %}
+{% block sidebar %}
+    <ul>
+        <li>Helpful links</li>
+        <li>Utilitiy Providers & Options</li>
+    </ul>
+{% endblock %}
+
+{% block body %} 
+    <div class="section-header"><h1>Maps</h1>
+    <div class="section-header"><h6>Google Earth View</h6></div>
+    <iframe
+        width="708"
+        height="450"
+        frameborder="0" style="border:1pt black solid"
+        src="
+        https://www.google.com/maps/embed/v1/place
+        ?key=AIzaSyCEcsrdeESrjcTEFYGkZzRBsSkzdfiZ8AU
+        &q=Space+Needle,Seattle+WA
+        "
+        
+        {# src="
+            https://www.google.com/maps/embed/v1/search
+            ?key=AIzaSyC9OHMseY_DKRt8g5QIljNY3wx6URbD634
+            &center=-33.8569,151.2152
+            &zoom=18
+            &maptype=satellite
+            " #}
+            allowfullscreen
+    >
+    </iframe> 
+    <div class="section-header"><h6>Licking County Auditor Parcel Map</h6></div>
+    <iframe
+        width="708"
+        height="450"
+        frameborder="0" style="border:0"
+        src="
+            http://apps.lcounty.com/maps/taxparcelviewer/default.htm?parcelId=17190000717184029000
+            {# http://lcountygis.maps.arcgis.com/apps/webappviewer/index.html?id=9a220b5f653b4831b32ad38a9fb881d9 #}
+            " 
+            allowfullscreen
+    >
+    </iframe> 
+{% endblock %}

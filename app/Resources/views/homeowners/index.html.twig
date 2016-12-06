@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block sidebar %}
+    <ul>
+        <li>Helpful links</li>
+        <li>Utilitiy Providers & Options</li>
+    </ul>
+{% endblock %}
+{% block title %}Homeowners{% endblock %}
+{% block body %}    
+  
+    <style>
+        .list_wrapper{
+            width: 100%;
+            height: 25px;
+        }
+        .div1{
+            width: 30%;
+            float: left;
+            padding-left: 10px;
+        }
+        .div2{
+            width: 33%;
+            float: left;
+        }
+        .div3{
+            width: 33%;
+            float: left;
+        }
+    </style>
+    
+    <div class="section-header"><h1>Homeowners</h1></div>
+    
+    <div class="section-header"><h6>Brandy Mill Drive</h6></div>
+        {% for brandymill_homeowner in brandymill_homeowners %}
+            <div class="list_wrapper">
+                <div class='div1'>
+                    <a href="{{ path('homeownersShow', {'id' : brandymill_homeowner.id}) }}"> {{ brandymill_homeowner.housenumber }} {{ brandymill_homeowner.street }}</a> 
+                </div>
+                <div class='div2'>
+                    {{ brandymill_homeowner.lastname }} - {{ brandymill_homeowner.firstname }}
+                </div>
+                <div class='div3'>
+                    Homeowner since: {{ brandymill_homeowner.occupyDate|date('M, Y') }}
+                </div>
+            </div>
+        {% endfor %}
+    
+    <div class="section-header"><h6>Spring Brook Court</h6></div>
+        {% for springbrook_homeowner in springbrook_homeowners %}
+            <div class="list_wrapper">
+                <div class='div1'>
+                    <a href="{{ path('homeownersShow', {'id' : springbrook_homeowner.id}) }}">{{ springbrook_homeowner.housenumber }} {{ springbrook_homeowner.street }}</a> 
+                </div>
+                <div class='div2'>
+                    {{ springbrook_homeowner.lastname }} - {{ springbrook_homeowner.firstname }}
+                </div>
+                <div class='div3'>
+                    Homeowner since: {{ springbrook_homeowner.occupyDate|date('M, Y') }}
+                </div>
+            </div>
+        {% endfor %}
+    
+    <div class="section-header"><h6>Spring Flower Way</h6></div>
+        {% for springflower_homeowner in springflower_homeowners %}
+            <div class="list_wrapper">
+                <div class='div1'>
+                    <a href="{{ path('homeownersShow', {'id' : springflower_homeowner.id}) }}">{{ springflower_homeowner.housenumber }} {{ springflower_homeowner.street }}</a> 
+                </div>
+                <div class='div2'>
+                    {{ springflower_homeowner.lastname }} - {{ springflower_homeowner.firstname }}
+                </div>
+                <div class='div3'>
+                    Homeowner since: {{ springflower_homeowner.occupyDate|date('M, Y') }}
+                </div>
+            </div>
+        {% endfor %}
+    
+{% endblock %}

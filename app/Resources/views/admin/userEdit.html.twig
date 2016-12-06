@@ -1,0 +1,83 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/forms.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Admin - User Edit{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/admin.html.twig') }}
+{% endblock %}
+{% form_theme form 'form/fields.html.twig' %}
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <fieldset class="group"> 
+            <ul {{ block('widget_container_attributes') }} >
+            {% for child in form %}
+                {{ form_widget(child) }}
+            {% endfor %}
+            </ul>
+        </fieldset> 
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <li>
+            <label  for="{{ prop.id }}" class="checkbox {% if checked %}checked{% endif %}" >
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}
+            </label>
+        </li>
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block body %}    
+    <div class="section-header"><h1>Admin - Edit User</h1></div>
+    <div class="section-header"><h6>{{ user.fullname }}</h6></div>
+    
+    {{ form_start(form) }}
+    {#<form action="{{ path('MainBundle_Admin_User_Edit', {'id' : user.id}) }}" method="post" {{ form_enctype(form) }} class="user">#}
+        {# form_widget(form) #}
+        {{ form_row(form.roles) }}
+        <div class='dates'>{{ form_row(form.vacate_date) }}</div>
+        <label for="expired">Expire User Account</label>
+        <fieldset class="group">
+            <ul class="checkboxes" >
+                {{ form_widget(form.expired) }}
+            </ul>
+        </fieldset>
+        {# form_row(form.color) }}
+        <div class='dates'>{{ form_row(form.dateBuilt) }}</div>
+        <label for="plant_resistsDeer">Has HOA Lien</label>
+        <fieldset class="group">
+            <ul class="checkboxes" >
+                {{ form_widget(form.hasHoaLien) }}
+            </ul>
+        </fieldset>
+        {{ form_row(form.houseNumber) }}
+        <label for="plant_resistsDeer">Occupied</label>
+        <fieldset class="group">
+            <ul class="checkboxes" >
+                {{ form_widget(form.isOccupied) }}
+            </ul>
+        </fieldset>
+        {{ form_row(form.lotNumber) }}
+        <label for="plant_resistsDeer">In Arrears</label>
+        <fieldset class="group">
+            <ul class="checkboxes" >
+                {{ form_widget(form.inArrears) }}
+            </ul>
+        </fieldset>
+        {{ form_row(form.status) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.street) }}
+        {{ form_row(form.user) #}
+        
+        
+        
+        {{ form_rest(form) }}
+        
+        <input type="submit" value="Submit" />
+    {{ form_end(form) }}
+    
+
+{% endblock %}

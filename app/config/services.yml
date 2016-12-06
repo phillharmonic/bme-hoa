@@ -1,0 +1,33 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    app.twig_extension:
+        class: AppBundle\Twig\PhoneFilter
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    app.form.type.property:
+        class: AppBundle\Form\PropertyForm
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+            
+    app.form.type.admin_user:
+        class: AppBundle\Form\AdminUserForm
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+            
+    app.form.type.complaint_new:
+        class: AppBundle\Form\ComplaintForm
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }

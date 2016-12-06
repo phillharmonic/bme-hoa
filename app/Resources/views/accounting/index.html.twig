@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Accouting Index{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/admin.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+    <style>
+        .list_wrapper{
+            width: 100%;
+            height: 25px;
+        }
+        .div1{
+            width: 30%;
+            float: left;
+            padding-left: 10px;
+        }
+        .div2{
+            width: 33%;
+            float: left;
+        }
+        .div3{
+            width: 33%;
+            float: left;
+        }
+    </style>
+    <div class="section-header"><h1>Accounts</h1><ul class="page-nav"><li><a href='{{ path('adminAccountingNew') }}'>New</a></li></ul></div>
+    <div class="section-header"><h6>Index</h6></div>
+    {% for account in accounts %}
+        <div class="list_wrapper">  
+            <div class='div1'>
+                <a href="{{ path('adminAccountingShow', {'id' : account.id}) }}">{{account.createdAt|date('Y')}}-{{account.createdAt|date('m')}}{{ account.id }}-{{account.createdAt|date('d')}}{{account.createdAt|date('H')}}</a> 
+            </div>
+            <div class='div2'>
+                {{account.users.0.fullname}} 
+                {% if account.users.1 is defined %}
+                    & {{account.users.1.fullname}} 
+                {% endif %}
+            </div>
+            <div class='div3'>
+                {{account.property.0.houseNumber}} {{account.property.0.street}}
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}

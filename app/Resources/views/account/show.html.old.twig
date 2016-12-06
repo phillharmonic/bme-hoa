@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/jgallery.min.css?v=1.5.5') }}" media="all" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" media="all" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jquery-2.0.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/main/js/jgallery.min.js?v=1.5.5') }}"></script>
+{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/account.html.twig') }}
+{% endblock %}
+{% block title %}Account Profile{% endblock %}
+{% block body %}    
+    
+    <div class="section-header"><h1>Account Profile</h1></div>
+    <div class="section-header"><h6>User</h6></div>
+        <div class='form'>
+            <div class='section'>
+                <div class="section-header">
+                    <h2>{{ user.firstname|title }} {{ user.lastname|title }}</h2>
+                    <ul class="page-nav">
+                        <li><a href='{# path('MainBundle_Account_Edit', {'id' : user.id}) #}'>Edit</a></li>
+                    </ul>
+                </div>
+                <div class='wrapper'>
+                    <div id='left'><section><div id='one'>Username</div><div id='two'> {{ user.username }}</div></section></div>
+                    <div id='left'><section><div id='one'>Email Address</div><div id='two'> {{ user.email }}</div></section></div>
+                    <div id='left'><section><div id='one'>Street Address</div><div id='two'> {{ user.housenumber }} {{ user.street }}</div></section></div>
+                    <div id='left'><section><div id='one'>Honorific:</div><div id='two'> {{ user.honorific }}</div></section></div>
+                    <div id='left'><section><div id='one'>First Name:</div><div id='two'> {{ user.firstname|title }}</div></section></div>
+                    <div id='left'><section><div id='one'>MI</div><div id='two'> {{ user.mi|title }}</div></section></div>
+                    <div id='left'><section><div id='one'>Last Name</div><div id='two'> {{ user.lastname|title }}</div></section></div>
+                    <div id='left'><section><div id='one'>Gender</div><div id='two'> {{ user.gender|title }}</div></section></div>
+                    <div id='left'><section><div id='one'>Home Phone</div><div id='two'> {{ user.homephone|phone }}</div></section></div>
+                    <div id='left'><section><div id='one'>Cell Phone</div><div id='two'> {{ user.cellphone|phone }}</div></section></div>
+                    <div id='left'><section><div id='one'>Birthday</div><div id='two'> {{ user.bday|date("F d, Y") }}</div></section></div>
+                    <div id='left'><section><div id='one'>Marital Status</div><div id='two'> {{ user.maritalStatus|title }}</div></section></div>
+                    <div id='left'><section><div id='one'>Occupation</div><div id='two'> {{ user.Occupation }}</div></section></div>
+                    <div id='left'><section><div id='one'>Occupied Date</div><div id='two'> {{ user.occupyDate|date("F d, Y") }}</div></section></div>
+                    {% if user.vacateDate|date("Y") == '-0001' %}
+                    <div id='left'><section><div id='one'>Vacate Date</div><div id='two'>Currently Occupied</div></section></div>
+                    {% else %}
+                    <div id='left'><section><div id='one'>Vacate Date</div><div id='two'> {{ user.vacateDate|date("m/d/Y") }}</div></section></div>
+                    {% endif %}
+                    <div id='right'></div>
+                </div> 
+            </div>
+                    
+            {% if user.photos is not empty %}
+                <div style='width: 100%; margin-top: 400px;'>
+                    <div id="{{user.firstname}}">
+                        {% for pic in user.photos %}
+                            <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $( function() {
+                        $( '#{{user.firstname}}' ).jGallery({ 
+                            mode: 'slider',                                    
+                            width: '92%'
+                        });
+                    } );
+                </script>   
+                <div style='padding-bottom: 30px;  width: 100%'></div>   
+            {% endif %}
+            
+            {% if spouse is not null%}                           
+                <div class='section'>
+                    <div class="section-header"><h6>Spouse</h6></div>
+                    <div class="section-header"><h2>{{spouse.type}}:  {{spouse.firstname}} {{spouse.lastname}},  Age {{ ('now'|date('Y') - spouse.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - spouse.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }}</h2></div>
+                    <div id="{{spouse.firstname}}">
+                        {% for pic in spouse.photos %}
+                            <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
+                        {% endfor %}
+                    </div>
+                    <script type="text/javascript">
+                        $( function() {
+                            $( '#{{spouse.firstname}}' ).jGallery({ 
+                                mode: 'slider',                                    
+                                width: '92%'
+                            });
+                        } );
+                    </script>  
+                    <div style='padding-bottom: 30px;  width: 100%'></div>
+                </div>
+                {% endif %}
+                
+            {# user.property.street #}
+                
+            <div class='section'>
+                <div class="section-header"><h6>Dependents</h6></div>
+                <section>
+                    {% for dependent in dependents %}
+                        <div class="section-header"><h2>{{dependent.type}}:  {{dependent.firstname}} {{dependent.lastname}},  Age {{ ('now'|date('Y') - dependent.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - dependent.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }}</h2>
+                        <div id="{{dependent.firstname}}">
+                            {% for pic in dependent.photos %}
+                                <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
+                            {% endfor %}
+                        </div>
+                        <script type="text/javascript">
+                            $( function() {
+                                $( '#{{dependent.firstname}}' ).jGallery({ 
+                                    mode: 'slider',                                    
+                                    width: '92%'
+                                });
+                            } );
+                        </script>   
+                        <div style='padding-bottom: 30px;  width: 100%'></div>    
+                    {% endfor %}      
+                </section>
+            </div>
+                
+            <div class='section'>
+                <div class="section-header"><h6>Vehicles</h6></div>
+                <section>
+                    {% for vehicle in vehicles %}
+                        <div class="section-header"><h2>{{vehicle.year}}:  {{vehicle.make}} {{vehicle.model}}</h2>
+                        <div id="vehicle_{{vehicle.id}}">
+                            {% for pic in vehicle.photos %}
+                                <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
+                            {% endfor %}
+                        </div>
+                        <script type="text/javascript">
+                            $( function() {
+                                $( '#vehicle_{{vehicle.id}}' ).jGallery({ 
+                                    mode: 'slider',                                    
+                                    width: '92%'
+                                });
+                            } );
+                        </script>   
+                        <div style='padding-bottom: 30px;  width: 100%'></div>    
+                    {% endfor %}      
+                </section>
+            </div>
+                
+            <div class='section'>
+                <div class="section-header"><h6>Pets</h6></div>
+                <section>
+                    {% for pet in pets %}
+                        <div class="section-header"><h2>{{pet.name}}:  {{pet.type}} {{pet.breed}}</h2>
+                        <div id="pet_{{pet.id}}">
+                            {% for pic in pet.photos %}
+                                <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
+                            {% endfor %}
+                        </div>
+                        <script type="text/javascript">
+                            $( function() {
+                                $( '#pet_{{pet.id}}' ).jGallery({ 
+                                    mode: 'slider',                                    
+                                    width: '92%'
+                                });
+                            } );
+                        </script>   
+                        <div style='padding-bottom: 30px;  width: 100%'></div>    
+                    {% endfor %}      
+                </section>
+            </div>
+                
+        </div>
+{% endblock %}

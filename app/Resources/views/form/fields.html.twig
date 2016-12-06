@@ -1,0 +1,23 @@
+{# this template overrides form fields with custom markup #}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <fieldset class="group"> 
+            <ul {{ block('widget_container_attributes') }} >
+            {% for child in form %}
+                {{ form_widget(child) }}
+            {% endfor %}
+            </ul>
+        </fieldset> 
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <li>
+            <label  for="{{ id }}" class="checkbox {% if checked %}checked{% endif %}" >
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}
+            </label>
+        </li>
+    {% endspaceless %}
+{% endblock checkbox_widget %}

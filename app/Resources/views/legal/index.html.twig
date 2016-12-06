@@ -1,0 +1,36 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/legal.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+    <div class="content">
+        <div class="section-header"><h1>Legal</h1></div>
+        <div class="section-header"><h6>Summary</h6></div>
+        <p>
+            This is the landing page for all things legal for the HOA.  Nothing sexy or exciting, but very much important. These are the documents that govern the HOA.  Here you will find the following:
+        </p>
+        <ul>
+            <li>Declaration of Covenants, Conditions, and Restrictions (CC&Rs)</li>
+                <ul>
+                    <li>Original CC&Rs</li>
+                    <li>1st Amendment</li>
+                    <li>2nd Amendment</li>
+                    <li>3rd Amendment</li>
+                    <li>4th Amendment</li>
+                </ul>
+            <li>Code of Regualtions</li>
+            <li>Contracts</li>
+                <ul>
+                    <li>Property Management: SBS Management Group</li>
+                    <li>Pond Maintenance: Aqua Doc</li>
+                    <li>Lawn Care: Creative Lawncare</li>
+                    <li>Gardening & Landscaping: WinnScapes</li>
+                </ul>
+        </ul>
+    </div>
+{% endblock %}

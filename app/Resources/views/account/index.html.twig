@@ -1,0 +1,43 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'MainBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Homeowner Index{% endblock %}
+{% block sidebar %}
+    {% render controller("MainBundle:Sidebar:account") %}
+{% endblock %}
+
+{% block body %}    
+  
+    <div class="section-header"><h1>Account</h1></div>
+    <div class="section-header"><h6>Summary</h6></div>
+    <div class="section-header"><h2>User</h2></div>
+    <div class='content'>
+        <div class="typeface_courier">
+            <p>{{ user.honorific }} {{ user.firstname }} {{ user.lastname }}</p>
+            <p>{{ user.housenumber }} {{ user.street }}</p>
+            <p>Etna, Ohio 43062</p>
+            <p>Email: <a href="mailto:{{ user.email }}" target="_top">{{ user.email }} </a><p>
+            <p>Phone: {{ user.cellphone|phone }} </p>
+        </div>
+        <div class="typeface_courier">
+            <p>Spouse: {{ user.firstname }}</p>
+            <p>Dependents: {{ user.firstname }} </p>
+            <p>Pets: {{ user.firstname }} </p>
+            <p>Vehicles: {{ user.firstname }} </p>
+        </div>
+    </div>
+    <div class='content'>
+        <div class="section-header"><h2>Current Balance</h2></div>
+        <div class="typeface_courier">
+            <p>{{"now"|date("m/d/Y")}}: <span class="red">$385 DUE</span></p>
+        </div>    
+    </div>
+    <div class='content'>
+        <div class="section-header"><h2>Account History</h2></div>
+        <div class="typeface_courier">
+            <p>{{"now"|date("m/d/Y")}}: <span class="red">$385</span></p>
+        </div>    
+    </div>
+{% endblock %}

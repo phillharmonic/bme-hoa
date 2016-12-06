@@ -1,0 +1,32 @@
+{# src/MainBundle/Resources/views/Sidebars/index.html.twig #} 
+
+{% block body %}
+    <div class='sidebarmenu'>
+        <ul>
+            <li>Legal Menu</li>
+            <ul>
+                <li><a title="Legal Home Page" href="{{path('legalHome')}}">Homepage</a></li>
+            </ul>
+            <li>Member Governance</li>
+            <li>Covenants Conditions & Restrictions</li>
+                <ul>
+                    <li><a title="Fully Amended" href="{{path('legalCurrentCCRs')}}">Current CCRs - Fully Amended</a></li>
+                    <li><a title="Declaration of Covenants, Conditions, and Restrictions (CC&Rs)" href="{{path("legalOriginalCCRs")}}">Original CCRs</a></li>
+                    <li><a title="First Amendment" href="{{path("legalFirstAmendment")}}">1st Amendment</a></li>
+                    <li><a title="Second Amendment" href="{{path("legalSecondAmendment")}}">2nd Amendment</a></li>
+                    <li><a title="Third Amendment" href="{{path("legalThirdAmendment")}}">3rd Amendment</a></li>
+                    <li><a title="Forth Amendment" href="{{path("legalFourthAmendment")}}">4th Amendment</a></li>
+                </ul>
+            <li>Board Governance</li>
+            <ul><li><a title="Code of Regulations" href="{{path("legalCodeOfRegs")}}">Code of Regulations</a></li></ul>
+            <li>Association Contracts</li>
+                <ul>
+                    <li><a title="SBS Management Group" href="{{path("contractSBSManagement")}}">Property Management</a></li>
+                    <li><a title="Aquadoc" href="{{path("contractPondMaint")}}" target='blank'>Pond Maintenance</a></li>
+                    <li><a title="Creative Lawncare" href="{{path("contractLawncare")}}" target='blank'>Lawn Care</a></li>
+                    <li><a title="Winnscapes" href="{{path("contractGardenLandscape")}}" target='blank'>Gardening & Landscaping</a></li>
+                </ul>
+        </ul>
+        
+    </div>
+{% endblock %}

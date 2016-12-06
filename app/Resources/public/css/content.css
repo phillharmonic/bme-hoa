@@ -1,0 +1,225 @@
+/* 
+    Created on : Jun 14, 2016, 9:41:23 AM
+    Author     : Patrick
+*/
+
+.content{
+    padding-bottom: 15px;
+}
+
+.content ul { 
+   list-style-type: disc; 
+   list-style-position: inside; 
+}
+.content ol { 
+   list-style-type: decimal; 
+   list-style-position: inside; 
+}
+.content ul ul, .content ol ul { 
+   list-style-type: circle; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+.content ol ol, .content ul ol { 
+   list-style-type: lower-latin; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+
+.content .typeface_courier {
+    padding-bottom: 10px;
+}
+
+.content .typeface_courier p{
+    font-family: courier;
+    font-size: 12pt;
+    line-height: 1.5em;
+    color: gray;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 25px;
+}
+
+.content .typeface_standard {
+    padding-bottom: 10px;
+}
+
+.content .typeface_standard p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    line-height: 1.5em;
+    color: gray;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+}
+
+.form ul { 
+   list-style-type: none; 
+   list-style-position: inside; 
+}
+.form ol { 
+   list-style-type: none; 
+   list-style-position: inside; 
+}
+.form ul ul, .form ol ul { 
+   list-style-type: none; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+.form ol ol, .form ul ol { 
+   list-style-type: none; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+
+.form .section {    
+    padding-bottom: 50px;
+    width: 100%;
+    height: auto;
+}
+
+.red{
+    color: red;
+}
+
+/*.form section {
+    width: 80%;
+    height: 20px;
+    background: aqua;
+    margin: auto;
+    padding: 5px;
+}
+
+div#one{
+    width: 25%;
+    background: red;
+    float: left;
+    text-align: right;
+    padding: 3px 5px 3px 5px;
+    border-right: solid grey 1pt;
+    font-weight: bold;
+}
+
+div#two {
+    margin-left: 15%;
+    background: pink;
+    text-align: left;
+    padding: 3px 5px 3px 5px;
+    padding-left: 75px;
+}*/
+
+.form .section {
+    width: 97%;
+    height: auto;
+    /*background: aqua;*/
+    margin: auto;
+    padding: 5px;
+}
+
+div#one{
+    width: 35%;
+    /*background: red;*/
+    float: left;
+    text-align: right;
+    padding: 3px 5px 3px 5px;
+    border-right: solid grey 1pt;    
+}
+
+div#two {
+    margin-left: 38%;
+    font-family: courier;
+    color: grey;
+    /*background: green;*/
+    text-align: left;
+    padding: 3px 5px 3px 5px;
+    padding-left: 0;
+}
+
+div#two_admin {
+    margin-left: 42%;
+    width: 400px;
+    height: 100%;
+    font-family: courier;
+    color: grey;
+    /*background: green;*/
+    text-align: left;
+    padding: 3px 5px 3px 5px;
+    padding-left: 0;
+}
+
+.form .wrapper {
+    width: 90%;
+    height: 100%;
+    /*background: aqua;*/
+    margin: auto;
+    padding: 5px;
+    padding-bottom: 20px;
+}
+
+div#left{
+    width: 90%;
+    /*background: pink;*/
+    float: left;
+    text-align: right;
+    padding: 3px 5px 3px 5px;
+    /*border-right: solid grey 1pt;*/
+    /*font-weight: bold;*/
+}
+
+div#right {
+    margin-left: 60%;
+    /*background: yellow;*/
+    text-align: right;
+    padding: 3px 10px 3px 5px;
+    padding-left: 5px;
+}
+
+div#left_admin {
+    width: 49%;
+    /*background: pink;*/
+    float: left;
+    height: 100%;
+    text-align: right;
+    padding: 3px 5px 20px 5px;
+    /*border-right: solid grey 1pt;*/
+    /*font-weight: bold;*/
+}
+div#left_admin section{
+    height: 25px;
+}
+div#right_admin {
+    margin-left: 50%;
+    /*background: yellow;*/
+    height: 100%;
+    text-align: right;
+    padding: 3px 10px 3px 5px;
+    padding-left: 5px;
+}
+.sidebarmenu ul { 
+   list-style-type: none; 
+   list-style-position: inside; 
+}
+.sidebarmenu ol { 
+   list-style-type: none; 
+   list-style-position: inside; 
+}
+.sidebarmenu ul ul, .sidebarmenu ol ul { 
+   list-style-type: none; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+.sidebarmenu ol ol, .sidebarmenu ul ol { 
+   list-style-type: none; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+
+.sidebarmenu {
+    font-size: 10pt;
+}
+
+li {
+    line-height: 1.75em;
+}

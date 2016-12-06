@@ -1,0 +1,184 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Admin - Users Index{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/admin.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+ <style>
+        .list_wrapper{
+            width: 100%;
+            height: 25px;
+        }
+        .div1{
+            width: 25%;
+            float: left;
+            padding-left: 10px;
+        }
+        .div2{
+            width: 50%;
+            float: left;
+        }
+        .div3{
+            width: 23%;
+            float: left;
+        }
+        .toprow{
+            background-color: #eee;
+            color: #555555;
+        }
+        .nolien{
+            color: black;
+        }
+        .toprow ul, .haslien ul, .nolien ul{
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li, .haslien ul li, .nolien ul li{
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li:nth-child(1), .nolien ul li:nth-child(1){
+            padding-left: 5px;
+            width: 130px;
+        }
+        .toprow ul li:nth-child(2), .nolien ul li:nth-child(2){
+            width: 190px;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li:nth-child(3), .nolien ul li:nth-child(3){
+            width: 170px;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li:nth-child(4), .nolien ul li:nth-child(4){
+            width: 75px;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li:nth-child(5), .nolien ul li:nth-child(5){
+            width: 100px;
+            padding: 0px;
+            margin: 0px;
+        }
+        .nolien:nth-child(even) {background-color: #eee}
+        .wrapper_a{
+            display: inline-block;
+            overflow: auto;
+            padding-bottom: 30px;
+            width: 100%;
+        }
+</style>  
+<div class="wrapper_a">
+    <div class="section-header"><h1>Unassigned Users</h1></div>
+    <div class="toprow">
+        <ul>
+            <li>User</li>
+            <li>Address</li>
+            <li>Role</li>
+            <li>Property</li>
+            <li>Account</li>
+        </ul>
+    </div>
+    {% for user in unassignedUsers %}
+    <div class="nolien">
+        <ul>
+            <li><a href="{{ path('adminUserEdit', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></li>
+            <li>{{ user.housenumber }} {{ user.street }}</li>
+            <li>{{ user.roles.0 }}</li>
+            {% if user.account.property is defined %}
+                <li class="red">Unassigned</li>
+            {% else %}
+                <li>Assigned</li>
+            {% endif %}
+            {% if user.account is not null %}
+                <li>{{user.account.accountNumber}}</li>
+            {% else %}
+                <li class="red">Unassigned</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+<div class="wrapper_a">
+    <div class="section-header"><h1>Current Homeowners</h1></div>
+    <div class="toprow">
+        <ul>
+            <li>Homeowner</li>
+            <li>Address</li>
+            <li>Role</li>
+            <li>Property</li>
+            <li>Account #</li>
+        </ul>
+    </div>
+    {% for user in currentUsers %}
+    <div class="nolien">
+        <ul>
+            <li><a href="{{ path('adminUserEdit', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></li>
+            <li>{{ user.housenumber }} {{ user.street }}</li>
+            <li>{{ user.roles.0 }}</li>
+            <li>{% if user.account.property is not null %}Assigned{% endif %}</li>{% if user.account is not null %}
+            <li>{{user.account.accountNumber}}</li>{% else %}
+            <li class="red">Unassigned</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+<div class="wrapper_a">
+    <div class="section-header"><h1>Former Homeowners</h1></div>
+    <div class="toprow">
+        <ul>
+            <li>Homeowner</li>
+            <li>Address</li>
+            <li>Role</li>
+            <li>Property</li>
+            <li>Account #</li>
+        </ul>
+    </div>
+    {% for user in formerUsers %}
+    <div class="nolien">
+        <ul>
+            <li><a href="{{ path('adminUserEdit', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></li>
+            <li>{{ user.housenumber }} {{ user.street }}</li>
+            <li>{{ user.roles.0 }}</li>
+            <li>{%if user.vacateDate == null%}Occupied{%elseif user.vacateDate == '0000-00-00'%}Occupied{%else%}Vacated{%endif%}</li>{% if user.account is not null %}
+            <li>{{user.account.accountNumber}}</li>{% else %}
+            <li class="red">Unassigned</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+<div class="wrapper_a">
+    <div class="section-header"><h1>Administrative Users</h1></div>
+    <div class="toprow">
+        <ul>
+            <li>User</li>
+            <li>Occupation</li>
+            <li>Role</li>
+            <li style="width: 150px">Last Loggin</li>
+        </ul>
+    </div>
+    {% for userArray in adminUsers %}
+        {% for user in userArray %}
+            <div class="nolien">
+                <ul>
+                    <li><a href="{{ path('adminUserEdit', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></li>
+                    <li>{{ user.occupation }}</li>
+                    <li>{{ user.roles.0 }}</li>
+                    <li style="width: 150px">{{user.lastLogin|date('g:sa n/j/y ')}}</li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+</div>
+{% endblock %}

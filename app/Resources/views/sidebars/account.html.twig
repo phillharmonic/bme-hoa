@@ -1,0 +1,17 @@
+{% block body %}
+    <div class='sidebarmenu'>
+        <ul>
+            <li>Account Menu</li>
+            <ul>
+                <li><a title="Account Home Page" href="{# path('MainBundle_Account') #}">Summary</a></li>
+                <li><a title="Profile" href="{# path('MainBundle_Account_Show') #}">Profile</a></li>
+                <li><a title="Account Statements" href="{# path('MainBundle_LegalFirstAmendment') #}">Statements</a></li>
+                <li><a title="Official Notices & Communications" href="{# path('MainBundle_Account_Show') #}">Official Notices</a></li>
+                <li><a title="Add Dependent" href="{# path('MainBundle_Account_AddDependent') #}">Add Dependent</a></li>
+                <li><a title="Add Vehicle" href="{# path('MainBundle_Account_AddVehicle') #}">Add Vehicle</a></li>
+                <li><a title="Add Pet" href="{# path('MainBundle_Account_AddPet') #}">Add Pet</a></li>
+            </ul>
+        </ul>
+        
+    </div>
+{% endblock %}

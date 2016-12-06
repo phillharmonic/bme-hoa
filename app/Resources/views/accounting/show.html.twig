@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Accouting Show{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/admin.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+  
+    <div class="section-header"><h1>Accounting</h1>{#<ul class="page-nav"><li><a href='{{ path('MainBundle_Admin_Account_Edit') }}'>Edit</a></li></ul></div>#}
+    <div class="section-header"><h6>Show</h6></div>
+    <div class="section-header"><h2>Account Number: 0000-000{{ account.id }}-2016</h2></div>
+    <div class='form'>
+            <div class='section'>
+                <div class="section-header">
+                    {#
+                    <h2>{{ account.balance|title }} {{ user.lastname|title }}</h2>
+                    <ul class="page-nav">
+                        <li><a href='{{ path('MainBundle_Account_Edit', {'id' : user.id}) }}'>Edit</a></li>
+                    </ul>
+                </div>
+                #}
+                    <div class='wrapper'>
+                        <div id='left'><section><div id='one'>Balance</div><div id='two'> {{ account.balance }}</div></section></div>
+                        {% for user in account.users %}
+                            <div id='left'><section><div id='one'>Homeowner {{loop.index}}</div><div id='two'> {{ user.fullname }}</div></section></div>
+                        {% endfor %}
+                        <div id='left'><section><div id='one'>Property</div><div id='two'> {{ account.property.0.houseNumber }} {{ account.property.0.street }}</div></section></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <iframe
+        width="450"
+        height="250"
+        frameborder="0" style="border:0"
+        src="
+            https://www.google.com/maps/embed/v1/search
+            ?key=AIzaSyC9OHMseY_DKRt8g5QIljNY3wx6URbD634
+            &center=-33.8569,151.2152
+            &zoom=18
+            &maptype=satellite
+            " 
+            allowfullscreen
+    >
+    </iframe>      
+        <iframe
+        width="700"
+        height="450"
+        frameborder="0" style="border:0"
+        src="
+            http://lcountygis.maps.arcgis.com/apps/webappviewer/index.html?id=9a220b5f653b4831b32ad38a9fb881d9
+            " 
+            allowfullscreen
+    >
+    </iframe> 
+{% endblock %}
