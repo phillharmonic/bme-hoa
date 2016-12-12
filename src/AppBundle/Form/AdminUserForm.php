@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+//use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class AdminUserForm extends AbstractType {
     public function __construct($em) {
@@ -33,6 +34,14 @@ class AdminUserForm extends AbstractType {
 //            'choices_as_values' => true,
         ));
         
+//        $builder->add('role', EntityType::class, array(
+//            'class' => 'AppBundle:Roles',
+//            'choice_label' => 'name',
+//            'required'      => true,
+//            'multiple'      => true,
+//            'choice_value' => 'name',
+//        ));
+        
         $builder->add('vacate_date', DateType::class, array(
             'years' => range(date('Y') -15, date('Y')),
             'label'         =>  'Date Vacated', 
@@ -40,6 +49,10 @@ class AdminUserForm extends AbstractType {
         ));
         
         $builder->add('expired', CheckboxType::class, array(
+            'required'      =>  false
+        ));
+        
+        $builder->add('is_trustee', CheckboxType::class, array(
             'required'      =>  false
         ));
     }

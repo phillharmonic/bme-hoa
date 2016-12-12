@@ -1,11 +1,11 @@
 {# src/MainBundle/Resources/views/Legal/index.html.twig #}
-{% extends 'MainBundle::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 {% block title %}Homeowner Index{% endblock %}
 {% block sidebar %}
-    {% render controller("MainBundle:Sidebar:account") %}
+        {{ include('sidebars/account.html.twig') }}
 {% endblock %}
 
 {% block body %}    

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+{% endblock %}
+{% block title %}Term Show{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/account.html.twig') }}
+{% endblock %}
+
+{% block body %}          
+{% if terms is empty %}
+    Looks like you don't have a Trustee Profile yet... create one <a href='{{ path('trusteeTermNew') }}'>here</a>.
+{% else %}
+    {% for term in terms %}
+        <div class="section-header"><h1>Term {{ loop.index }} - Show </h1></div> 
+        <div class="section-header"><h6>{{term.trusteePosition}}</h6></div>
+        <div class='form'>
+                <div class='section'>
+                <div class="section-header">
+                    <h2>{{user.honorific}} {{user.firstname}} {{user.mi}} {{user.lastname}}<span style='font-size: smaller; color: gray; padding-left: 15px;'>[ {{ term.startDate|date('F Y') }} - present ]</span></h2> <ul class="page-nav"><li><a href='{{ path('trusteeTermEdit', {'id' : term.id}) }}'>Edit</a></li></ul> 
+                </div>
+                <div>
+                    {% for pic in term.photos|slice(0, 1) %}
+                            <img src='{{ pic.path }}' width='290' style='float: right; padding-left: 10px; padding-top: 25px;'/>
+                    {% endfor %} 
+                    <h5 style='color: grey; padding-left: 15px;  padding-bottom: 10px;padding-right: 10px; font-size: larger; '>Introduction</h5>
+                    <p style=' text-align: left; white-space: pre-wrap; padding-left: 15px;'>{{ term.aboutme }}</p>
+                    <p style='padding-left: 15px; '>Sincerely,</p>
+                    <p style='padding-left: 15px; font-family: Yellowtail; font-size: 16pt; '>{{user.fullname}}</p>
+                </div>
+                <div style='border-top: 1px gray solid ; border-bottom: 1px gray solid ; margin: 15px; padding-top: 18px; padding-left: 5px;'>
+                    <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

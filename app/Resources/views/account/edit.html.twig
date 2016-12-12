@@ -1,6 +1,6 @@
 {# empty Twig template #}
 {# src/MainBundle/Resources/views/Account/edit.html.twig #}
-{% extends 'MainBundle::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}<link href="{{ asset('bundles/main/css/forms.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
@@ -10,15 +10,15 @@
     <script type="text/javascript" src="{{ asset('bundles/main/js/add_delete.js') }}"></script>
 {% endblock %}
 {% block sidebar %}
-    {% render controller("MainBundle:Sidebar:account") %}
+    {{ include('sidebars/account.html.twig') }}
 {% endblock %}
 {% block title %}Edit Profile{% endblock %}
 {% block body %}    
+    
 {% form_theme form 'form/fields.html.twig' %}
         <div class="section-header"><h1>Account</h1></div>
-        
-        <form action="{{ path('MainBundle_Account_Edit', {'id' : user.id}) }}" method="post" {{ form_enctype(form) }} class="user">
-        {# {{ form_widget(form) }} #}
+
+        {{ form_start(form) }}
         {{ form_errors(form) }}
         <div class="section-header"><h6>Edit Profile</h6></div>
             {{ form_row(form.honorific) }}
@@ -52,8 +52,7 @@
                 {% endfor %}
             </div>
             
-            {{ form_rest(form) }}
-            <input type="submit" value="Submit" />
-        </form>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
         
 {% endblock %}

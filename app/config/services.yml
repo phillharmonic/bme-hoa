@@ -31,3 +31,16 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type }
+            
+    app.form.type.user_edit:
+        class: AppBundle\Form\UserForm
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+            
+    app.form.type.term_new:
+        class: AppBundle\Form\TermForm
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+

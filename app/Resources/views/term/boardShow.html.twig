@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+{% endblock %}
+{% block title %}Board of Directors{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/account.html.twig') }}
+{% endblock %}
+
+{% block body %}          
+    <div class="section-header"><h1>Board of Directors</h1></div> 
+    {% if directors is not null %}
+        {% for director in directors %}
+            <div class="section-header"><h6>{{director.trusteePosition}}</h6></div>
+            <div class='form'>
+                    <div class='section'>
+                    <div class="section-header">
+                        <h2>{{director.user.honorific}} {{director.user.firstname}} {{director.user.mi}} {{director.user.lastname}}<span style='font-size: smaller; color: gray; padding-left: 15px;'>[ {{ director.startDate|date('F Y') }} - present ]</span></h2>  
+                    </div>
+                    <div>
+                        {% for pic in director.photos|slice(0, 1) %}
+                                <img src='{{ pic.path }}' width='290' style='float: right; padding-left: 10px; padding-top: 25px;'/>
+                        {% endfor %} 
+                        <h5 style='color: grey; padding-left: 15px;  padding-bottom: 10px;padding-right: 10px; font-size: larger; '>Introduction</h5>
+                        <p style=' text-align: left; white-space: pre-wrap; padding-left: 15px;'>{{ director.aboutme }}</p>
+                        <p style='padding-left: 15px; '>Sincerely,</p>
+                        <p style='padding-left: 15px; font-family: Yellowtail; font-size: 16pt; '>{{director.user.fullname}}</p>
+                    </div>
+                    <div style='border-top: 1px gray solid ; border-bottom: 1px gray solid ; margin: 15px; padding-top: 18px; padding-left: 5px;'>
+                        <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {{ user.term[0].id }}
+    
+    {%  for bod in bods %}
+        <h2>About Me</h2>
+        {%  for term in bod.term %}
+            {{term.aboutme}}
+        
+        {% endfor %}
+        
+    {% endfor %}
+    
+{% endblock %}

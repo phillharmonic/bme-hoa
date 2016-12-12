@@ -131,6 +131,12 @@ class User extends BaseUser
      */
     protected $vehicles;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", inversedBy="user", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $term;    
+    
 //    /**
 //     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Account", mappedBy="users")
 //     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
@@ -143,6 +149,12 @@ class User extends BaseUser
      */
     protected $account;
 
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $is_trustee;
+    
     /**
      * Set firstname
      *
@@ -784,5 +796,63 @@ class User extends BaseUser
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set isTrustee
+     *
+     * @param boolean $isTrustee
+     *
+     * @return User
+     */
+    public function setIsTrustee($isTrustee)
+    {
+        $this->is_trustee = $isTrustee;
+
+        return $this;
+    }
+
+    /**
+     * Get isTrustee
+     *
+     * @return boolean
+     */
+    public function getIsTrustee()
+    {
+        return $this->is_trustee;
+    }
+
+    /**
+     * Add term
+     *
+     * @param \AppBundle\Entity\Term $term
+     *
+     * @return User
+     */
+    public function addTerm(\AppBundle\Entity\Term $term)
+    {
+        $this->term[] = $term;
+
+        return $this;
+    }
+
+    /**
+     * Remove term
+     *
+     * @param \AppBundle\Entity\Term $term
+     */
+    public function removeTerm(\AppBundle\Entity\Term $term)
+    {
+        $this->term->removeElement($term);
+    }
+
+    /**
+     * Get term
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTerm()
+    {
+        return $this->term;
     }
 }

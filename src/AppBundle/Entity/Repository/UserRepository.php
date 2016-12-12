@@ -14,6 +14,16 @@ class UserRepository extends EntityRepository
         return $this->findBy(array(), array('lastname' => 'ASC'));
     }
     
+    public function getCurrentBoard(){
+        $qb = $this->createQueryBuilder('u')
+                   ->select('u')
+                   ->where('u.is_trustee = 1');
+        
+        return $qb->getQuery()
+                  ->getResult();
+        
+    }
+    
     public function getUnassignedUsers(){
         //This is only partially correct.  
         //Need to join with the property table and check if a property has been assigned too

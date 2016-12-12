@@ -27,7 +27,7 @@
                             </ul>
                             <ul class="my_navigation">                                
                                 {% if app.user %}
-                                <li><a href="{{ path('personalAccountShow', {'id' : app.user.id }) }}" title="My Account and Profile">My Account</a></li> 
+                                <li><a href="{{ path('personalAccountSummary') }}" title="My Account and Profile">My Account</a></li> 
                                 <li><a href="{{ path('admin') }}" title="Administrative Page">Admin</a></li> 
                                 <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                                 {% else %}
@@ -51,7 +51,7 @@
                         {% endblock %}
                     </h2>
                         <h3><a id='tagline' href="{{ path('home') }}">
-                                {% block blog_tagline %}Welcome Home{% endblock %}{# if is_granted('IS_AUTHENTICATED_FULLY') %}: {{ app.user.honorific }} {{ app.user.lastname }}{% endif #}
+                                {% block blog_tagline %}Welcome Home{% endblock %}{% if is_granted('IS_AUTHENTICATED_FULLY') %}: {{ app.user.honorific }} {{ app.user.lastname }}{% endif %}
                             </a>
                         </h3>
                     <div class="main_nav_wrapper" >    

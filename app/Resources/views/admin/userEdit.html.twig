@@ -33,7 +33,7 @@
 {% block body %}    
     <div class="section-header"><h1>Admin - Edit User</h1></div>
     <div class="section-header"><h6>{{ user.fullname }}</h6></div>
-    
+       
     {{ form_start(form) }}
     {#<form action="{{ path('MainBundle_Admin_User_Edit', {'id' : user.id}) }}" method="post" {{ form_enctype(form) }} class="user">#}
         {# form_widget(form) #}
@@ -45,6 +45,12 @@
                 {{ form_widget(form.expired) }}
             </ul>
         </fieldset>
+        <label for="is_trustee">Is a Trustee</label>
+        <fieldset class="group">
+            <ul class="checkboxes" >
+                {{ form_widget(form.is_trustee) }}
+            </ul>
+        </fieldset> 
         {# form_row(form.color) }}
         <div class='dates'>{{ form_row(form.dateBuilt) }}</div>
         <label for="plant_resistsDeer">Has HOA Lien</label>

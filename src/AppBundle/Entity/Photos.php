@@ -42,6 +42,12 @@ class Photos
     private $user;
     
     /**
+     * Many Photos have Many Terms.
+     * @ORM\ManyToMany(targetEntity="Term", mappedBy="photos")
+     */    
+    private $terms;
+    
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $public;    
@@ -193,5 +199,39 @@ class Photos
     public function getPublic()
     {
         return $this->public;
+    }
+
+    /**
+     * Add term
+     *
+     * @param \AppBundle\Entity\Term $term
+     *
+     * @return Photos
+     */
+    public function addTerm(\AppBundle\Entity\Term $term)
+    {
+        $this->terms[] = $term;
+
+        return $this;
+    }
+
+    /**
+     * Remove term
+     *
+     * @param \AppBundle\Entity\Term $term
+     */
+    public function removeTerm(\AppBundle\Entity\Term $term)
+    {
+        $this->terms->removeElement($term);
+    }
+
+    /**
+     * Get terms
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTerms()
+    {
+        return $this->terms;
     }
 }

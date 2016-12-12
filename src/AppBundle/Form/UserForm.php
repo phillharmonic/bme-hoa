@@ -1,10 +1,19 @@
 <?php
 
-namespace MainBundle\Form;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use AppBundle\Form\PhotoForm;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserForm extends AbstractType {
     public function __construct($em) {
@@ -13,19 +22,19 @@ class UserForm extends AbstractType {
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('bday', 'birthday', array(
+        $builder->add('bday', BirthdayType::class, array(
             'label'         =>  'Birthday '
         ));
-        $builder->add('cellphone', 'text', array(
+        $builder->add('cellphone', TextType::class, array(
             'label'         =>  'Cell Phone'
         ));
-        $builder->add('email', 'text', array(
+        $builder->add('email', TextType::class, array(
             'label'         =>  'Email'
         ));
-        $builder->add('firstname', 'text', array(
+        $builder->add('firstname', TextType::class, array(
             'label'         =>  'First Name'
         ));
-        $builder->add('gender', 'choice', array(
+        $builder->add('gender', ChoiceType::class, array(
             'required' => true,
             'placeholder'   => 'Choose an option',
             'choices'  => array(
@@ -35,10 +44,10 @@ class UserForm extends AbstractType {
             ),
             'choices_as_values' => true,
         ));
-        $builder->add('homephone', 'text', array(
+        $builder->add('homephone', TextType::class, array(
             'label'         =>  'Home Phone'
         ));
-        $builder->add('honorific', 'choice', array(
+        $builder->add('honorific', ChoiceType::class, array(
             'required' => false,
             'choices'   => array(
                 'Mr.'       => 'Mr.',
@@ -55,10 +64,10 @@ class UserForm extends AbstractType {
             ),
             'choices_as_values' => true,
         ));
-        $builder->add('lastname', 'text', array(
+        $builder->add('lastname', TextType::class, array(
             'label'         =>  'Last Name'
         ));
-        $builder->add('marital_status', 'choice', array(
+        $builder->add('marital_status', ChoiceType::class, array(
             'label'         =>  'Marital Status',
             'required'      => false,
             'choices'       => array(
@@ -73,20 +82,20 @@ class UserForm extends AbstractType {
             ),
             'choices_as_values' => true,
         ));
-        $builder->add('mi', 'text', array(
+        $builder->add('mi', TextType::class, array(
             'label'         =>  'MI'
         ));
-        $builder->add('occupation', 'text', array(
+        $builder->add('occupation', TextType::class, array(
             'label'         =>  'Occupation'
         ));
-        $builder->add('occupy_date', 'date', array(
+        $builder->add('occupy_date', DateType::class, array(
             'years' => range(date('Y') -15, date('Y')),
             'label'         =>  'Occupy Date '
         ));
-        $builder->add('housenumber', 'integer', array(
+        $builder->add('housenumber', IntegerType::class, array(
             'label'         =>  'House Number'
         ));
-        $builder->add('street', 'choice', array(
+        $builder->add('street', ChoiceType::class, array(
             'label'         =>  'Street',
             'required'      => true,
             'placeholder'   => 'Choose an option',
@@ -99,7 +108,7 @@ class UserForm extends AbstractType {
             ),
             'choices_as_values' => true,
         ));
-        $builder->add('username', 'text', array(
+        $builder->add('username', TextType::class, array(
             'label'         =>  'Username'
         ));
 //        $builder->add('vacate_date', 'date', array(
@@ -107,17 +116,21 @@ class UserForm extends AbstractType {
 //            'label'         =>  'Vacate Date '
 //        ));
         
-        $builder->add('photos', 'collection', array(
-            'type' => new PhotoForm(),
+        $builder->add('photos', CollectionType::class, array(
+//            'type' => new PhotoForm(),
+            'entry_type'   => PhotoForm::class,
             'allow_add'    => true,
             'by_reference' => false,
         ));
+        
+        $builder->add('save', SubmitType::class, array('label' => 'Submit'));
+        
     }
     
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MainBundle\Entity\User',
+            'data_class' => 'AppBundle\Entity\User',
         ));
     }
     

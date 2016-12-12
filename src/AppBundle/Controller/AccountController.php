@@ -29,7 +29,7 @@ class AccountController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $user->addDependent($dependent);
                 $dependent->setUser($user);
                 !isset($photo)?:$em->persist($photo);
@@ -47,7 +47,29 @@ class AccountController extends Controller
             'form' => $form->createView()
         ));
     }
+     
+    
+    /**
+     * @Route(
+     *      "/personal/account/dependent/edit/{id}", 
+     *      name="personalAccountDependentEdit",
+     *      requirements={
+     *         "id": "\d+"
+     *     }
+     * )
+     */      
+    public function editDependentAction($id){
         
+/*
+ * TODO: YOU NEED TO PUT A CHECK IN HERE TO RESTRICT EDITS TO THE OWER OF THE PET AND/OR THEIR SPOUSE ONLY
+ * TODO: FINISH THE EDIT FORM
+ */
+        
+        return $this->render('account/editDependent.html.twig' , array(
+//            'form' => $form->createView()
+        ));
+    }
+    
     public function addPetAction(Request $request){
         $pet = new Pets();
         $photo = new Photos();
@@ -77,6 +99,27 @@ class AccountController extends Controller
             'form' => $form->createView()
         ));
     }
+    
+    /**
+     * @Route(
+     *      "/personal/account/pet/edit/{id}", 
+     *      name="personalAccountPetEdit",
+     *      requirements={
+     *         "id": "\d+"
+     *     }
+     * )
+     */      
+    public function editPetAction($id){
+        
+/*
+ * TODO: YOU NEED TO PUT A CHECK IN HERE TO RESTRICT EDITS TO THE OWER OF THE PET AND/OR THEIR SPOUSE ONLY
+ * TODO: FINISH THE EDIT FORM
+ */
+        
+        return $this->render('account/editPet.html.twig' , array(
+//            'form' => $form->createView()
+        ));
+    }    
     
     public function addVehicleAction(Request $request){
         $vehicle = new Vehicles();
@@ -108,13 +151,44 @@ class AccountController extends Controller
         ));
     }
     
-    public function indexAction()
+    
+    /**
+     * @Route(
+     *      "/personal/account/vhcl/edit/{id}", 
+     *      name="personalAccountVhclEdit",
+     *      requirements={
+     *         "id": "\d+"
+     *     }
+     * )
+     */      
+    public function editVhclAction($id){
+        
+/*
+ * TODO: YOU NEED TO PUT A CHECK IN HERE TO RESTRICT EDITS TO THE OWER OF THE PET AND/OR THEIR SPOUSE ONLY
+ * TODO: FINISH THE EDIT FORM
+ */
+        
+        return $this->render('account/editVhcl.html.twig' , array(
+//            'form' => $form->createView()
+        ));
+    }    
+    
+    
+    /**
+     * @Route(
+     *      "/personal/account/summary", 
+     *      name="personalAccountSummary",
+     *      requirements={
+     *     }
+     * )
+     */      
+    public function summaryAction()
     {
         $user = $this->getUser();
         if (!$user) {
             throw $this->createNotFoundException('Unable to find specified user.');
         }
-        return $this->render('MainBundle:Account:index.html.twig', array(
+        return $this->render('account/summary.html.twig', array(
         'user'     =>  $user));
     }
     
@@ -170,25 +244,6 @@ class AccountController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Unable to find specified user.');
         }
-//        
-//        this is the old account page.  It is crap.  The admin details were much better
-//        
-//        $em = $this->getDoctrine()->getManager();
-//        
-//        $spouse = $em->getRepository('AppBundle:Dependents')->getUsersSpouse($user);
-//        $dependents = $em->getRepository('AppBundle:Dependents')->getUsersDependents($user);
-//        $vehicles = $em->getRepository('AppBundle:Vehicles')->getUsersVehicles($user);
-//        $pets = $em->getRepository('AppBundle:Pets')->getUsersPets($user);
-//        
-//        return $this->render('account/show.html.twig', array(
-//            'user'          =>  $user,
-//            'dependents'    =>  $dependents,
-//            'spouse'        =>  $spouse[0],
-//            'vehicles'      =>  $vehicles,
-//            'pets'          =>  $pets
-//        ));
-        
-//        $user = $this->getUser();
         
         /*
          *  Okay, here's what's going on here: a user (homeowner) can potentially own more than one property... and the 
@@ -204,9 +259,6 @@ class AccountController extends Controller
         $usersProperty = $em->getRepository('AppBundle:Property')->getUsersProperty($user);
         $property = $em->getRepository('AppBundle:Property')->findOneBy(array('id' => $usersProperty[0]->getId()));
         
-//        $resultProp =  $em->getRepository('AppBundle:Property')->findOneBy(array('id' => 2));//$em->getRepository('AppBundle:Property')->findOneBy(array('id' => $usersProperty[0]->getId()));
-//        $userAccount = $user->getAccount();
-//        $result = $userAccount->getProperty()[0]; //$em->getRepository('AppBundle:Account')->findOneBy(array('id' => $userAccount->getId()))->getProperty()->getStatus();
         // Residents of Property by Property Association & Vacate Date (not by user defined address):
         $currentOwners = new ArrayCollection();
         foreach($property->getUser() as $owner){
@@ -221,10 +273,15 @@ class AccountController extends Controller
         //vehicles
         $vhcls = $em->getRepository('AppBundle:Vehicles')->getUniqueVehicles($currentOwners);
         //transactions (past 12 months)
-        $transactions = $em->getRepository('AppBundle:Transactions')->getAccountTransactions($currentOwners[0]->getAccount(), 365);
+        $account = $em->getRepository('AppBundle:Account')->find($id);
+        if($account != null){
+            $transactions = $em->getRepository('AppBundle:Transactions')->getAccountTransactions($account, 365);
+        }else{
+            $transactions = null;
+        }
+        
         
         return $this->render('account/show.html.twig', array(
-//            'result'        => $result,
             'property'      => $property, 
             'currentOwners' => $currentOwners, 
             'depsCol'       => $dependents, 
@@ -235,13 +292,29 @@ class AccountController extends Controller
         
     }
     
-    public function editAction(Request $request){
+    /**
+     * @Route(
+     *      "/personal/account/edit/{id}", 
+     *      name="personalAccountEdit",
+     *      requirements={
+     *         "id": "\d+"
+     *     }
+     * )
+     */         
+    public function editAction(Request $request, $id){
+        
+    /*
+     * TODO: YOU NEED TO PUT A CHECK IN HERE TO RESTRICT EDITS TO THE OWER OF THE ACCOUNT AND/OR THEIR SPOUSE ONLY
+     */        
+        
         $em = $this->getDoctrine()
-                   ->getEntityManager();
-        $user = $this->getUser();
+                   ->getManager();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
+        $user = $repository->find($id);
+
         if (!$user && !$request->isMethod('POST')) {
             throw $this->createNotFoundException(
-                    'No aaccount found for id ' . $user->getId()
+                    'No account found for id ' . $user->getId()
             );
         }
         
@@ -253,7 +326,7 @@ class AccountController extends Controller
             $originalPhotos->add($photo);
         }
         
-        $form = $this->createForm(new UserForm($em), $user);
+        $form = $this->createForm(UserForm::class, $user);
         
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -278,14 +351,14 @@ class AccountController extends Controller
                 
                 $em->flush();
                 
-                return $this->redirect($this->generateUrl('MainBundle_Account_Show', array(
+                return $this->redirect($this->generateUrl('personalAccountShow', array(
                     'id'    => $user->getId(),
                 )));
             }
             $em->refresh($user);
         }
         
-        return $this->render('MainBundle:Account:edit.html.twig', array(
+        return $this->render('account/edit.html.twig', array(
             'user'      =>  $user, 
             'form'      =>  $form->createView(),
         ));

@@ -1,3 +1,5 @@
+{# personal/account/show/{id} #}
+
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
@@ -6,7 +8,7 @@
     {{ parent() }}
 {% endblock %}
 {% block sidebar %}
-    {{ include('sidebars/admin.html.twig') }}
+    {{ include('sidebars/account.html.twig') }}
 {% endblock %}
 {% block title %}Property Details{% endblock %}
 
@@ -37,7 +39,10 @@ ol ol, ul ol {
             <div class='section'>
                 <div class="section-header">
                     <h2>{{ property.houseNumber }} {{ property.street }}</h2>
-                    <ul class="page-nav"><li><a href='{{ path('propertyEdit', {'id' : property.id}) }}'>Edit</a></li></ul>
+                    {# 
+                        DO NOT INCLUDE AN EDIT BUTTON FOR THE PROPERTY IN THE PERSONAL/ACCOUNT/SHOW VIEW - THAT INFO IS ONLY EDITABLE BY HOA ADMIN PERSONELL 
+                        <ul class="page-nav"><li><a href='{{ path('propertyEdit', {'id' : property.id}) }}'>Edit</a></li></ul> 
+                    #}
                 </div>
                 <div class='wrapper'>
                     <div id='left_admin'>
@@ -58,9 +63,10 @@ ol ol, ul ol {
                     </div>
                 </div>
                 {% for owner in currentOwners %}   
-                    <div class="section-header"><h6>Current Owner(s):</h6></div>   
+                    <div class="section-header"><h6>Homeowner ({{ loop.index }})</h6></div>   
                     <div class="section-header">
-                        <h2>Homeowner {{ loop.index }}: {{ owner.fullname }}</h2>
+                        <h2>{{ owner.fullname }}</h2>
+                        <ul class="page-nav"><li><a href='{{ path('personalAccountEdit', {'id' : owner.id}) }}'>Edit</a></li></ul>
                     </div>    
                     <div class='wrapper'>
                         <div id='left_admin'>
@@ -90,8 +96,12 @@ ol ol, ul ol {
                     </div>
                 {% endfor %}
 
-        <div class="section-header"><h2>Dependents </h2></div>   
         {% for dep in depsCol %}
+            <div class="section-header"><h6>Dependent ({{ loop.index }})</h6></div>   
+            <div class="section-header">
+                <h2>{{ dep.firstname }} {{ dep.lastname }}</h2>
+                <ul class="page-nav"><li><a href='{{ path('personalAccountDependentEdit', {'id' : dep.id}) }}'>Edit</a></li></ul>
+            </div>    
             <div class='wrapper'>
                 <div id='left_admin'>
                     <section><div id='one'>Name</div><div id='two_admin'> {{ dep.firstname }} {{ dep.lastname }}</div></section>
@@ -105,8 +115,12 @@ ol ol, ul ol {
             </div>
         {% endfor %}
         
-        <div class="section-header"><h2>Pets </h2></div>   
         {% for pet in pets %}
+            <div class="section-header"><h6>Pet ({{ loop.index }})</h6></div>   
+            <div class="section-header">
+                <h2>{{ pet.name }} </h2>
+                <ul class="page-nav"><li><a href='{{ path('personalAccountPetEdit', {'id' : pet.id}) }}'>Edit</a></li></ul>
+            </div>
             <div class='wrapper'>
                 <div id='left_admin'>
                     <section><div id='one'>Name</div><div id='two_admin'> {{ pet.name }} </div></section>
@@ -122,8 +136,12 @@ ol ol, ul ol {
             </div>
         {% endfor %}
         
-        <div class="section-header"><h2>Vehicles</h2></div>   
         {% for vhcl in vhcls %}
+            <div class="section-header"><h6>Vehicle ({{ loop.index }})</h6></div>   
+            <div class="section-header">
+                <h2>{{ vhcl.make }} {{ vhcl.model }}</h2>
+                <ul class="page-nav"><li><a href='{{ path('personalAccountVhclEdit', {'id' : vhcl.id}) }}'>Edit</a></li></ul>
+            </div>            
             <div class='wrapper'>
                 <div id='left_admin'>
                     <section><div id='one'>Year</div><div id='two_admin'> {{ vhcl.year }} </div></section>
@@ -138,7 +156,7 @@ ol ol, ul ol {
         {% endfor %}
         
 
-    <div class="section-header"><h6>Current Owner(s) Account:</h6></div>
+    <div class="section-header"><h6>Account:</h6></div>
     <div class='wrapper'>
         <div id='left_admin'>
             <section><div id='one'>Current Balance</div><div id='two_admin'>
@@ -161,7 +179,7 @@ ol ol, ul ol {
     {% if currentOwners.0.account.id is defined %}
         <a href="{{ path('adminAccountTransactions', {'id' : currentOwners.0.account.id}) }}" >show all</a>
     {% endif %}
-    <div class="section-header"><h6>Current Owner(s) Communications:</h6></div>
+    <div class="section-header"><h6>Communications:</h6></div>
     <ul>
         <li>Bill: <a>date</a></li>
         <li>Statement: <a>date</a></li>
@@ -174,29 +192,6 @@ ol ol, ul ol {
         <li>Account Transaction [ $300 payment posted ]: <a>date</a> </li>
         <li>HOA Board Communication [ Bylaw change announcement ]: <a>date</a> </li>
     </ul>
-    <div class="section-header"><h6>Past Owner(s):</h6></div>
-    <ul>
-        <li>{{ property.user|join }} </li>
-        <li>Date Occupied: NOV 1 2004</li>
-        <li>Date Vacated: MAY 30 2016</li>
-        <li>Picture[0]</li>
-    </ul>
-    <ul>
-        <li>{{ property.user|join }} </li>
-        <li>Date Occupied: NOV 1 2004</li>
-        <li>Date Vacated: MAY 30 2016</li>
-        <li>Picture[0]</li>
-    </ul>
-    <div class="section-header"><h6>Past Owner(s) Communications:</h6></div>
-    <ul>
-        <li>Bill: date sent</li>
-        <li>Statement: date sent</li>
-        <li>Notice: date sent</li>
-        <li>Permit received: date</li>
-        <li>Permit approved: date</li>
-        <li>Complaint: date received</li>
-    </ul>
-    
     
     </div>
         </div>
