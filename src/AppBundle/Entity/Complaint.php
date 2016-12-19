@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Complaint
@@ -28,7 +30,12 @@ class Complaint
     protected $user;    
     
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="date")
+     */
+    protected $timestamp;
+    
+    /**
+     * @ORM\Column(type="string", length=100)
      */
     protected $type;
     
@@ -43,26 +50,35 @@ class Complaint
     protected $assigned_to;
     
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */    
+    protected $defendent_name;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */    
+    protected $defendent_address;
+    
+    /**
+     * @ORM\Column(type="string")
+     */    
+    protected $reg_violated;
+    
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $is_resolved;
     
     /**
-     * @ORM\Column(type="date")
-     */
-    protected $date_issued;
-    
-    /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $date_resolved;
     
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $date_updated;
 
-    
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Action", inversedBy="complaints", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
@@ -79,6 +95,7 @@ class Complaint
     }
 
 
+
     /**
      * Get id
      *
@@ -87,6 +104,30 @@ class Complaint
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set timestamp
+     *
+     * @param \DateTime $timestamp
+     *
+     * @return Complaint
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+
+        return $this;
+    }
+
+    /**
+     * Get timestamp
+     *
+     * @return \DateTime
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
     }
 
     /**
@@ -162,6 +203,78 @@ class Complaint
     }
 
     /**
+     * Set defendentName
+     *
+     * @param string $defendentName
+     *
+     * @return Complaint
+     */
+    public function setDefendentName($defendentName)
+    {
+        $this->defendent_name = $defendentName;
+
+        return $this;
+    }
+
+    /**
+     * Get defendentName
+     *
+     * @return string
+     */
+    public function getDefendentName()
+    {
+        return $this->defendent_name;
+    }
+
+    /**
+     * Set defendentAddress
+     *
+     * @param string $defendentAddress
+     *
+     * @return Complaint
+     */
+    public function setDefendentAddress($defendentAddress)
+    {
+        $this->defendent_address = $defendentAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get defendentAddress
+     *
+     * @return string
+     */
+    public function getDefendentAddress()
+    {
+        return $this->defendent_address;
+    }
+
+    /**
+     * Set regViolated
+     *
+     * @param string $regViolated
+     *
+     * @return Complaint
+     */
+    public function setRegViolated($regViolated)
+    {
+        $this->reg_violated = $regViolated;
+
+        return $this;
+    }
+
+    /**
+     * Get regViolated
+     *
+     * @return string
+     */
+    public function getRegViolated()
+    {
+        return $this->reg_violated;
+    }
+
+    /**
      * Set isResolved
      *
      * @param boolean $isResolved
@@ -183,30 +296,6 @@ class Complaint
     public function getIsResolved()
     {
         return $this->is_resolved;
-    }
-
-    /**
-     * Set dateIssued
-     *
-     * @param \DateTime $dateIssued
-     *
-     * @return Complaint
-     */
-    public function setDateIssued($dateIssued)
-    {
-        $this->date_issued = $dateIssued;
-
-        return $this;
-    }
-
-    /**
-     * Get dateIssued
-     *
-     * @return \DateTime
-     */
-    public function getDateIssued()
-    {
-        return $this->date_issued;
     }
 
     /**
@@ -314,4 +403,17 @@ class Complaint
     {
         return $this->actions;
     }
+    
+    /**
+     * @ORM\PrePersist
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $complaint = $args->getEntity();
+        if($complaint->getTimestamp() === null){ 
+            $complaint->setTimestamp(new \DateTime());
+        }
+    }    
+    
 }

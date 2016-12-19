@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Financials{% endblock %}
+{% block sidebar %}
+    {{ include('sidebars/financial.html.twig') }}
+{% endblock %}
+
+{% block body %}    
+    <div class="content">
+        <div class="section-header"><h1>Financial</h1></div>
+        <div class="section-header"><h6>Summary</h6></div>
+        <p style='padding-left: 10px;'>Brandy Mill Homeowners Association's financial affairs are currently represented by:</p>
+        <p style='padding-left: 10px;'><span style='font-weight: bold'>Certified Public Accountants:</span></p>
+        <BLOCKQUOTE style='padding-left: 50px; line-height: 14pt; padding-bottom: 20px; '><span style='font-weight: bold'>Wilson, Shannon & Snow, INC</span>
+            </br>10 West Locust Street
+            </br>Newark, OH 43055
+            </br>Phone: (740) 345-6611
+            </br><a href='http://www.wssinc.net/' target='blank'>www.wssinc.net</a>
+        </BLOCKQUOTE>
+
+         <p style='padding-left: 10px;'><span style='font-weight: bold'>Financial Investment Brokerage Firm:</span></p>
+        <BLOCKQUOTE style='padding-left: 50px; line-height: 14pt; padding-bottom: 20px; '><span style='font-weight: bold'>JP Morgan Chase and Co.</span>
+            </br>84 W Broad St
+            </br>Pataskala, OH 43062
+            </br>Phone: 740-927-5051
+            </br><a href='https://www.chase.com/' target='blank'>www.chase.com</a>
+        </BLOCKQUOTE>
+        
+        <p style='padding-left: 10px;'>The menu to the right has links to all the Association's financial documents.  We outsource the following functions to the firms listed above:</p>
+        
+        <ul style='padding-left: 50px;'>
+            <li>Day-to-day Accounting & Journal Entries</li>
+            <li>Accounts Payable</li>
+            <li>Accounts Receivable</li>
+            <li>Monthly Statements</li>
+            <li>Year End Taxes & Statements</li>
+            <li>Investments</li>
+        </ul>
+    </div>
+{% endblock %}

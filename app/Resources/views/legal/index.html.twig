@@ -1,36 +1,39 @@
-{# src/MainBundle/Resources/views/Legal/index.html.twig #}
-{% extends 'base.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
-{% block sidebar %}
-    {{ include('sidebars/legal.html.twig') }}
-{% endblock %}
+{% extends 'alt-layout.html.twig' %}
+{% block title %}Legal Page{% endblock %}
+{% block pageheader %}<h1>Legal</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block sidenav %} {{ include('sidebars/alt-legal.html.twig') }}  {% endblock %}
+{% block content %}
+ 
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">Legal</li>
+    </ol>
+    <hr>
+    <h2>Legal Homepage</h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+    
+    <p>Brandy Mill Homeowner's Association's legal affairs are currently represented by:</p>
+    <BLOCKQUOTE><strong> Reese, Pyle, Drake & Meyer, PLL</strong>
+        </br>36 N 2nd St, P.O. 919
+        </br>Newark, OH 43058-0919
+        </br>Phone: (740) 345-3431
+        </br><a href='http://www.rpdm.com/' target='blank'>www.rpdm.com</a>
+    </BLOCKQUOTE>
 
-{% block body %}    
-    <div class="content">
-        <div class="section-header"><h1>Legal</h1></div>
-        <div class="section-header"><h6>Summary</h6></div>
-        <p>
-            This is the landing page for all things legal for the HOA.  Nothing sexy or exciting, but very much important. These are the documents that govern the HOA.  Here you will find the following:
-        </p>
-        <ul>
-            <li>Declaration of Covenants, Conditions, and Restrictions (CC&Rs)</li>
-                <ul>
-                    <li>Original CC&Rs</li>
-                    <li>1st Amendment</li>
-                    <li>2nd Amendment</li>
-                    <li>3rd Amendment</li>
-                    <li>4th Amendment</li>
-                </ul>
-            <li>Code of Regualtions</li>
-            <li>Contracts</li>
-                <ul>
-                    <li>Property Management: SBS Management Group</li>
-                    <li>Pond Maintenance: Aqua Doc</li>
-                    <li>Lawn Care: Creative Lawncare</li>
-                    <li>Gardening & Landscaping: WinnScapes</li>
-                </ul>
+    <p style='padding-left: 10px;'>The menu to the left has links to all the Association's legal documents.  We consult with the
+    attorneys for the following reasons:
+    <p>
+        
+    <ul style='padding-left: 50px;'>
+        <li>Interpretation of the CCRs</li>
+        <li>Amendment of the CCRs</li>
+        <li>Filing legal documents with the various courts, such as</li>
+        <ul style='padding-left: 12px;'>
+            <li>Liens</li>
+            <li>Foreclosures</li>
         </ul>
-    </div>
+        <li>Collections</li>
+    </ul>
+    
 {% endblock %}

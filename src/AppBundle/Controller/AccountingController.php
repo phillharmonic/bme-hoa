@@ -6,9 +6,11 @@ use AppBundle\Form\AccountForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AccountingController extends Controller
 {
+    
     
     
     /**
@@ -74,5 +76,47 @@ class AccountingController extends Controller
             'account' => $account
         ));
     }
+    
+    /**
+     * @Route(
+     *      "/financials/index", 
+     *      name="financialsIndex",
+     *      requirements={
+     *     }
+     * )
+     */       
+    public function financialsIndexAction()
+    {
+        return $this->render('accounting/financialsIndex.html.twig', array(
+        ));
+    }    
+    
+    /**
+     * @Route("/financial/2016-4th-quarter-pdf", name="2016-4th-quarter-pdf")
+     */
+    public function pdf20164thquarterAction(){
+        return new BinaryFileResponse('bundles/main/files/brandymillFinancials/2016-3rd-quarter.pdf');
+    }    
+    
+    /**
+     * @Route("/financial/2016-3rd-quarter-pdf", name="2016-3rd-quarter-pdf")
+     */
+    public function pdf20163rdquarterAction(){
+        return new BinaryFileResponse('bundles/main/files/brandymillFinancials/2016-3rd-quarter.pdf');
+    }     
+    
+    /**
+     * @Route("/financial/2016-2nd-quarter-pdf", name="2016-2nd-quarter-pdf")
+     */
+    public function pdf20162ndquarterAction(){
+        return new BinaryFileResponse('bundles/main/files/brandymillFinancials/2016-2nd-quarter.pdf');
+    }    
+    
+    /**
+     * @Route("/financial/2016-1st-quarter-pdf", name="2016-1st-quarter-pdf")
+     */
+    public function pdf20161stquarterAction(){
+        return new BinaryFileResponse('bundles/main/files/brandymillFinancials/2016-1st-quarter.pdf');
+    }        
     
 }

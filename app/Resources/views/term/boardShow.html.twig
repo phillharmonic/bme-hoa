@@ -8,41 +8,31 @@
     {{ include('sidebars/account.html.twig') }}
 {% endblock %}
 
-{% block body %}          
-    <div class="section-header"><h1>Board of Directors</h1></div> 
-    {% if directors is not null %}
-        {% for director in directors %}
-            <div class="section-header"><h6>{{director.trusteePosition}}</h6></div>
-            <div class='form'>
-                    <div class='section'>
-                    <div class="section-header">
-                        <h2>{{director.user.honorific}} {{director.user.firstname}} {{director.user.mi}} {{director.user.lastname}}<span style='font-size: smaller; color: gray; padding-left: 15px;'>[ {{ director.startDate|date('F Y') }} - present ]</span></h2>  
-                    </div>
-                    <div>
-                        {% for pic in director.photos|slice(0, 1) %}
-                                <img src='{{ pic.path }}' width='290' style='float: right; padding-left: 10px; padding-top: 25px;'/>
-                        {% endfor %} 
-                        <h5 style='color: grey; padding-left: 15px;  padding-bottom: 10px;padding-right: 10px; font-size: larger; '>Introduction</h5>
-                        <p style=' text-align: left; white-space: pre-wrap; padding-left: 15px;'>{{ director.aboutme }}</p>
-                        <p style='padding-left: 15px; '>Sincerely,</p>
-                        <p style='padding-left: 15px; font-family: Yellowtail; font-size: 16pt; '>{{director.user.fullname}}</p>
-                    </div>
-                    <div style='border-top: 1px gray solid ; border-bottom: 1px gray solid ; margin: 15px; padding-top: 18px; padding-left: 5px;'>
-                        <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
+{% block body %}        
+    {% if bods is not null %}
+        {%  for bod in bods %}
+            {%  for term in bod.term %}
+                <div class="section-header"><h6>{{term.trusteePosition}}</h6></div>
+                <div class='form'>
+                        <div class='section'>
+                        <div class="section-header">
+                            <h2>{{term.user.honorific}} {{term.user.firstname}} {{term.user.mi}} {{term.user.lastname}}<span style='font-size: smaller; color: gray; padding-left: 15px;'>[ {{ term.startDate|date('F Y') }} - present ]</span></h2> 
+                        </div>
+                        <div>
+                            {% for pic in term.photos|slice(0, 1) %}
+                                    <img src='{{ pic.path }}' width='290' style='float: right; padding-left: 10px; padding-top: 25px;'/>
+                            {% endfor %} 
+                            <h5 style='color: grey; padding-left: 15px;  padding-bottom: 10px;padding-right: 10px; font-size: larger; '>Introduction</h5>
+                            <p style=' text-align: left; white-space: pre-wrap; padding-left: 15px;'>{{ term.aboutme }}</p>
+                            <p style='padding-left: 15px; '>Sincerely,</p>
+                            <p style='padding-left: 15px; font-family: Yellowtail; font-size: 16pt; '>{{term.user.fullname}}</p>
+                        </div>
+                        <div style='border-top: 1px gray solid ; border-bottom: 1px gray solid ; margin: 15px; padding-top: 18px; padding-left: 5px;'>
+                            <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         {% endfor %}
     {% endif %}
-    {{ user.term[0].id }}
-    
-    {%  for bod in bods %}
-        <h2>About Me</h2>
-        {%  for term in bod.term %}
-            {{term.aboutme}}
-        
-        {% endfor %}
-        
-    {% endfor %}
-    
 {% endblock %}

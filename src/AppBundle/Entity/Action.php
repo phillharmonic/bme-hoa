@@ -27,9 +27,14 @@ class Action
     protected $complaints;    
     
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string")
      */
     protected $type;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $action;      
     
     /**
      * @ORM\Column(type="string")
@@ -40,6 +45,16 @@ class Action
      * @ORM\Column(type="date")
      */
     protected $date_taken;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $taken_by;    
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $is_resolved;      
 
     /**
      * Constructor
@@ -85,6 +100,30 @@ class Action
     }
 
     /**
+     * Set action
+     *
+     * @param string $action
+     *
+     * @return Action
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -106,6 +145,78 @@ class Action
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set dateTaken
+     *
+     * @param \DateTime $dateTaken
+     *
+     * @return Action
+     */
+    public function setDateTaken($dateTaken)
+    {
+        $this->date_taken = $dateTaken;
+
+        return $this;
+    }
+
+    /**
+     * Get dateTaken
+     *
+     * @return \DateTime
+     */
+    public function getDateTaken()
+    {
+        return $this->date_taken;
+    }
+
+    /**
+     * Set takenBy
+     *
+     * @param string $takenBy
+     *
+     * @return Action
+     */
+    public function setTakenBy($takenBy)
+    {
+        $this->taken_by = $takenBy;
+
+        return $this;
+    }
+
+    /**
+     * Get takenBy
+     *
+     * @return string
+     */
+    public function getTakenBy()
+    {
+        return $this->taken_by;
+    }
+
+    /**
+     * Set isResolved
+     *
+     * @param boolean $isResolved
+     *
+     * @return Action
+     */
+    public function setIsResolved($isResolved)
+    {
+        $this->is_resolved = $isResolved;
+
+        return $this;
+    }
+
+    /**
+     * Get isResolved
+     *
+     * @return boolean
+     */
+    public function getIsResolved()
+    {
+        return $this->is_resolved;
     }
 
     /**
@@ -140,29 +251,5 @@ class Action
     public function getComplaints()
     {
         return $this->complaints;
-    }
-
-    /**
-     * Set dateTaken
-     *
-     * @param \DateTime $dateTaken
-     *
-     * @return Action
-     */
-    public function setDateTaken($dateTaken)
-    {
-        $this->date_taken = $dateTaken;
-
-        return $this;
-    }
-
-    /**
-     * Get dateTaken
-     *
-     * @return \DateTime
-     */
-    public function getDateTaken()
-    {
-        return $this->date_taken;
     }
 }

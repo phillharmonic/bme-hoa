@@ -1,0 +1,17 @@
+{# empty Twig template #}
+<header>
+    <h1>COMPLAINT BME HOA</h1>
+</header>
+
+<p>A complaint was made by {{ complaint.user.fullname }}  at {{ "now" | date("Y-m-d H:i") }} .</p>
+
+<p>Reply-To: {{ complaint.user.email }} </p>
+<p>Subject: Complaint </p>
+<p>Complaintant's name: {{ complaint.user.fullname }}</p>
+<p>Type: {{complaint.type}}</p>
+<p>Name of the accused: {{complaint.defendentName}}</p>
+<p>Adress of the accused: {{complaint.defendentAddress}}</p>
+<p>Regulation in violation: {{complaint.regViolated}}</p>
+<p>Complaint Details:</p>
+<p>{{ complaint.details }} </p>
+

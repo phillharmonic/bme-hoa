@@ -1,20 +1,20 @@
-{# src/MainBundle/Resources/views/Legal/index.html.twig #}
-{% extends 'base.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
-{% block sidebar %}
-    {{ include('sidebars/legal.html.twig') }}
-{% endblock %}
+{% extends 'alt-layout.html.twig' %}
+{% block title %}Current CCRs{% endblock %}
+{% block pageheader %}<h1>Legal</small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block sidenav %} {{ include('sidebars/alt-legal.html.twig') }}  {% endblock %}
+{% block content %}
 
-{% block body %}    
-    <div class="content">
-        <div>
-            <div class="section-header"><h1>Legal</h1></div>
-            <div class="section-header"><h6>Covenants Conditions & Restrictions [original] - <a href="{{ path('declarationsPDF') }}" target="_blank" title="Covenants Conditions & Restrictions">PDF</a></h6></div>
-        </div>
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('legalHome') }}">Legal</a></li>
+        <li class="breadcrumb-item active">Original CCRs</li>
+        <span class="label label-success"><a href="{{ path('declarationsPDF') }}" target="_blank" title="Original CCRs PDF">PDF</a></span>
+    </ol>
+    <hr>
+    <h2>Original CCRs</h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+        
 <html xmlns="http://www.w3.org/1999/xhtml"><!--This file was converted to xhtml by LibreOffice - see http://cgit.freedesktop.org/libreoffice/core/tree/filter/source/xslt for the code.--><head profile="http://dublincore.org/documents/dcmi-terms/"><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/><title xml:lang="en-US">- no title specified</title><meta name="DCTERMS.title" content="" xml:lang="en-US"/><meta name="DCTERMS.language" content="en-US" scheme="DCTERMS.RFC4646"/><meta name="DCTERMS.source" content="http://xml.openoffice.org/odf2xhtml"/><meta name="DCTERMS.issued" content="2016-05-18T15:26:39.357000000" scheme="DCTERMS.W3CDTF"/><meta name="DCTERMS.modified" content="2016-05-23T13:49:13.993000000" scheme="DCTERMS.W3CDTF"/><meta name="DCTERMS.provenance" content="" xml:lang="en-US"/><meta name="DCTERMS.subject" content="," xml:lang="en-US"/><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" hreflang="en"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" hreflang="en"/><link rel="schema.DCTYPE" href="http://purl.org/dc/dcmitype/" hreflang="en"/><link rel="schema.DCAM" href="http://purl.org/dc/dcam/" hreflang="en"/><style type="text/css">
 	@page {  }
 	table { border-collapse:collapse; border-spacing:0; empty-cells:show }

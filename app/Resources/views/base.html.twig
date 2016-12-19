@@ -27,6 +27,7 @@
                             </ul>
                             <ul class="my_navigation">                                
                                 {% if app.user %}
+                                <li><a href="{{ path('exp') }}" title="Experiment">Exp</a></li> 
                                 <li><a href="{{ path('personalAccountSummary') }}" title="My Account and Profile">My Account</a></li> 
                                 <li><a href="{{ path('admin') }}" title="Administrative Page">Admin</a></li> 
                                 <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
@@ -53,6 +54,11 @@
                         <h3><a id='tagline' href="{{ path('home') }}">
                                 {% block blog_tagline %}Welcome Home{% endblock %}{% if is_granted('IS_AUTHENTICATED_FULLY') %}: {{ app.user.honorific }} {{ app.user.lastname }}{% endif %}
                             </a>
+                            {% for flash_message in app.session.flashBag.get('notice') %}
+                                <div class="flash-notice" style='background-color: yellow; margin: 10px 0;'>
+                                    {{ flash_message }}
+                                </div>
+                            {% endfor %}
                         </h3>
                     <div class="main_nav_wrapper" >    
                         {% block main_menu %}{{ include('menus/mainMenu.html.twig') }}{% endblock %}

@@ -1,0 +1,93 @@
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+    </button>
+    <a class="navbar-brand" href="{{ path('exp') }}" title="Homepage">Brandy Mill Estates HOA</a>
+</div>
+<div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Homeowners <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">My Neighbors</a></li>
+              <li><a href="#">Community Forum</a></li>
+              <li><a href="#">Announcements</a></li>
+              <li><a href="#">Neighborhood Maps</a></li>
+              <li><a href="#">Pay Dues</a></li>
+              <li><a href="#">Useful Links</a></li>
+              <li><a href="#">Neighborhood Watch</a></li>
+              <li><a href="#">Block Party</a></li>
+              <li><a href="#">Gardeners Club</a></li>
+            </ul>
+        </li>
+        
+        
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Official Business <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a tabindex="-1" title="Legal" href="{{ path('legalHome') }}">Legal</a></li>
+            <li><a tabindex="-1" href="#">Financial</a></li>
+            <li><a tabindex="-1" href="#">Submit Permit</a></li>
+            <li><a tabindex="-1" href="#">Log Complaint</a></li>
+            <li class="dropdown-submenu">
+              <a class="test" tabindex="-1" href="#">Board of Directors <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="#">Current Board</a></li>
+                <li><a tabindex="-1" href="#">Quarterly Meeting Minutes</a></li>
+                <li><a tabindex="-1" href="#">Topics for next Board Meeting</a></li>
+                <li><a tabindex="-1" href="#">Complaints</a></li>
+                <li class="dropdown-submenu">
+                  <a class="test" href="#">Permits <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Issued</a></li>
+                    <li><a href="#">Denied</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a tabindex="-1" href="#">Contact Us</a></li>
+          </ul>
+        </li>
+        
+        
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrative <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a tabindex="-1" href="#">Manage Properties</a></li>
+            <li><a tabindex="-1" href="#">Manage Users</a></li>
+            <li><a tabindex="-1" href="#">Issue Noticet</a></li>
+            <li><a tabindex="-1" href="#">Issue Statement</a></li>
+            <li><a tabindex="-1" href="#">Upload Document</a></li>
+            <li class="dropdown-submenu">
+              <a class="test" tabindex="-1" href="#">Accounting<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="#">Journal Entry</a></li>
+                <li><a tabindex="-1" href="#">Transactions</a></li>
+                <li><a tabindex="-1" href="#">Manage Accounts</a></li>
+                <li class="dropdown-submenu">
+                  <a class="test" href="#">Statements <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Balance Sheet</a></li>
+                    <li><a href="#">Income Statement</a></li>
+                    <li><a href="#">Accounts Receivable</a></li>
+                    <li><a href="#">Accounts Payable</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        
+        
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        {% if app.user %}
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;  My Account</a></li>
+        {% else %}
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        {% endif %}
+    </ul>
+</div>

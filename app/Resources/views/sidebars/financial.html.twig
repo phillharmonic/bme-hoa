@@ -1,0 +1,32 @@
+{% block body %}
+    <div class='sidebarmenu'>
+        <ul>
+            <li>Financial Menu</li>
+            <ul>
+                <li><a title="Legal Home Page" href="{{path('legalHome')}}">Homepage</a></li>
+            </ul>
+            <li>2016 Statements</li>
+                <ul>
+                    <li><a title="2016-4th-quarter" href="{{ path('2016-3rd-quarter-pdf') }}" target='blank'>2016 4th Quarter</a></li>
+                    <li><a title="2016-3rd-quarter" href="{{ path('2016-3rd-quarter-pdf') }}" target='blank'>2016 3rd Quarter</a></li>
+                    <li><a title="2016-2nd-quarter" href="{{ path('2016-2nd-quarter-pdf') }}" target='blank'>2016 2nd Quarter</a></li>
+                    <li><a title="2016-1st-quarter" href="{{ path('2016-1st-quarter-pdf') }}" target='blank'>2016 1st Quarter</a></li>
+                </ul>
+            <li>2015 Statements</li>
+                <ul>
+                    <li><a title="2016-4th-quarter" href="{{ path('2016-3rd-quarter-pdf') }}" target='blank'>2015 4th Quarter</a></li>
+                    <li><a title="2016-3rd-quarter" href="{{ path('2016-3rd-quarter-pdf') }}" target='blank'>2015 3rd Quarter</a></li>
+                    <li><a title="2016-2nd-quarter" href="{{ path('2016-2nd-quarter-pdf') }}" target='blank'>2015 2nd Quarter</a></li>
+                    <li><a title="2016-1st-quarter" href="{{ path('2016-1st-quarter-pdf') }}" target='blank'>2015 1st Quarter</a></li>
+                </ul>
+            <li>2014 Statements</li>
+                <ul>
+                    <li><a title="2016-4th-quarter" href="{{ path('2016-3rd-quarter-pdf') }}" target='blank'>2014 4th Quarter</a></li>
+                    <li><a title="2016-3rd-quarter" href="{{ path('2016-3rd-quarter-pdf') }}" target='blank'>2014 3rd Quarter</a></li>
+                    <li><a title="2016-2nd-quarter" href="{{ path('2016-2nd-quarter-pdf') }}" target='blank'>2014 2nd Quarter</a></li>
+                    <li><a title="2016-1st-quarter" href="{{ path('2016-1st-quarter-pdf') }}" target='blank'>2014 1st Quarter</a></li>
+                </ul>
+        </ul>
+        
+    </div>
+{% endblock %}

@@ -22,16 +22,11 @@ class TermController extends Controller
      */      
     public function boardShowAction(){
         
-        $user = $this->getUser();
-        $directors = null;
-        
         $em = $this->getDoctrine()->getManager();
         $bods = $em->getRepository('AppBundle:User')->getCurrentBoard();
         
         return $this->render('term/boardShow.html.twig', array(
-            'directors'      => $directors,
             'bods'       =>  $bods,
-            'user'  =>  $user
         ));
         
     }    
