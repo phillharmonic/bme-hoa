@@ -24,4 +24,27 @@ class PropertyRepository extends EntityRepository
                   ->getResult();
         
     }
+    
+    public function getPropertiesByStreet($street, $type){
+        /*
+         * 
+         * We can retrieve users by property, but not vise versa... which necessitates this function.  Be sure to include:
+         *      - include vacant houses
+         *      - sort by house number
+         * It is not needed to join the table with users in order to get the current homeowners.  ONLY current homeowners can be assigned to a property by ADMIN EDIT PROPERTY  
+         */
+        
+        $qb = $this->createQueryBuilder('p')
+                   ->select('p')
+                   ->where('p.street = :street')
+                   ->andWhere('p.type = :type')
+                   ->setParameter('street', $street)
+                   ->setParameter('type', $type)
+                   ->addOrderBy('p.house_number', 'ASC');
+        
+        return $qb->getQuery()
+                  ->getResult();
+        
+    }
+    
 }

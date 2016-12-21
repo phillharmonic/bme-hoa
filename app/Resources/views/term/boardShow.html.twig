@@ -1,37 +1,45 @@
-{% extends 'base.html.twig' %}
+{% extends 'alt-layout.html.twig' %}
 {% block stylesheets %}
-    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+    {{ parent() }}
     <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+    <style>
+        img {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;
+    }
+    </style>
 {% endblock %}
 {% block title %}Board of Directors{% endblock %}
-{% block sidebar %}
-    {{ include('sidebars/account.html.twig') }}
-{% endblock %}
-
-{% block body %}        
+{% block pageheader %}<h1>Official Business</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block sidenav %} {{ include('sidebars/alt-legal.html.twig') }}  {% endblock %}
+{% block content %}
+ 
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Official Business</a></li>
+        <li class="breadcrumb-item"><a href="#">Board of Directors</a></li>
+        <li class="breadcrumb-item active">Current Board</a></li>
+    </ol>
+    <hr>
+    
     {% if bods is not null %}
         {%  for bod in bods %}
             {%  for term in bod.term %}
-                <div class="section-header"><h6>{{term.trusteePosition}}</h6></div>
-                <div class='form'>
-                        <div class='section'>
-                        <div class="section-header">
-                            <h2>{{term.user.honorific}} {{term.user.firstname}} {{term.user.mi}} {{term.user.lastname}}<span style='font-size: smaller; color: gray; padding-left: 15px;'>[ {{ term.startDate|date('F Y') }} - present ]</span></h2> 
-                        </div>
-                        <div>
-                            {% for pic in term.photos|slice(0, 1) %}
-                                    <img src='{{ pic.path }}' width='290' style='float: right; padding-left: 10px; padding-top: 25px;'/>
-                            {% endfor %} 
-                            <h5 style='color: grey; padding-left: 15px;  padding-bottom: 10px;padding-right: 10px; font-size: larger; '>Introduction</h5>
-                            <p style=' text-align: left; white-space: pre-wrap; padding-left: 15px;'>{{ term.aboutme }}</p>
-                            <p style='padding-left: 15px; '>Sincerely,</p>
-                            <p style='padding-left: 15px; font-family: Yellowtail; font-size: 16pt; '>{{term.user.fullname}}</p>
-                        </div>
-                        <div style='border-top: 1px gray solid ; border-bottom: 1px gray solid ; margin: 15px; padding-top: 18px; padding-left: 5px;'>
-                            <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
-                        </div>
-                    </div>
-                </div>
+                <h2>Trustee Profile</h2>    
+                <h5><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;TERM [{{ loop.index }}]&nbsp;: {{ term.startDate|date('F Y') }} to PRESENT</h5>
+                <hr>
+                <h3>{{term.trusteePosition}}&nbsp;&nbsp;|&nbsp;&nbsp;{{term.user.honorific}} {{term.user.firstname}} {{term.user.mi}} {{term.user.lastname}}</h3>
+                
+                <p style="white-space: pre-wrap;">{% for pic in term.photos|slice(0, 1) %}<img class="img-responsive" src='{{ pic.path }}' style="max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;" />{% endfor %}<span style="font-size: 18pt; color: grey;">Introduction</span></br></br>{{ term.aboutme }}</p>
+                <p>Sincerely,</p>
+                <p style='font-family: Yellowtail; font-size: 16pt; '>{{term.user.fullname}}</p>
+                <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
+                <hr>
             {% endfor %}
         {% endfor %}
     {% endif %}

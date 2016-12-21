@@ -11,15 +11,17 @@
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Homeowners <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">My Neighbors</a></li>
+              <li><a href="{{ path('homeownersIndex') }}">The Neighborhood</a></li>
               <li><a href="#">Community Forum</a></li>
               <li><a href="#">Announcements</a></li>
-              <li><a href="#">Neighborhood Maps</a></li>
+              <li><a href="{{ path('mapsShow') }}">Neighborhood Maps</a></li>
               <li><a href="#">Pay Dues</a></li>
               <li><a href="#">Useful Links</a></li>
               <li><a href="#">Neighborhood Watch</a></li>
               <li><a href="#">Block Party</a></li>
               <li><a href="#">Gardeners Club</a></li>
+              <li><a href="#">Garage Sales</a></li>
+              <li><a href="#">Trading Post</a></li>
             </ul>
         </li>
         
@@ -27,14 +29,15 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Official Business <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a tabindex="-1" title="Legal" href="{{ path('legalHome') }}">Legal</a></li>
-            <li><a tabindex="-1" href="#">Financial</a></li>
+            <li><a tabindex="-1" href="{{ path('legalHome') }}">Legal</a></li>
+            <li><a tabindex="-1" href="{{path('financialsIndex')}}">Financial</a></li>
             <li><a tabindex="-1" href="#">Submit Permit</a></li>
-            <li><a tabindex="-1" href="#">Log Complaint</a></li>
+            <li><a tabindex="-1" href="{{ path('complaintNew')}}#">Log Complaint</a></li>
             <li class="dropdown-submenu">
               <a class="test" tabindex="-1" href="#">Board of Directors <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a tabindex="-1" href="#">Current Board</a></li>
+                <li><a tabindex="-1" href="{{ path('boardOfDirectorsShow') }}">Current Board</a></li>
+                <li><a tabindex="-1" href="{{ path('officialBusinessShow') }}">Official Business - to delete</a></li>
                 <li><a tabindex="-1" href="#">Quarterly Meeting Minutes</a></li>
                 <li><a tabindex="-1" href="#">Topics for next Board Meeting</a></li>
                 <li><a tabindex="-1" href="#">Complaints</a></li>
@@ -47,7 +50,7 @@
                 </li>
               </ul>
             </li>
-            <li><a tabindex="-1" href="#">Contact Us</a></li>
+            <li><a tabindex="-1" href="{{ path('contact') }}">Contact Us</a></li>
           </ul>
         </li>
         
@@ -55,7 +58,7 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrative <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a tabindex="-1" href="#">Manage Properties</a></li>
+            <li><a tabindex="-1" href="{{ path('admin') }}">Manage Properties</a></li>
             <li><a tabindex="-1" href="#">Manage Users</a></li>
             <li><a tabindex="-1" href="#">Issue Noticet</a></li>
             <li><a tabindex="-1" href="#">Issue Statement</a></li>
@@ -84,10 +87,11 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
         {% if app.user %}
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;  My Account</a></li>
+            <li><a href="{{ path('personalAccountSummary') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; My Account</a></li>
+            <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp; Logout</a></li>
         {% else %}
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; Sign Up</a></li>
+            <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp; Login</a></li>
         {% endif %}
     </ul>
 </div>

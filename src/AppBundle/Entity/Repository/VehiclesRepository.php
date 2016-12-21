@@ -31,6 +31,8 @@ class VehiclesRepository extends EntityRepository
     }
     
     public function getUniqueVehicles($collectionOfUsers){
+        //since multiple users of the same household can have an account and create their own instance of a vehicle, we have
+        //to remove duplicate vehicles not by ID (bc they will be differnt), but by name
         $vhcls = array();
         foreach($collectionOfUsers as $user){
             foreach($user->getVehicles() as $vhcl){
@@ -41,6 +43,26 @@ class VehiclesRepository extends EntityRepository
         $vhcls = array_unique($vhcls);
         //create an array of the vehicles's ids
         $vhclsIds = array();
+        foreach($vhcls as $k => $v){
+            $vhclsIds[] = $k;
+        }
+        //retreive a collection of vehicles by their ids in an array:
+        return $this->getVehiclesCollectionByIds($vhclsIds);
+        
+    }
+    
+    public function removeDupes($vehicleCollection){
+        //since multiple users of the same household can have an account and create their own instance of a pet, we have
+        //to remove duplicate pets not by ID (bc they will be differnt), but by name.  
+        
+        $vhcls = array();
+        foreach($vehicleCollection as $vhcl){
+            $vhcls[$vhcl->getId()] = $vhcl->getYear().$vhcl->getMake().$vhcl->getModel();
+        }
+        $vhcls = array_unique($vhcls);
+        
+        $vhclsIds = array();
+        //create an array of the vehicles's ids
         foreach($vhcls as $k => $v){
             $vhclsIds[] = $k;
         }

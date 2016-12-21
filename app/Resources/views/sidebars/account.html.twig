@@ -1,25 +1,25 @@
-{% block body %}
-    <div class='sidebarmenu'>
-        <ul>
-            <li>Account Menu</li>
-            <ul>
-                <li><a title="Account Home Page" href="{{ path('personalAccountSummary') }}">Summary</a></li>
-                <li><a title="Profile" href="{{ path('personalAccountShow', {'id' : app.user.id } ) }}">Profile</a></li>
-                <li><a title="Account Statements" href="{# path('MainBundle_LegalFirstAmendment') #}">Statements</a></li>
-                <li><a title="Official Notices & Communications" href="{# path('MainBundle_Account_Show') #}">Official Notices</a></li>
-                <li><a title="Add Property Photo" href="{# path('MainBundle_Account_AddPet') #}">Add Property Photo</a></li>
-                <li><a title="Add Dependent" href="{# path('MainBundle_Account_AddDependent') #}">Add Dependent</a></li>
-                <li><a title="Add Vehicle" href="{# path('MainBundle_Account_AddVehicle') #}">Add Vehicle</a></li>
-                <li><a title="Add Pet" href="{# path('MainBundle_Account_AddPet') #}">Add Pet</a></li>
-            </ul>
-        </ul>
-        {% if app.user.isTrustee == true %}
-            <ul>
-            <li>Trustee Menu</li>
-            <ul>
-                <li><a title="Public Trustee Profile" href="{{ path('trusteeTermShow', {'id' : app.user.id }) }}">Public Trustee Profile</a></li>
-            </ul>
-        </ul>
-        {% endif %}
-    </div>
-{% endblock %}
+<h4>My Account Menu</h4>
+<ul class="nav nav-pills nav-stacked">
+    <li {% if app.request.attributes.get( '_route' ) starts with 'personalAccountSummary' %} class="active"{% endif %}><a title="My Account" href="{{path('personalAccountSummary')}}">My Account</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'personalAccountShow' %} class="active"{% endif %} ><a title="Profile" href="{{path('personalAccountShow', {'id' : app.user.id })}}">Profile</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'legalOriginalCCRs' %} class="active"{% endif %} ><a title="Statements" href="#">Statements</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'legalFirstAmendment' %} class="active"{% endif %} ><a title="Notices" href="#">Notices</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'legalSecondAmendment' %} class="active"{% endif %} ><a title="Add Property Photo" href="#">Add Property Photo</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'legalThirdAmendment' %} class="active"{% endif %} ><a title="Add Dependent" href="#">Add Dependent</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'legalFourthAmendment' %} class="active"{% endif %} ><a title="Add Vehicle" href="#">Add Vehicle</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'legalFourthAmendment' %} class="active"{% endif %} ><a title="Add Pet" href="#">Add Pet</a></li>
+</ul><br>
+{% if app.user.isTrustee == true %}
+    <h5>Trustee Menu</h5>
+    <ul class="nav nav-pills nav-stacked">
+        <li {% if app.request.attributes.get( '_route' ) starts with 'trusteeTermShow' %} class="active"{% endif %} ><a title="Public Trustee Profile" href="{{path('trusteeTermShow', {'id' : app.user.id })}}">Public Trustee Profile</a></li>
+    </ul><br>
+{% endif %}
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Search My Account...">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </span>
+</div>

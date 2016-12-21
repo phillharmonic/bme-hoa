@@ -58,7 +58,11 @@ class AdminController extends Controller
         //vehicles
         $vhcls = $em->getRepository('AppBundle:Vehicles')->getUniqueVehicles($currentOwners);
         //transactions (past 12 months)
-        $transactions = $em->getRepository('AppBundle:Transactions')->getAccountTransactions($currentOwners[0]->getAccount(), 365);
+        if(isset($currentOwners[0])){
+            $transactions = $em->getRepository('AppBundle:Transactions')->getAccountTransactions($currentOwners[0]->getAccount(), 365);
+        }else{
+            $transactions = null;
+        }
         
         return $this->render('admin/show.html.twig', array(
             'property'      => $property, 

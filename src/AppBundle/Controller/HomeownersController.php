@@ -7,7 +7,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 //use Symfony\Component\HttpFoundation\Request;
-//use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class HomeownersController extends Controller
 {
@@ -27,46 +27,50 @@ class HomeownersController extends Controller
 //            'springflower_homeowners'   => $properties,
 //        ));
         
+//        $brandymillHomeowners = $em->createQueryBuilder()
+//                    ->select('u')
+//                    ->from('AppBundle:User',  'u')
+//                    ->where('u.street = ?1')
+//                    ->andWhere('u.vacate_date IS NULL')
+//                    ->addOrderBy('u.housenumber', 'ASC')
+//                    ->setParameter(1, 'Brandy Mill Drive')
+//                    ->getQuery()
+//                    ->getResult();
         
-        /* This index call ONLY retrieves CURRENT HOMEOWNERS */
+//        $springbrookHomeowners = $em->createQueryBuilder()
+//                    ->select('u')
+//                    ->from('AppBundle:User',  'u')
+//                    ->where('u.street = ?1')
+//                    ->andWhere('u.vacate_date IS NULL')
+//                    ->addOrderBy('u.housenumber', 'ASC')
+//                    ->setParameter(1, 'Spring Brook Court')
+//                    ->getQuery()
+//                    ->getResult();
         
+//        $springflowerHomeowners = $em->createQueryBuilder()
+//                    ->select('u')
+//                    ->from('AppBundle:User',  'u')
+//                    ->where('u.street = ?1')
+//                    ->andWhere('u.vacate_date IS NULL')
+//                    ->addOrderBy('u.housenumber', 'ASC')
+//                    ->setParameter(1, 'Spring Flower Way')
+//                    ->getQuery()
+//                    ->getResult();
         
+    /*  
+     * 
+     * TODO:    This index call retrieves ALL residential properties with ALL present and past homeowners.  
+     *          Need to trim off the past homeowners.  
+     *      
+     */
         $em = $this->getDoctrine()->getManager();       
-        
-        $brandymillHomeowners = $em->createQueryBuilder()
-                    ->select('u')
-                    ->from('AppBundle:User',  'u')
-                    ->where('u.street = ?1')
-                    ->andWhere('u.vacate_date IS NULL')
-                    ->addOrderBy('u.housenumber', 'ASC')
-                    ->setParameter(1, 'Brandy Mill Drive')
-                    ->getQuery()
-                    ->getResult();
-        
-        $springbrookHomeowners = $em->createQueryBuilder()
-                    ->select('u')
-                    ->from('AppBundle:User',  'u')
-                    ->where('u.street = ?1')
-                    ->andWhere('u.vacate_date IS NULL')
-                    ->addOrderBy('u.housenumber', 'ASC')
-                    ->setParameter(1, 'Spring Brook Court')
-                    ->getQuery()
-                    ->getResult();
-        
-        $springflowerHomeowners = $em->createQueryBuilder()
-                    ->select('u')
-                    ->from('AppBundle:User',  'u')
-                    ->where('u.street = ?1')
-                    ->andWhere('u.vacate_date IS NULL')
-                    ->addOrderBy('u.housenumber', 'ASC')
-                    ->setParameter(1, 'Spring Flower Way')
-                    ->getQuery()
-                    ->getResult();
-        
+        $bmd = $em->getRepository('AppBundle:Property')->getPropertiesByStreet('Brandy Mill Drive', 'Residential');
+        $sbc = $em->getRepository('AppBundle:Property')->getPropertiesByStreet('Spring Brook Court', 'Residential');
+        $sfw = $em->getRepository('AppBundle:Property')->getPropertiesByStreet('Spring Flower Way', 'Residential');
         return $this->render('homeowners/index.html.twig', array(
-            'brandymill_homeowners'     => $brandymillHomeowners,
-            'springbrook_homeowners'    => $springbrookHomeowners,
-            'springflower_homeowners'   => $springflowerHomeowners,
+            'bmproperty'     => $bmd,
+            'sbproperty'    => $sbc,
+            'sfproperty'   => $sfw,
         ));
     }
     
@@ -81,6 +85,15 @@ class HomeownersController extends Controller
      */         
     public function showAction($id)
     {
+
+        /*
+         *  TODO:   This method is wrong.  It is grabbing users instead of properties for public viewing.  We need to be grabbing properties (because there is ONLY ONE PROPERTY
+         *          as opposed to multiple users who may or may not currently reside at the property), and by virtue, you will get the currently assigned user object.  Then 
+         *          design a public property page with associated (current residents) user(s).
+         * 
+         *  ALSO:   Condense the layout of this view.  Summarize and lump all the photos in an array and put in a carousel.
+         */
+        
         $em = $this->getDoctrine()->getManager();
 
 //        This works, but it's just not the way to do it... but it might be a good example down the road
@@ -94,21 +107,70 @@ class HomeownersController extends Controller
 //        $homeowner = $query->setMaxResults(1)->getOneOrNullResult();
         
         //correct way: 
-        $homeowner = $em->getRepository('AppBundle:User')->findOneBy(array('id' => $id));
+//        $homeowner = $em->getRepository('AppBundle:User')->findOneBy(array('id' => $id));
+//        
+//        $spouse = $em->getRepository('AppBundle:Dependents')->getUsersSpouse($homeowner);
+//        $dependents = $em->getRepository('AppBundle:Dependents')->getUsersDependents($homeowner);
+//        $vehicles = $em->getRepository('AppBundle:Vehicles')->getUsersVehicles($homeowner);
+//        $pets = $em->getRepository('AppBundle:Pets')->getUsersPets($homeowner);
+//        $property = $em->getRepository('AppBundle:Property')->getUsersProperty($homeowner);
         
-        $spouse = $em->getRepository('AppBundle:Dependents')->getUsersSpouse($homeowner);
-        $dependents = $em->getRepository('AppBundle:Dependents')->getUsersDependents($homeowner);
-        $vehicles = $em->getRepository('AppBundle:Vehicles')->getUsersVehicles($homeowner);
-        $pets = $em->getRepository('AppBundle:Pets')->getUsersPets($homeowner);
-        $property = $em->getRepository('AppBundle:Property')->getUsersProperty($homeowner);
+        $property   = $em->getRepository('AppBundle:Property')->find($id);
+        $homeowners = $property->getUser(); //this is a collection
         
+//  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
+        
+        
+        $spouses = new ArrayCollection();
+        $dependents = new ArrayCollection();
+        $children = new ArrayCollection();
+        $pets = new ArrayCollection();
+        $vhcls = new ArrayCollection();
+        
+        //SPOUSE & DEPENDENTS
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getDependents()) ){
+                $dependents = $homeowner->getDependents();
+                //foreach dependent check to see if it is a spouse
+                foreach($dependents as $dependent){
+                    //SPOUSE
+                    if($dependent->getSpouse() == 1){
+                        $spouses[] = $dependent;
+                    }
+                    //CHILDREN
+                    else{
+                        $children[] = $dependent;
+                    }
+                }
+            }
+        }
+            
+        //PETS
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getPets())){
+                foreach($homeowner->getPets() as $animal){
+                    $pets[] = $animal;
+                }
+            }
+        }        
+        $animals = $em->getRepository('AppBundle:Pets')->removeDupes($pets);
+        
+        //VEHICLES
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getVehicles())){
+                foreach($homeowner->getVehicles() as $car){
+                    $vhcls[] = $car;
+                }
+            }
+        }    
+        $cars = $em->getRepository('AppBundle:Vehicles')->removeDupes($vhcls);
         return $this->render('homeowners/show.html.twig', array(
-            'homeowner'     =>  $homeowner,
-            'spouse'        =>  $spouse[0],
-            'dependents'    =>  $dependents,
-            'vehicles'      =>  $vehicles,
-            'pets'          =>  $pets,
-            'property'      =>  $property[0]
+            'property'   =>  $property,
+            'homeowners' =>  $homeowners,
+            'spouses'    =>  $spouses,
+            'dependents' =>  $children,
+            'vehicles'   =>  $cars,
+            'pets'       =>  $animals,
         ));
     }
     

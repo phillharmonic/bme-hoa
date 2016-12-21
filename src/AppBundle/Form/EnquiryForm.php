@@ -18,18 +18,15 @@ class EnquiryForm extends AbstractType {
         
         $builder->add('name', TextType::class, array(
             'required' => true,
-            'attr' => array('style' => 'width: 500px')
         ));
         $builder->add('email', EmailType::class, array(
             'required' => true,
-            'attr' => array('style' => 'width: 500px')
         ));
         $builder->add('subject', TextType::class, array(
             'required' => false,
-            'attr' => array('style' => 'width: 500px')
         ));
         $builder->add('body', TextareaType::class, array(
-            'attr' => array('style' => 'width: 500px')
+//            'attr' => array('style' => 'width: 500px')
         ));
         $builder->add('save', SubmitType::class, array('label' => 'Submit'));
         

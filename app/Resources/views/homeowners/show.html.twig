@@ -1,33 +1,253 @@
-{% extends 'base.html.twig' %}
+{% extends 'alt-layout.html.twig' %}
 {% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('bundles/main/css/jgallery.min.css?v=1.5.5') }}" media="all" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('bundles/main/css/font-awesome.min.css') }}" media="all" type="text/css" rel="stylesheet" />
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
-{% block javascripts %}
-    <script type="text/javascript" src="{{ asset('bundles/main/js/jquery-2.0.3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/main/js/jgallery.min.js?v=1.5.5') }}"></script>
-{% endblock %}
-{% block title %}Homeowner Summary{% endblock %}
-{% block sidebar %}
-    <ul>
-        <li>Helpful links</li>
-        <li>Utilitiy Providers & Options</li>
+{% block title %}The Association{% endblock %}
+{% block sidenav %}
+    <p>Google Map & Auditor Parcel View goes here</p>
+    <ul> 
+        <li>Store Longetude & Lattitude in property entity</li>
+        <li>Store Licking county Parcel Number in property entity</li>
     </ul>
 {% endblock %}
+{% block pageheader %}<h1>Homeowners</small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
 
-{% block body %}   
-<style>
-    .content .left{
-        float: left;
-        width: 50%;
-    }
-    .content .right{
-        float: left;
-        width: 50%;
-    }
-</style>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Homeowners</a></li>
+        <li class="breadcrumb-item"><a href="#">My Neighbors</a></li>
+        <li class="breadcrumb-item">{{ property.houseNumber }} {{ property.street }}</li>
+    </ol>
+    <hr>
+    <h2>Property <small>PUBLIC VIEW</small></h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+    
+    {#
+        TODO:   This page is currently listing EVERYTHING about the property AND it's current resident(s).  The current resident(s) need to have control
+                over what is shared:
+                    - PUBLICLY
+                    - Logged in & authenticated users (users that are assigned a HOMEOWNER_ROLE
+                
+                Each role needs to show/hide information permitted/denied by current resident... which requires an update to the USER entity, adding the following:
+                
+                _ispubic = allows the information to be shared publicly
+                _ispermitted = allows the information to be shared to authenticated users assigned to the HOMEOWNER_ROLE
+    
+                    - spouse_ispublic
+                    - spouse_ispermitted
+                    - dependents_ispublic
+                    - dependents_ispermitted
+                    - pets_ispublic
+                    - pets_ispermitted
+                    - vehicles_ispublic
+                    - vehicles_ispermitted
+                    - bio (a family summary)
+                    - bio_ispublic
+                    - bio_ispermitted
+                    - bday_ispublic
+                    - bday_permitted
+                    - maritalstatus_ispublic
+                    - maritalstatus_ispermitted        
+                    - phonenumbers_ispublic
+                    - phonenumbers_ispermitted
+                    - occupation_ispublic
+                    - occupation_ispermitted
+    #}
+    
+    <h3>{{ property.houseNumber }} {{ property.street }}</h3>
+    <span class="label label-success"><a id="a-buttons" href="#" target="_blank" title="Edit photos for {{ property.houseNumber }} {{ property.street }}">Edit Photos</a></span>
+    <hr class="invisible"> 
+    <div class="row">
+        <div class="col-md-6">
+            <div class='content'>
+                <div class="typeface_courier">
+                    <p><label class="text-right">ID</label>{{ property.id }}</p>
+                    <p><label class="text-right">Type</label>{{ property.type }}</p>
+                    <p><label class="text-right">Lot Number</label>{{ property.lotNumber }}</p>
+                    <p><label class="text-right">Status</label>{{ property.status }}</p>
+                    <p><label class="text-right">Color</label>{{ property.color }}</p>
+                    <p><label class="text-right">Is Occupied</label>{{ property.isOccupied ? 'Yes':'No' }} </p>
+                    <p><label class="text-right">Has HOA Lien</label>{{ property.hasHoaLien ? 'Yes':'No' }}</p>
+                    <p><label class="text-right">In Arrears</label>{{  property.inArrears ? 'Yes':'No' }}</p>
+                    <p><label class="text-right">Date Built</label>{{ property.dateBuilt|date('m-d-y') }}</p>
+                </div>
+            </div>
+        </div>
+                
+        <div class="col-md-6">
+            {% for pic in property.photos|slice(0, 1) %}
+                <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
+            {% endfor %} 
+        </div>
+                
+    </div>
+    <hr>
+    {% if homeowners is not null%}     
+        {% for owner in homeowners %}  
+            <h4><small>{{ owner.fullname|upper }}</small></h4>
+            <h3>Homeowner {{ loop.index }}</h3>
+            <span class="label label-success"><a id="a-buttons" href="{{ path('personalAccountEdit', {'id' : owner.id}) }}" target="_blank" title="Edit {{ owner.firstname }}">Edit {{ owner.firstname }}</a></span>
+            <hr class="invisible"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class='content'>
+                        <div class="typeface_courier">
+                            <p><label class="text-right">Name</label>{{ owner.fullname }}</p>
+                            <p><label class="text-right">Gender</label>{{ owner.gender }}</p>
+                            <p><label class="text-right">Birthday</label>{{ owner.bday|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - owner.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - owner.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
+                            <p><label class="text-right">Marital Status</label>{{ owner.maritalStatus }}</p>
+
+                            {% for dependent in owner.dependents %}
+                                {% if dependent.spouse == true %}
+                                    <p><label class="text-right">Spouse</label>{{ dependent.firstname }} {{ dependent.lastname }} ({{ dependent.gender }})</p>
+                                {% endif %}
+                            {% endfor %}
+
+                            <p><label class="text-right">Occupation</label>{{ owner.occupation }}</p>
+                            <p><label class="text-right">Cellphone</label>{{ owner.cellphone|phone }}</p>
+                            <p><label class="text-right">Homephone</label>{{ owner.homephone|phone }} </p>
+                            <p><label class="text-right">Date Occupied</label>{{ owner.occupyDate|date('M d Y')|upper }}  ({{ ('now'|date('Y') - owner.occupyDate|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - owner.occupyDate|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }} years) </p>
+
+                            {% for role in owner.roles %}
+                                <p><label class="text-right">Acct. Privlege({{loop.index}})</label>{{role}}</p>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    {% for pic in owner.photos|slice(0, 1) %}
+                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
+                    {% endfor %} 
+                </div>
+
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+    
+    {% if spouses is not null%}      
+        {% for spouse in spouses %}  
+            <h4><small>{{ spouse.firstname|upper }}</small></h4>
+            <h3>{{ spouse.user.firstname}}'s {{ spouse.type }} </h3>
+            <span class="label label-success"><a id="a-buttons" href="{{ path('personalAccountEdit', {'id' : spouse.id}) }}" target="_blank" title="Edit {{ spouse.firstname }}">Edit {{ spouse.firstname }}</a></span>
+            <hr class="invisible"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class='content'>
+                        <div class="typeface_courier">
+                            <p><label class="text-right">Name</label>{{ spouse.firstname }} {{ spouse.mi }} {{ spouse.lastname }}</p>
+                            <p><label class="text-right">Gender</label>{{ spouse.gender }}</p>
+                            <p><label class="text-right">Birthday</label>{{ spouse.bday|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - spouse.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - spouse.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
+                            <p><label class="text-right">Cellphone</label>{{ spouse.cellphone|phone }}</p>
+                            <p><label class="text-right">Spouse</label>{{ spouse.user.fullname }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    {% for pic in spouse.photos|slice(0, 1) %}
+                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
+                    {% endfor %} 
+                </div>
+
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}    
+    
+    {% if dependents is not null%}      
+        {% for child in dependents %}  
+            <h4><small>{{ child.firstname|upper }}</small></h4>
+            <h3>{{ child.user.firstname}}'s {{ child.type }} </h3>
+            <span class="label label-success"><a id="a-buttons" href="{{ path('personalAccountEdit', {'id' : child.id}) }}" target="_blank" title="Edit {{ child.firstname }}">Edit {{ child.firstname }}</a></span>
+            <hr class="invisible"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class='content'>
+                        <div class="typeface_courier">
+                            <p><label class="text-right">Name</label>{{ child.firstname }} {{ child.mi }} {{ child.lastname }}</p>
+                            <p><label class="text-right">Gender</label>{{ child.gender }}</p>
+                            <p><label class="text-right">Birthday</label>{{ child.bday|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - child.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - child.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
+                            <p><label class="text-right">Cellphone</label>{{ child.cellphone|phone }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    {% for pic in child.photos|slice(0, 1) %}
+                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
+                    {% endfor %} 
+                </div>
+
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}     
+    
+    {% if pets is not null%}      
+        {% for pet in pets %}  
+            <h4><small>{{ pet.name|upper }}</small></h4>
+            <h3>{{ pet.user.firstname}}'s {{ pet.type }} </h3>
+            <hr class="invisible"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class='content'>
+                        <div class="typeface_courier">
+                            <p><label class="text-right">Name</label>{{ pet.name }}</p>
+                            <p><label class="text-right">Gender</label>{{ pet.gender }}</p>
+                            <p><label class="text-right">Birthday</label>{{ pet.born|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - pet.born|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - pet.born|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
+                            <p><label class="text-right">Color</label>{{ pet.color }}</p>
+                            <p><label class="text-right">Breed</label>{{ pet.breed }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    {% for pic in pet.photos|slice(0, 1) %}
+                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
+                    {% endfor %} 
+                </div>
+
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+    
+    {% if vehicles is not null%}      
+        {% for vhcl in vehicles %}  
+            <h4><small>{{ vhcl.make|upper }} {{ vhcl.model|upper }}</small></h4>
+            <h3>{{ vhcl.user.firstname}}'s Vehicle </h3>
+            <hr class="invisible"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class='content'>
+                        <div class="typeface_courier">
+                            <p><label class="text-right">Make</label>{{ vhcl.make }}</p>
+                            <p><label class="text-right">Model</label>{{ vhcl.model }}</p>
+                            <p><label class="text-right">Year</label>{{ vhcl.year }}</p>
+                            <p><label class="text-right">Color</label>{{ vhcl.color }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    {% for pic in vhcl.photos|slice(0, 1) %}
+                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
+                    {% endfor %} 
+                </div>
+
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}    
+    
+    {# dump(test) }}
+    
+    {#
     <div class="section-header"><h1>Homeowner</h1></div>
     <div class="section-header"><h6>Summary</h6></div>
     <div class='content'>
@@ -84,6 +304,6 @@
                 <div style='padding-bottom: 30px;  width: 100%'></div>   
             {% endif %}
     </div>
-    
+    #}
                 
 {% endblock %}
