@@ -28,7 +28,7 @@
     <tbody>
         {% for property in bmproperty %}
             <tr>
-                <td class="col-xs-4">
+                <td class="col-xs-3">
                     <a href="{{ path('homeownersShow', {'id' : property.id}) }}">
                        
                        
@@ -45,10 +45,10 @@
                         {% endif %}
                     </a>
                     </td>
-                    <td>
+                    <td  class="col-xs-3">
                         {{ property.status }}
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                         {% if property.user is not empty %}
                             {% set arr ={} %}
                                 {% for key,user in property.user %}
@@ -59,7 +59,7 @@
                             Vacant
                         {% endif %}
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                         {% if property.user is not empty %}
                             {{ property.user.0.occupyDate|date('M d, Y') }}  
                         {% else %}
@@ -82,7 +82,7 @@
         <tbody>
             {% for property in sbproperty %}
                 <tr>
-                    <td class="col-xs-4"><a href="{{ path('homeownersShow', {'id' : property.id}) }}">
+                    <td class="col-xs-3"><a href="{{ path('homeownersShow', {'id' : property.id}) }}">
                                 {% if property.houseNumber is null %} {{ property.street }}
                                     Lot #{{ property.lotNumber }}
                                 {% else %}
@@ -90,10 +90,10 @@
                                 {% endif %}
                             </a>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                         {{ property.status }}
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                         {% if property.user is not empty %}
                             {% set arr ={} %}
                                 {% for key,user in property.user %}
@@ -104,7 +104,7 @@
                             Vacant
                         {% endif %}
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                         {% if property.user is not empty %}
                             {{ property.user.0.occupyDate|date('M d, Y') }}  
                         {% else %}
@@ -128,7 +128,7 @@
         <tbody>
             {% for property in sfproperty %}
                 <tr>
-                    <td class="col-xs-4"><a href="{{ path('homeownersShow', {'id' : property.id}) }}">
+                    <td class="col-xs-3"><a href="{{ path('homeownersShow', {'id' : property.id}) }}">
                                 {% if property.houseNumber is null %} {{ property.street }}
                                     Lot #{{ property.lotNumber }}
                                 {% else %}
@@ -136,10 +136,10 @@
                                 {% endif %}
                             </a>
                     </td>
-                    <td>
+                    <td class="col-xs-3">
                         {{ property.status }}
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                         {% if property.user is not empty %}
                             {% set arr ={} %}
                                 {% for key,user in property.user %}
@@ -150,7 +150,7 @@
                             Vacant
                         {% endif %}
                     </td>
-                    <td class="col-xs-4">
+                    <td class="col-xs-3">
                         {% if property.user is not empty %}
                             {{ property.user.0.occupyDate|date('M d, Y') }}  
                         {% else %}

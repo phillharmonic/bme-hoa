@@ -27,6 +27,11 @@ class Action
     protected $complaints;    
     
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Permit", mappedBy="action")
+     */
+    protected $permits;     
+    
+    /**
      * @ORM\Column(type="string")
      */
     protected $type;
@@ -251,5 +256,39 @@ class Action
     public function getComplaints()
     {
         return $this->complaints;
+    }
+
+    /**
+     * Add permit
+     *
+     * @param \AppBundle\Entity\Permit $permit
+     *
+     * @return Action
+     */
+    public function addPermit(\AppBundle\Entity\Permit $permit)
+    {
+        $this->permits[] = $permit;
+
+        return $this;
+    }
+
+    /**
+     * Remove permit
+     *
+     * @param \AppBundle\Entity\Permit $permit
+     */
+    public function removePermit(\AppBundle\Entity\Permit $permit)
+    {
+        $this->permits->removeElement($permit);
+    }
+
+    /**
+     * Get permits
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPermits()
+    {
+        return $this->permits;
     }
 }

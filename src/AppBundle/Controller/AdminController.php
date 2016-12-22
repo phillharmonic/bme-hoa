@@ -2,12 +2,8 @@
 
 
 namespace AppBundle\Controller;
-//use MainBundle\Entity\User;
-//use MainBundle\Entity\Photos;
-//use MainBundle\Entity\Dependents;
 use AppBundle\Form\PropertyForm;
 use AppBundle\Form\AdminUserForm;
-//use MainBundle\Form\DependentsForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;

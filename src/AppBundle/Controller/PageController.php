@@ -38,6 +38,21 @@ class PageController extends Controller
     }
     
     /**
+     * @Route("/test", name="test")
+     */
+    public function testAction() 
+    {
+        $str = "If you are interested in completing exterior improvements please be aware of the guidelines set by your Covenants and Deed Restrictions. For pre-approval and acceptance of your proposed improvements, please complete this form and submit to the management company for review. Upon verification that your proposed changes are within the guidelines of your Association, you will be notified, in writing, within 30 days of the receipt of your request at the management office. Your association account balance must be current and in good standing before an improvement will be approved.";
+        
+        $ar = str_split($str, 130);
+        
+        return $this->render('pages/test.twig', array(
+            'var' => $ar,
+        ));
+        
+    }
+
+    /**
      * @Route("/contact", name="contact")
      */    
     public function contactAction(Request $request)

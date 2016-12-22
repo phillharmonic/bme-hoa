@@ -1,0 +1,59 @@
+{# 
+
+Fields needed: 
+
+user:           collection - manyToOne
+action:         collection - manyToMany
+type:           string: length: 250 - choices
+                Choices:
+                    Shed - Addition/Modification
+                    Deck - Addition/Modification
+                    Fence - Addition/Modification
+                    House Color Modification
+                    Landscaping - Addition/Modification
+                    Driveway - Addition/Modification
+                    Exterior Home Addition 
+                    Misc. Exterior Modification
+description:    textearea
+location:       string lenght: 500
+drawings:       string lenght: 500
+assoc_name:     string length: 250 - hard coded
+submit_date:    date
+is_approved:    boolean
+is_denied:      boolean
+decision_date:  date
+decided_by:     string length: 250  (I was going to join this to the user entity but decided against it... 
+                don't want one person singled out.  It is a collective BOARD action.  This will instead be a dropdown menu with choices) 
+                choices:
+                    Unanimous Board Opinion
+                    Split Board Opinion
+                    Management Company Decision
+                    Attorney Decision
+                    Regulations Specifically Forbid
+
+#}
+
+
+{% extends 'alt-layout.html.twig' %}
+{% block title %}Submit Permit{% endblock %}
+{% block pageheader %}<h1>Official Business</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block sidenav %} {{ include('sidebars/alt-generic.html.twig') }}  {% endblock %}
+{% block content %}
+    
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Official Business</a></li>
+        <li class="breadcrumb-item active">Submit Permit</li>
+    </ol>
+    <hr>
+    <h2>Submit Permit&nbsp;&nbsp;<small><small>NEW</small></small></h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+    
+{% form_theme form 'form/bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}    
+
+{% endblock %}

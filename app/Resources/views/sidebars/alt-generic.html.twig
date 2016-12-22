@@ -1,0 +1,69 @@
+<hr style="border-color: black;"><h4>Main Menu</h4><hr style="border-color: black;">
+<ul class="nav nav-pills nav-stacked">
+    <li {% if app.request.attributes.get( '_route' ) starts with 'home' %} class="active"{% endif %}><a href="{{path('home')}}">Brandy Mill Estates HOA</a></li>
+</ul>
+<hr style="border-color: black;"><h4>Homeowners</h4><hr style="border-color: black;">
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="#">The Neighborhood</a></li>
+    <li><a href="#">Community Forum</a></li>
+    <li><a href="#">Announcements</a></li>
+    <li><a href="#">Neighborhood Maps</a></li>
+    <li><a href="#">Pay Dues</a></li>
+    <li><a href="#">Useful Links</a></li>
+    <li><a href="#">Neighborhood Watch</a></li>
+    <li><a href="#">Block Party</a></li>
+    <li><a href="#">Gardeners Club</a></li>
+    <li><a href="#">Garage Sales</a></li>
+    <li><a href="#">Trading Post</a></li>
+</ul>
+<hr style="border-color: black;"><h4>Official Business</h4><hr style="border-color: black;">
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="#">Legal</a></li>
+    <li><a href="#">Financial</a></li>
+    <li><a href="{{ path('permitNew') }}">Submit Permit</a></li>
+    <li><a href="#">Log Complaint</a></li>
+    <li><a href="#">Board of Directors <span class="caret"></span></a>
+        <ul class="nav-pills nav-stacked chevron">
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Current Board</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Official Business - to delete</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Quarterly Meeting Minutes</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Topics for next Board Meeting</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Complaints</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Permits</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Contact Us</a></li>
+</ul>
+<hr style="border-color: black;"><h4>Administrative</h4><hr style="border-color: black;">
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="#">Manage Properties</a></li>
+    <li><a href="#">Manage Users</a></li>
+    <li><a href="#">Issue Notice</a></li>
+    <li><a href="#">Issue Statement</a></li>
+    <li><a href="#">Upload Document</a></li>
+    <li><a href="#">Email Blast</a></li>
+    <li><a href="#">Urgent Mass Text Alert</a></li>
+    <li><a href="#">Accounting <span class="caret"></span></a>
+        <ul class="nav-pills nav-stacked chevron">
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Journal Entry</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Transactions</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Manage Accounts</a></li>
+            <li style="list-style-type: none;"><a href="#"><span class="glyphicon glyphicon-chevron-right"> </span> Statement</a></li>
+        </ul>
+    </li>
+</ul>
+<hr style="border-color: black;"><h4>My Account</h4><hr style="border-color: black;">
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="#">Summary</a></li>
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Statements</a></li>
+    <li><a href="#">Notices</a></li>
+</ul><hr style="border-color: black;">
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Search Website...">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </span>
+</div><hr style="border-color: black;">
