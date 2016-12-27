@@ -51,13 +51,13 @@ class Vehicles
     protected $color;
     
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="vehicles", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $user;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", inversedBy="user", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", mappedBy="photos", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $photos;

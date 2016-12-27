@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 /**
  * Action
@@ -42,7 +43,7 @@ class Action
     protected $action;      
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $description;   
     
@@ -67,8 +68,37 @@ class Action
     public function __construct()
     {
         $this->complaints = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->permits = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    
+     /**
+     * @ORM\PrePersist
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $action = $args->getEntity();
+        $action->setDateTaken(new \DateTime());
+        
+        $action->setTakenBy('NOT BEING USED - CONSIDER DELETING');
+        if(strpos($action->getAction(), 'APPROVED') !== false){ 
+            $action->setType('PERMIT');
+            $action->setIsResolved(true);
+        }elseif(strpos($action->getAction(), 'DENIED') !== false){ 
+            $action->setType('PERMIT');
+            $action->setIsResolved(true);
+        }elseif(strpos($action->getAction(), 'PENDING') !== false){ 
+            $action->setType('PERMIT');
+            $action->setIsResolved(false);
+        }elseif(strpos($action->getAction(), 'PROBLEM RESOLVED') !== false){ 
+            $action->setType('COMPLAINT');
+            $action->setIsResolved(true);
+        }else{
+            $action->setType('COMPLAINT');
+            $action->setIsResolved(false);
+        }
+    }   
 
     /**
      * Get id
@@ -271,7 +301,7 @@ class Action
 
         return $this;
     }
-
+    
     /**
      * Remove permit
      *

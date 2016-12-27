@@ -1,0 +1,141 @@
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block title %}HOA Permits{% endblock %}
+{% block pageheader %}<h1>Board of Directors - Permits</small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Official Business</a></li>
+        <li class="breadcrumb-item"><a href="#">Board of Directors</a></li>
+        <li class="breadcrumb-item">Permits</li>
+    </ol>
+    <hr>
+    <h2>ALL Permits <small>INDEX</small></h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+    
+    <div class="alert alert-warning">
+        <strong>Pending</strong> Permits:
+    </div>
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th class="col-xs-6">Permit Description</th>
+                <th class="col-xs-6">Permit Actions</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for permit in permits %}
+            <tr>
+                <td class="col-xs-6">
+                    {{permit.submitDate|date('M d, Y')}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="{{path('adminPermitShow', {'id' : permit.id})}}">{{ permit.type }}</a>
+                </td>
+                <td class="col-xs-6">
+                    <span class="badge">{{permit.actions|length}}</span> Actions&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="{{ path('adminPermitActionNew', { 'id' : permit.id }) }}">
+                        {# 
+                            wow.  can't believe the statement below actually worked. This gets only
+                            the last element of the collection of actions and returns the status. genious.
+                        #}
+                        {% if permit.actions|length > 0 %}
+                            {% for action in permit.actions|slice(-1) %}
+                                {{action.action}}
+                            {% endfor %}
+                        {% else %}
+                            PENDING - No action taken
+                        {% endif %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <hr>
+    
+    <div class="alert alert-success">
+        <strong>Approved</strong> Permits:
+    </div>
+    {% if approved is not empty %}
+        <table class="table table-striped table-responsive">    
+            <thead>
+                <tr>
+                    <th class="col-xs-6">Permit Description</th>
+                    <th class="col-xs-6">Permit Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for approve in approved %}
+                    <tr>
+                        <td class="col-xs-6">
+                            {{approve.submitDate|date('M d, Y')}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            <a href="{{path('adminPermitShow', {'id' : approve.id})}}">{{ approve.type }}</a>
+                        </td>
+                        <td class="col-xs-6">
+                            <span class="badge">{{approve.actions|length}}</span> Actions&nbsp;&nbsp;|&nbsp;&nbsp;
+                            <a href="{{ path('adminPermitActionNew', { 'id' : approve.id }) }}">
+                                {# 
+                                    wow.  can't believe the statement below actually worked. This gets only
+                                    the last element of the collection of actions and returns the status. genious.
+                                #}
+                                {% if approve.actions|length > 0 %}
+                                    {% for action in approve.actions|slice(-1) %}
+                                        {{action.action}}
+                                    {% endfor %}
+                                {% else %}
+                                    PENDING - No action taken
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        Nothing has been approved
+    {% endif %}
+    <hr>
+    
+    <div class="alert alert-danger">
+        <strong>Denied</strong> Permits:
+    </div>
+    {% if denied is not empty %}
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th class="col-xs-6">Permit Description</th>
+                    <th class="col-xs-6">Permit Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for deny in denied %}
+                    <tr>
+                        <td class="col-xs-6">
+                            {{deny.submitDate|date('M d, Y')}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            <a href="{{path('adminPermitShow', {'id' : deny.id})}}">{{ deny.type }}</a>
+                        </td>
+                        <td class="col-xs-6">
+                            <span class="badge">{{deny.actions|length}}</span> Actions&nbsp;&nbsp;|&nbsp;&nbsp;
+                            <a href="{{ path('adminPermitActionNew', { 'id' : deny.id }) }}">
+                                {# 
+                                    wow.  can't believe the statement below actually worked. This gets only
+                                    the last element of the collection of actions and returns the status. genious.
+                                #}
+                                {% if deny.actions|length > 0 %}
+                                    {% for action in deny.actions|slice(-1) %}
+                                        {{action.action}}
+                                    {% endfor %}
+                                {% else %}
+                                    PENDING - No action taken
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        Nothing has been denied
+    {% endif %}
+    
+{% endblock %}

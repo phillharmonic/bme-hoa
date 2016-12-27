@@ -34,10 +34,9 @@ decided_by:     string length: 250  (I was going to join this to the user entity
 #}
 
 
-{% extends 'alt-layout.html.twig' %}
+{% extends 'alt-layout-no-sidebar.html.twig' %}
 {% block title %}Submit Permit{% endblock %}
 {% block pageheader %}<h1>Official Business</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
-{% block sidenav %} {{ include('sidebars/alt-generic.html.twig') }}  {% endblock %}
 {% block content %}
     
     <ol class="breadcrumb">

@@ -1,0 +1,118 @@
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block title %}Permit Action{% endblock %}
+{% block pageheader %}<h1>Administrative</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+{% form_theme form 'form/bootstrap_3_layout.html.twig' %}    
+{#
+    TODO:   - set parameter: how many board votes required to pass: 51%, 2/3%, etc
+            - display board members who haven't voted
+            - upon all board members voting - issue email decision & set the decided_by field
+            - create a cron job that issues reminders for outstanding issues
+            - create a vote interface based upon trustee_role - to keep votes straight and recorded
+            - 
+    
+#}    
+    
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Administrative</a></li>
+        <li class="breadcrumb-item"><a href="#">Manage Permits</a></li>
+        <li class="breadcrumb-item active">Take Action on Permit #{{permit.id}}</li>
+    </ol>
+    
+    {% if (permit.isApproved == 1) or (permit.isDenied == 1) %}{% else %}
+        <hr>
+        <h2>Take Action&nbsp;&nbsp;<small><small>ON PERMIT #{{permit.id}}</small></small></h2>    
+        <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+        <hr>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}    
+        <hr style="margin-top: 50px;">
+    {% endif %}
+    
+    {% if permit.actions is not null %}
+        {% for action in permit.actions %}
+            <h2>Action&nbsp;&nbsp;<small><small></small></small></h2>    
+            <h5><span class="glyphicon glyphicon-time"></span>&nbsp;TAKEN ON: {{ action.dateTaken|date('l, F j, Y') }}</h5> 
+            <hr>
+            <ul>
+                <li>
+                    {% if 'PENDING' in action.action %}
+                        <span class="label label-warning">PENDING</span>&nbsp;{{ action.action|trim('PENDING') }}
+                    {% elseif 'APPROVED' in action.action %}
+                        <span class="label label-success">APPROVED</span>&nbsp;{{ action.action|trim('APPROVED') }}
+                    {% else %}
+                        <span class="label label-danger">DENIED</span>&nbsp;{{ action.action|trim('DENIED') }}
+                    {% endif %}
+                </li>
+                <li style="margin-top:15px;"><strong>Details:</strong> {{ action.description }}</li>
+                {% if action.isResolved == 1 %}
+                    <li style="margin-top:15px;"><strong>Permit Status:&nbsp;&nbsp;</strong><span class="label label-success">RESOLVED</span></li>
+                {% else %}
+                    <li style="margin-top:15px;"><strong>Permit Status:&nbsp;&nbsp;</strong><span class="label label-danger">FURTHER ACTION REQUIRED</span></li>
+                {% endif %}
+            </ul><hr style="margin-top: 50px;">
+        {% endfor %}
+    {%  endif %}
+    
+    </br></br>
+    <h2>PERMIT #{{permit.id}}<small>&nbsp;&nbsp;&nbsp;{{permit.type}}</small></h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+    
+    <p style="line-height: .6em; font-size: 10pt;"><strong>From:</strong> {{permit.user.fullname}}<small>&nbsp;&nbsp;<a href="mailto:{{permit.user.email}}">&#60;{{permit.user.email}}&#62;</a></small></p>
+    <p style="line-height: .6em; font-size: 10pt;"><strong>Sent:</strong> {{ "now" | date("l, F j, Y g:i A") }}</p>
+    <p style="line-height: .6em; font-size: 10pt;"><strong>To:</strong> BME Board of Directors</p>
+    <p style="line-height: .6em; font-size: 10pt;"><strong>Subject:</strong> Permit Request: {{permit.type}}</p>
+    
+    <div style="width:100%; text-align:center; padding-top: 30px;">
+            <h3>APPLICATION FOR EXTERIOR IMPROVEMENTS</h3>
+    </div>
+    <p>If you are interested in completing exterior improvements please be aware of the guidelines set by your Covenants and Deed Restrictions. For pre-approval and acceptance of your proposed improvements, please complete this form and submit to the management company for review. Upon verification that your proposed changes are within the guidelines of your Association, you will be notified, in writing, within 30 days of the receipt of your request at the management office. Your association account balance must be current and in good standing before an improvement will be approved.</p>
+    <ol class="list" style="width: 80%;margin-left: 5%;padding-bottom: 2%;">
+            <li>Complete all information on this application, along with detailed drawings or literature showing your proposed improvements.</li>
+            <li>Approval of application is good for one year from the date it is approved by the Association. </li>
+            <li>A Homeowner may, in the future, be required to remove all or part of an improvement for maintenance of a common area if the improvement restricts access to make a repair to common property. The Homeowner will be responsible for any cost incurred to assess that area.</li>
+            <li>Submit one application per requested improvement. </li>
+    </ol>
+    <p style="padding: 20px 0;"><strong>Please describe in detail the proposed improvement:</strong></p>		
+    {% for eachLine in descArray %}
+        {{eachLine}}<hr>
+    {% endfor %}	
+    <p style="padding: 30px 0;"><strong>Please provide location(s) of improvement and drawing showing proposed installation:</strong></p>		
+    {% for eachLine in locArray %}
+        {{eachLine}}<hr>
+    {% endfor %}
+    <div class="center pad-bottom-small" style="width: 100%;text-align: center;padding-bottom: 15px;">
+            <p><small>(use reverse side for drawing if needed)</small></p>
+    </div>
+    <div class="pad-bottom-huge" style="padding-bottom: 75px;">
+            <p><strong>(Please include drawings/pictures of improvements and a copy of the plat showing placement upon the Lot)</strong></p>
+    </div>
+    <div class="center pad-bottom-huge" style="width: 100%;text-align: center;padding-bottom: 75px;">
+            <p><strong><span class="label label-success"><a href="{{ asset('uploads/drawings/' ~ permit.drawings) }}">View Attachment (PDF)</a></span></strong></p>
+    </div>
+    
+    <div style="margin: 5px 0;overflow: hidden;width: 60%; height: 30px;">
+      <div style="float: left;padding: 10px;width: auto;border: none;height: 30px;">Name of Association:</div><div style="padding: 10px;overflow: hidden;border-bottom: 1pt solid #000;height: 30px;">Brandy Mill Estates Homeowners Association</div>
+    </div>
+    <div style="margin: 5px 0;overflow: hidden;width: 60%; height: 30px;">
+      <div style="float: left;padding: 10px;width: auto;border: none;height: 30px;">Name of Applicant:</div><div style="padding: 10px;overflow: hidden;border-bottom: 1pt solid #000;height: 30px;">{{permit.user.fullname}}</div>
+    </div>
+    <div style="margin: 5px 0;overflow: hidden;width: 60%; height: 30px;">
+      <div style="float: left;padding: 10px;width: auto;border: none;height: 30px;">Property Address:</div><div style="padding: 10px;overflow: hidden;border-bottom: 1pt solid #000;height: 30px;">{{permit.user.houseNumber}} {{permit.user.street}}, Etna OH 43062</div>
+    </div>
+    <div style="margin: 5px 0;overflow: hidden;width: 60%; height: 30px;">
+      <div style="float: left;padding: 10px;width: auto;border: none;height: 30px;">Home Phone:</div><div style="float: left;padding: 10px;width: 25%;overflow: hidden;border-bottom: 1pt solid #000;height: 30px;">{{ permit.user.homephone|phone }}</div>
+      <div style="float: left;padding: 10px;width: auto;border: none;height: 30px;">Cell Phone:</div><div style="padding: 10px;overflow: hidden;border-bottom: 1pt solid #000;height: 30px;">{{ permit.user.cellphone|phone }}</div>
+    </div>
+    <div style="margin: 5px 0;overflow: hidden;width: 60%; height: 30px;">
+      <div style="float: left;padding: 10px;width: auto;border: none;height: 30px;">Date of Application:</div><div style="padding: 10px;overflow: hidden;border-bottom: 1pt solid #000;height: 30px;">{{ permit.submitDate|date('l, F j, Y g:i A') }}</div>
+    </div>
+    <div style="width: 100%;text-align: center;padding-bottom: 30px;"></div>
+    <div style="width: 100%;text-align: center;padding-bottom: 15px; height: 30px;">
+        <p><small>Please copy as needed. Extra forms for print are available at <a href="http://www.sbspropertymanagement.com">sbspropertymanagement.com</a></small></p>
+    </div>
+    
+{% endblock %}

@@ -18,14 +18,27 @@ use AppBundle\Form\ChooseUsersPropertyForm;
 class AccountController extends Controller
 {
     
+    /**
+     * @Route(
+     *      "/personal/account/dependent/add", 
+     *      name="personalAccountDependentAdd",
+     *      requirements={
+     *     }
+     * )
+     */      
     public function addDependentAction(Request $request){
         $dependent = new Dependents();
         $photo = new Photos();
         $dependent->getPhotos()->add($photo);
         $user = $this->getUser();
         //send the entity manager to the Form - so we can assign default choices for related data:
-        $form = $this->createForm(new DependentsForm($this->getDoctrine()->getManager()), $dependent);
+        //$form = $this->createForm(new DependentsForm($this->getDoctrine()->getManager()), $dependent);
 
+        $form = $this->createForm(DependentsForm::class, $dependent, array(
+            'action' => $this->generateUrl('personalAccountDependentAdd'),
+            'method' => 'POST',
+        ));
+        
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -38,12 +51,12 @@ class AccountController extends Controller
 
                 // Redirect - This is important to prevent users re-posting
                 // the form if they refresh the page
-                return $this->redirect($this->generateUrl('MainBundle_Account_Show', array(
+                return $this->redirect($this->generateUrl('personalAccountShow', array(
                     'id'    => $user->getId(),
                 )));
         }}  
 
-        return $this->render('MainBundle:Account:addDependent.html.twig' , array(
+        return $this->render('account/addDependent.html.twig' , array(
             'form' => $form->createView()
         ));
     }

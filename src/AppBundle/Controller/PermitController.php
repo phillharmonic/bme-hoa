@@ -21,6 +21,33 @@ use AppBundle\Form\PermitForm;
  */
 class PermitController extends Controller {
 
+    /**
+     * @Route(
+     *      "/permit/index/", 
+     *      name="permitIndex",
+     *      requirements={
+     *     }
+     * )
+     */  
+    public function permitIndexAction(){
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager ();
+        //unresolved permits
+        $unresolvedPermits = $em->getRepository('AppBundle:Permit')->getAllUnresolvedPermits();
+        
+        //approved permits
+        $approvedPermits = $em->getRepository('AppBundle:Permit')->getAllApprovedPermits();
+        
+        //denied permits
+        $deniedPermits = $em->getRepository('AppBundle:Permit')->getAllDeniedPermits();
+        
+        return $this->render('permits/index.html.twig', array(
+            'permits'   => $unresolvedPermits,
+            'approved'  => $approvedPermits,
+            'denied'    => $deniedPermits,
+        ));
+    }
+    
     
     /**
      * @Route(
@@ -55,11 +82,6 @@ class PermitController extends Controller {
      */ 
     public function indexAdminAction(){
         $em = $this->getDoctrine()->getManager ();
-        $permits = $em->getRepository('AppBundle:Permit')->findAll();
-        
-        //resolved permits
-        $resolvedPermits = $em->getRepository('AppBundle:Permit')->getResolvedPermits();
-        
         //unresolved permits
         $unresolvedPermits = $em->getRepository('AppBundle:Permit')->getUnresolvedPermits();
         
@@ -71,7 +93,6 @@ class PermitController extends Controller {
         
         return $this->render('permits/adminPermitIndex.html.twig', array(
             'permits'   => $unresolvedPermits,
-            'resolved'  => $resolvedPermits,
             'approved'  => $approvedPermits,
             'denied'    => $deniedPermits,
         ));
@@ -156,4 +177,27 @@ class PermitController extends Controller {
              'form'  =>  $form->createView(),
         ));
     }        
+    
+    /**
+     * @Route("/user/permit/index", name="userPermitIndex")
+     */ 
+    public function userPermitIndexAction(){
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager ();        
+        //unresolved permits
+        $unresolvedPermits = $em->getRepository('AppBundle:Permit')->getUserUnresolvedPermits($user);
+        
+        //approved permits
+        $approvedPermits = $em->getRepository('AppBundle:Permit')->getUserApprovedPermits($user);
+        
+        //denied permits
+        $deniedPermits = $em->getRepository('AppBundle:Permit')->getUserDeniedPermits($user);
+        
+        return $this->render('permits/userPermitIndex.html.twig', array(
+            'permits'   => $unresolvedPermits,
+            'approved'  => $approvedPermits,
+            'denied'    => $deniedPermits,
+        ));
+    }    
+    
     }

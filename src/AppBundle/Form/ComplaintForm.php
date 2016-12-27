@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Complaint;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -9,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ComplaintForm extends AbstractType {
     
@@ -38,6 +40,11 @@ class ComplaintForm extends AbstractType {
         $builder->add('reg_violated', TextareaType::class, array(
             'label'         =>  'Regulation in violation'
         ));
+        $builder->add('photos', CollectionType::class, array(
+            'entry_type'   => PhotoAltForm::class,
+            'allow_add'    => true,
+            'by_reference' => false,
+        ));
         
         $builder->add('save', SubmitType::class, array('label' => 'Submit'));
         
@@ -46,7 +53,7 @@ class ComplaintForm extends AbstractType {
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Complaint',
+            'data_class' => Complaint::class,
         ));
     }
     

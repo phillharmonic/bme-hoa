@@ -27,7 +27,7 @@ class Photos
     protected $name;   
     
     /**
-     * @ORM\Column(type="string", length=250)
+     * @ORM\Column(type="string", length=250, nullable=true)
      */
     protected $description;
     
@@ -46,6 +46,12 @@ class Photos
      * @ORM\ManyToMany(targetEntity="Term", mappedBy="photos")
      */    
     private $terms;
+    
+    /**
+     * Many Photos have Many Terms.
+     * @ORM\ManyToMany(targetEntity="Complaint", mappedBy="photos")
+     */    
+    private $complaint;
     
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -233,5 +239,39 @@ class Photos
     public function getTerms()
     {
         return $this->terms;
+    }
+
+    /**
+     * Add complaint
+     *
+     * @param \AppBundle\Entity\Complaint $complaint
+     *
+     * @return Photos
+     */
+    public function addComplaint(\AppBundle\Entity\Complaint $complaint)
+    {
+        $this->complaint[] = $complaint;
+
+        return $this;
+    }
+
+    /**
+     * Remove complaint
+     *
+     * @param \AppBundle\Entity\Complaint $complaint
+     */
+    public function removeComplaint(\AppBundle\Entity\Complaint $complaint)
+    {
+        $this->complaint->removeElement($complaint);
+    }
+
+    /**
+     * Get complaint
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComplaint()
+    {
+        return $this->complaint;
     }
 }

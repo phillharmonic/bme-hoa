@@ -1,3 +1,14 @@
-{# empty Twig template #}
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block title %}TEST PAGE{% endblock %}
+{% block pageheader %}<h1>TEST PAGE</small></h1><p>...because sometimes you just need to test your code.</p>{% endblock %}
+{% block content %}
 
-Var: {{ dump(var) }}
+    Var: {{ dump(var) }}
+
+    {% if 'bad' in 'abcde' %}
+        TRUE: 'bad' IS in the string 'abcde'
+    {% else %}
+        FALSE: 'bad' is NOT in the string 'abcde'
+    {% endif %}
+
+{% endblock %}

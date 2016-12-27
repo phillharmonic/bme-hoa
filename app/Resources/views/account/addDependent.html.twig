@@ -1,52 +1,49 @@
-{# empty Twig template #}
-{# src/MainBundle/Resources/views/Account/edit.html.twig #}
-{% extends 'MainBundle::layout.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}<link href="{{ asset('bundles/main/css/forms.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
+{% extends 'alt-layout.html.twig' %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/main/js/form.js') }}"></script>
+    {#<script type="text/javascript" src="{{ asset('bundles/main/js/form.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('bundles/main/js/add_delete.js') }}"></script>
-{% endblock %}
-{% block sidebar %}
-    {% render controller("MainBundle:Sidebar:account") %}
-{% endblock %}
+{% endblock %}  
 {% block title %}Add Dependent{% endblock %}
-{% block body %}     
-{% form_theme form 'form/fields.html.twig' %}
-        <div class="section-header"><h1>Dependent</h1></div>
-        
-        <form action="{{ path('MainBundle_Account_AddDependent') }}" method="post" {{ form_enctype(form) }} class="user">
-        {# {{ form_widget(form) }} #}
+{% block pageheader %}<h1>My Account</small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block sidenav %} {{ include('sidebars/account.html.twig') }}  {% endblock %}
+{% block content %} 
+    
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">My Account</a></li>
+        <li class="breadcrumb-item"><a href="#">Profile</a></li>
+        <li class="breadcrumb-item active">Add Dependent</li>
+    </ol>
+    <hr>
+    <h2>Add Dependent&nbsp;&nbsp;<small><small>NEW</small></small></h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
+    <hr>
+
+{% form_theme form 'form/bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form) }}
         {{ form_errors(form) }}
-        <div class="section-header"><h6>Add Dependent</h6></div>
-            {{ form_row(form.firstname) }}
-            {{ form_row(form.mi) }}
-            {{ form_row(form.lastname) }}
-            {{ form_row(form.gender) }}
-            <div class='dates'>{{ form_row(form.bday) }}</div>
-            {{ form_row(form.cellphone) }}
-            {{ form_row(form.spouse) }}
-            {{ form_row(form.type) }}
-            
-            <div class="section-header"><h6>Pictures</h6></div>
-            {#  data-prototype becomes available after adding the 'allow-add' option in the collection builder 
-                of the form.  This "prototype" is a little "template" that contains all the HTML to be able to 
-                render any new "photo" forms: #}
-            <div class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
-                {# iterate over each existing tag and render its only field: description #}
-                {% for picture in form.photos %}
-                    <section>
-                        {{ form_row(picture.name) }}
-                        {{ form_row(picture.description) }}
-                        {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
-                    </section>
-                {% endfor %}
-            </div>
-            
-            {{ form_rest(form) }}
-            <input type="submit" value="Submit" />
-        </form>
+        {{ form_row(form.spouse) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.mi) }}
+        {{ form_row(form.lastname) }}
+        {{ form_row(form.gender) }}
+        <div class='dates'>{{ form_row(form.bday) }}</div>
+        {{ form_row(form.cellphone) }}
+        {{ form_row(form.type) }}
+        {#  data-prototype becomes available after adding the 'allow-add' option in the collection builder 
+            of the form.  This "prototype" is a little "template" that contains all the HTML to be able to 
+            render any new "photo" forms: #}
+        <div class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+            {# iterate over each existing tag and render its only field: description #}
+            {% for picture in form.photos %}
+                <section>
+                    {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
+                </section>
+            {% endfor %}
+        </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }} 
         
 {% endblock %}

@@ -10,11 +10,94 @@ namespace AppBundle\Entity\Repository;
  */
 class PermitRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getResolvedPermits(){
+    public function getSortedActionsForPermit($permit){
         $qb = $this->createQueryBuilder('p')
+                    ->select('p', 'a')
+                    ->leftJoin('p.action', 'a')
+                    ->where('a = :permit')
+                    ->setParameter('permit', $permit)
+                    ->orderBy('a.date_taken', 'DESC');
+        
+        return $qb->getQuery()
+                  ->getResult();
+    }
+    
+    public function getUserUnresolvedPermits($user){
+        
+            $qb = $this->createQueryBuilder('p')
+                    ->select('p', 'u')
+                    ->leftJoin('p.user', 'u')
+                    ->where('u = :user')
+                    ->andWhere('p.is_approved is null')
+                    ->andWhere('p.is_denied is null')
+                    ->setParameter('user', $user)
+                    ->orderBy('p.submit_date', 'DESC');
+
+            return $qb->getQuery()->getResult();   
+    }
+    public function getAllUnresolvedPermits(){
+        
+            $qb = $this->createQueryBuilder('p')
+                    ->select('p')
+                    ->where('p.is_approved is null')
+                    ->andWhere('p.is_denied is null')
+                    ->orderBy('p.submit_date', 'DESC');
+
+            return $qb->getQuery()->getResult();   
+    }
+    
+    public function getUserApprovedPermits($user){
+        $qb = $this->createQueryBuilder('p')
+                ->select('p', 'u')
+                ->leftJoin('p.user', 'u')
+                ->where('u = :user')
+                ->andWhere('p.is_approved = 1')
+                ->setParameter('user', $user)
+                ->orderBy('p.submit_date', 'DESC');
+
+        return $qb->getQuery()->getResult();   
+    }
+    public function getAllApprovedPermits(){
+        $qb = $this->createQueryBuilder('p')
+                ->select('p')
+                ->where('p.is_approved = 1')
+                ->orderBy('p.submit_date', 'DESC');
+
+        return $qb->getQuery()->getResult();   
+    }
+    
+    public function getUserDeniedPermits($user){
+        $qb = $this->createQueryBuilder('p')
+                ->select('p', 'u')
+                ->leftJoin('p.user', 'u')
+                ->where('u = :user')
+                ->andWhere('p.is_denied = 1')
+                ->setParameter('user', $user)
+                ->orderBy('p.submit_date', 'DESC');
+
+        return $qb->getQuery()->getResult();   
+    }
+    public function getAllDeniedPermits(){
+        $qb = $this->createQueryBuilder('p')
+                ->select('p')
+                ->where('p.is_denied = 1')
+                ->orderBy('p.submit_date', 'DESC');
+
+        return $qb->getQuery()->getResult();   
+    }
+    
+    public function getResolvedPermits($userId = null){
+        if(!is_null($userId)){
+            $qb = $this->createQueryBuilder('p')
                    ->select('p')
                    ->where('p.is_approved is not null')
                    ->orWhere('p.is_denied is not null');
+        }else{
+            $qb = $this->createQueryBuilder('p')
+                   ->select('p')
+                   ->where('p.is_approved is not null')
+                   ->orWhere('p.is_denied is not null');
+        }
         
         return $qb->getQuery()
                   ->getResult();

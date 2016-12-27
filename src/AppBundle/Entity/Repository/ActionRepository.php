@@ -10,4 +10,28 @@ namespace AppBundle\Entity\Repository;
  */
 class ActionRepository extends \Doctrine\ORM\EntityRepository
 {
+        public function getSortedActionsForPermit($permit){
+            //not working
+//            $query = $em->createQuery(""
+//                    . "SELECT a "
+//                    . "FROM Action a "
+//                    . "JOIN a.permits p "
+//                    . "WHERE p.city = 'Berlin'"
+//                    . "");
+//            
+//            
+//            return $query->getResult();
+            
+//        $qb = $this->createQueryBuilder('a')
+//                    ->select('a', 'p')
+//                    ->innerJoin('a.permits', 'p')
+//                    ->where('p = :permits')
+//                    ->setParameter('permit', $permit)
+//                    ->orderBy('a.date_taken', 'DESC');
+        
+        return $qb->getQuery()
+                  ->getResult();
+        
+    }
+
 }

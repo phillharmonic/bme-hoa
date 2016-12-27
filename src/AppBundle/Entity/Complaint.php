@@ -24,8 +24,8 @@ class Complaint
     protected $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="complaints", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $user;    
     
@@ -40,7 +40,7 @@ class Complaint
     protected $type;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $details;
     
@@ -85,6 +85,11 @@ class Complaint
      */
     protected $actions;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", inversedBy="complaint", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $photos;
     
     /**
      * Constructor
@@ -92,8 +97,22 @@ class Complaint
     public function __construct()
     {
         $this->actions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
+    /**
+     * @ORM\PrePersist
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $complaint = $args->getEntity();
+        if($complaint->getTimestamp() === null){ 
+            $complaint->setTimestamp(new \DateTime());
+        }
+    }    
+    
 
 
     /**
@@ -347,23 +366,33 @@ class Complaint
     }
 
     /**
-     * Set user
+     * Add user
      *
      * @param \AppBundle\Entity\User $user
      *
      * @return Complaint
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function addUser(\AppBundle\Entity\User $user)
     {
-        $this->user = $user;
+        $this->user[] = $user;
 
         return $this;
     }
 
     /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUser()
     {
@@ -403,17 +432,38 @@ class Complaint
     {
         return $this->actions;
     }
-    
+
     /**
-     * @ORM\PrePersist
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     * Add photo
+     *
+     * @param \AppBundle\Entity\Photos $photo
+     *
+     * @return Complaint
      */
-    public function prePersist(LifecycleEventArgs $args)
+    public function addPhoto(\AppBundle\Entity\Photos $photo)
     {
-        $complaint = $args->getEntity();
-        if($complaint->getTimestamp() === null){ 
-            $complaint->setTimestamp(new \DateTime());
-        }
-    }    
-    
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photos $photo
+     */
+    public function removePhoto(\AppBundle\Entity\Photos $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
 }

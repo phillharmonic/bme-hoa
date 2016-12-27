@@ -1,0 +1,214 @@
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block title %}Complaints{% endblock %}
+{% block pageheader %}<h1>Official Business</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Official Business</a></li>
+        <li class="breadcrumb-item"><a href="#">Board of Directors</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('indexComplaintProtected') }}">Complaints</a></li>
+        <li class="breadcrumb-item active">Show Complaint #{{complaint.id}}</li>
+    </ol>
+    <hr>
+    
+    <h2>Complaint #{{complaint.id}}&nbsp;&nbsp;<small>{% for user in complaint.user %}{{user.lastname}}{% endfor %} Vs. {{ complaint.defendentName }}</small></h2>    
+    <h5><span class="glyphicon glyphicon-time"></span> Submitted: {{ complaint.timestamp|date('m-d-y') }}</h5>
+    {% if complaint.isResolved == 1 %}
+        <span class="label label-success">RESOLVED</span>
+    {% else %}
+        <span class="label label-warning">UNRESOLVED</span>
+    {% endif %}
+    <hr>
+
+    <div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Complainant Type
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {{complaint.type}}
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Complainant
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {% for user in complaint.user %}{{user.fullname}}{% endfor %} 
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Complainant Address
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {% for user in complaint.user %}{{user.houseNumber}} {{user.street}}, Etna, OH 43062{% endfor %}                 
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Respondent
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {{complaint.defendentName}}
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Respondent Address
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {{complaint.defendentAddress}}, Etna, OH 43062
+            </div>
+        </div>                
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Details
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {{complaint.details}}
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Regulation Violated
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {{complaint.regViolated}}
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Assigned To
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {{complaint.assignedTo|capitalize}}
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Complaint Status
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {% if complaint.isResolved is null or complaint.isResolved == 0 %}
+                    Unresolved
+                {% else %}
+                    Resolved
+                {% endif %}
+            </div>
+        </div>
+        <div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Date Updated
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {% if complaint.dateUpdated is not null%}
+                    {{complaint.dateUpdated|date('m-d-y')}}
+                {% else %}
+                    No update
+                {% endif %}
+            </div>
+        </div><div class="block-cont">
+            <div class="col-sm-2 col-xs-4 left-block">
+                Date Resolved
+            </div>
+            <div class="col-sm-10 col-xs-8 right-block">
+                {% if complaint.dateResolved is not null%}
+                    {{complaint.dateResolved|date('m-d-y')}}
+                {% else %}
+                    Unresolved
+                {% endif %}
+            </div>
+        </div>
+            
+        {% if complaint.photos|length > 0 %}
+        <div class="block-cont" style="height: 300px;">
+            <div class="block-cont">
+                <div class="col-sm-2 col-xs-4 left-block">   
+                    Photos of Complaint
+                </div>
+                <div class="col-sm-10 col-xs-8 right-block">
+
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 400px;">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        {% for pic in complaint.photos %}
+                            <li data-target="#myCarousel" data-slide-to="{{loop.index}}" {% if loop.index0 == 0 %} class="active" {% endif %}></li>
+                        {% endfor %}
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        {% for pic in complaint.photos %}
+                            <div {% if loop.index0 == 0 %} class="item active" {% else %} class="item" {% endif %} >
+                                <a href="{{pic.path}}"><img src="{{pic.path}}" /></a>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                </div>
+            </div>
+        </div>
+    {% endif%}        
+    
+    {% if complaint.actions is not null %}
+        {% for action in complaint.actions %}
+            <hr>
+            <h2>Action Taken&nbsp;&nbsp;</h2>    
+            <h5><span class="glyphicon glyphicon-time"></span>&nbsp;TAKEN ON: {{ action.dateTaken|date('l, F j, Y') }}</h5> 
+            {% if 'PROBLEM RESOLVED' in action.action %}
+                <span class="label label-success">RESOLVED</span>
+            {% else %}
+                <span class="label label-warning">UNRESOLVED</span>
+            {% endif %}
+            <hr>
+            <div>
+                <div class="block-cont">
+                    <div class="col-sm-2 col-xs-4 left-block">
+                        Action
+                    </div>
+                    <div class="col-sm-10 col-xs-8 right-block">
+                        {{ action.action }}
+                    </div>
+                </div>
+                <div class="block-cont">
+                    <div class="col-sm-2 col-xs-4 left-block">
+                        Details
+                    </div>
+                    <div class="col-sm-10 col-xs-8 right-block">
+                        {{action.description}}
+                    </div>
+                </div>
+                <div class="block-cont">
+                    <div class="col-sm-2 col-xs-4 left-block">
+                        Complaint Status
+                    </div>
+                    {% if action.isResolved == 1 %}
+                        <div class="col-sm-10 col-xs-8 right-block">
+                            <span class="label label-success">RESOLVED</span>
+                        </div>
+                    {% else %}
+                        <div class="col-sm-10 col-xs-8 right-block">
+                            FURTHER ACTION REQUIRED
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+           
+        {% endfor %}
+    {%  endif %}
+
+{% endblock %}

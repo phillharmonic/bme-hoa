@@ -16,142 +16,130 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Administrative</a></li>
-        <li class="breadcrumb-item">Manage Permits</li>
+        <li class="breadcrumb-item">Permits</li>
     </ol>
     <hr>
-    <h2>Manage Permits <small>ADMINISTRATIVE</small></h2>    
+    <h2>Permits <small>ADMINISTRATIVE</small></h2>    
     <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
     <hr>
     
-    <h4>Approved Permits&nbsp;&nbsp;&nbsp;<span class="label label-success">APPROVED - NO ACTION REQUIRED</span></h4><hr>
-    {% if approved is not empty %}
-        <table class="table table-striped table-responsive">
-            <thead>
-                <tr>
-                    <th class="col-xs-3">Date Submitted</th>
-                    <th class="col-xs-3">Type of Permit</th>
-                    <th class="col-xs-3">Submitted By</th>
-                    <th class="col-xs-3">Address</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for approve in approved %}
-                    <tr>
-                        <td class="col-xs-3">
-                            {{approve.submitDate|date('M d, Y')}}
-                        </td>
-                        <td class="col-xs-3">
-                            <a href="{{path('adminPermitShow', {'id' : approve.id})}}">{{ approve.type }}</a>
-                        </td>
-                        <td class="col-xs-3">
-                            {{approve.user.fullname}}
-                        </td>
-                        <td class="col-xs-3">
-                            {{approve.user.housenumber}} {{approve.user.street}}
-                        </td>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        Nothing has been approved
-    {% endif %}
-    <hr>
-    
-    <h4>Denied Permits&nbsp;&nbsp;&nbsp;<span class="label label-default">DENIED - POOR BASTARDS</span></h4><hr>
-    {% if denied is not empty %}
-        <table class="table table-striped table-responsive">
-            <thead>
-                <tr>
-                    <th class="col-xs-3">Date Submitted</th>
-                    <th class="col-xs-3">Type of Permit</th>
-                    <th class="col-xs-3">Submitted By</th>
-                    <th class="col-xs-3">Address</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for deny in denied %}
-                    <tr>
-                        <td class="col-xs-3">
-                            {{deny.submitDate|date('M d, Y')}}
-                        </td>
-                        <td class="col-xs-3">
-                            <a href="{{path('adminPermitShow', {'id' : deny.id})}}">{{ deny.type }}</a>
-                        </td>
-                        <td class="col-xs-3">
-                            {{deny.user.fullname}}
-                        </td>
-                        <td class="col-xs-3">
-                            {{deny.user.housenumber}} {{deny.user.street}}
-                        </td>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        Nothing has been denied
-    {% endif %}
-    <hr>
-    
-    <h4>Resolved Permits&nbsp;&nbsp;&nbsp;<span class="label label-success">RESOLVED - NO ACTION REQUIRED</span></h4><hr>
-    {% if resolved is not empty %}
-        <table class="table table-striped table-responsive">
-            <thead>
-                <tr>
-                    <th class="col-xs-3">Date Submitted</th>
-                    <th class="col-xs-3">Type of Permit</th>
-                    <th class="col-xs-3">Submitted By</th>
-                    <th class="col-xs-3">Address</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for resolve in resolved %}
-                    <tr>
-                        <td class="col-xs-3">
-                            {{resolve.submitDate|date('M d, Y')}}
-                        </td>
-                        <td class="col-xs-3">
-                            <a href="{{path('adminPermitShow', {'id' : resolve.id})}}">{{ resolve.type }}</a>
-                        </td>
-                        <td class="col-xs-3">
-                            {{resolve.user.fullname}}
-                        </td>
-                        <td class="col-xs-3">
-                            {{resolve.user.housenumber}} {{resolve.user.street}}
-                        </td>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        Nothing has been resolved
-    {% endif %}
-    <hr>
-    
-    <h4>Unresolved Permits&nbsp;&nbsp;&nbsp;<span class="label label-danger">ACTION REQUIRED</span></h4><hr>
+    <div class="alert alert-warning">
+        <strong>Pending</strong> Permits:
+    </div>
     <table class="table table-striped table-responsive">
         <thead>
             <tr>
-                <th class="col-xs-3">Date Submitted</th>
-                <th class="col-xs-3">Type of Permit</th>
-                <th class="col-xs-3">Submitted By</th>
-                <th class="col-xs-3">Address</th>
+                <th class="col-xs-6">Permit Description</th>
+                <th class="col-xs-6">Permit Actions</th>
             </tr>
         </thead>
     <tbody>
         {% for permit in permits %}
             <tr>
-                <td class="col-xs-3">
-                    {{permit.submitDate|date('M d, Y')}}
+                <td class="col-xs-6">
+                    {{permit.submitDate|date('m/d/y')}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="{{path('adminPermitActionNew', {'id' : permit.id})}}">{{ permit.type }}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    {{permit.user.lastname}} - {{permit.user.housenumber}} {{permit.user.street}}
                 </td>
-                <td class="col-xs-3">
-                    <a href="{{path('adminPermitShow', {'id' : permit.id})}}">{{ permit.type }}</a>
+                <td class="col-xs-6">
+                    <span class="badge">{{permit.actions|length}}</span> Actions&nbsp;&nbsp;|&nbsp;&nbsp;
+                        {# 
+                            wow.  can't believe the statement below actually worked. This gets only
+                            the last element of the collection of actions and returns the status. genious.
+                        #}
+                        {% if permit.actions|length > 0 %}
+                            {% for action in permit.actions|slice(-1) %}
+                                {{action.action}}
+                            {% endfor %}
+                        {% else %}
+                            PENDING - No action taken
+                        {% endif %}
                 </td>
-                <td class="col-xs-3">
-                    {{permit.user.fullname}}
-                </td>
-                <td class="col-xs-3">
-                    {{permit.user.housenumber}} {{permit.user.street}}
-                </td>
+            </tr>
         {% endfor %}
     </tbody>
     </table>
+    <hr>
+    
+    <div class="alert alert-success">
+        <strong>Approved</strong> Permits:
+    </div>
+    {% if approved is not empty %}
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th class="col-xs-6">Permit Description</th>
+                <th class="col-xs-6">Permit Actions</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for approve in approved %}
+            <tr>
+                <td class="col-xs-6">
+                    {{approve.submitDate|date('m/d/y')}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="{{path('adminPermitActionNew', {'id' : approve.id})}}">{{ approve.type }}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    {{approve.user.lastname}} - {{approve.user.housenumber}} {{approve.user.street}}
+                </td>
+                <td class="col-xs-6">
+                    <span class="badge">{{approve.actions|length}}</span> Actions&nbsp;&nbsp;|&nbsp;&nbsp;
+                        {# 
+                            wow.  can't believe the statement below actually worked. This gets only
+                            the last element of the collection of actions and returns the status. genious.
+                        #}
+                        {% if approve.actions|length > 0 %}
+                            {% for action in approve.actions|slice(-1) %}
+                                {{action.action}}
+                            {% endfor %}
+                        {% else %}
+                            PENDING - No action taken
+                        {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>{% else %}
+        Nothing has been approved
+    {% endif %}
+    <hr>
+    
+    <div class="alert alert-danger">
+        <strong>Denied</strong> Permits:
+    </div>
+    {% if denied is not empty %}
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th class="col-xs-6">Permit Description</th>
+                <th class="col-xs-6">Permit Actions</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for deny in denied %}
+            <tr>
+                <td class="col-xs-6">
+                    {{deny.submitDate|date('m/d/y')}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="{{path('adminPermitActionNew', {'id' : deny.id})}}">{{ deny.type }}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    {{deny.user.lastname}} - {{deny.user.housenumber}} {{deny.user.street}}
+                </td>
+                <td class="col-xs-6">
+                    <span class="badge">{{deny.actions|length}}</span> Actions&nbsp;&nbsp;|&nbsp;&nbsp;
+                        {# 
+                            wow.  can't believe the statement below actually worked. This gets only
+                            the last element of the collection of actions and returns the status. genious.
+                        #}
+                        {% if deny.actions|length > 0 %}
+                            {% for action in deny.actions|slice(-1) %}
+                                {{action.action}}
+                            {% endfor %}
+                        {% else %}
+                            PENDING - No action taken
+                        {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>{% else %}
+        Nothing has been denied
+    {% endif %}
     
 {% endblock %}

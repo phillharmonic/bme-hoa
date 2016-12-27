@@ -132,6 +132,12 @@ class User extends BaseUser
     protected $vehicles;
     
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Complaint", inversedBy="user", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $complaints;    
+    
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", inversedBy="user", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
@@ -854,5 +860,39 @@ class User extends BaseUser
     public function getTerm()
     {
         return $this->term;
+    }
+
+    /**
+     * Add complaint
+     *
+     * @param \AppBundle\Entity\Complaint $complaint
+     *
+     * @return User
+     */
+    public function addComplaint(\AppBundle\Entity\Complaint $complaint)
+    {
+        $this->complaints[] = $complaint;
+
+        return $this;
+    }
+
+    /**
+     * Remove complaint
+     *
+     * @param \AppBundle\Entity\Complaint $complaint
+     */
+    public function removeComplaint(\AppBundle\Entity\Complaint $complaint)
+    {
+        $this->complaints->removeElement($complaint);
+    }
+
+    /**
+     * Get complaints
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComplaints()
+    {
+        return $this->complaints;
     }
 }

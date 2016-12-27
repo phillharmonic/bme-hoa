@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Form\PhotoForm;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TermForm extends AbstractType {
 

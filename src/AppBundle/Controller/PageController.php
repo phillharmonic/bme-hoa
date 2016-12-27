@@ -4,12 +4,9 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Enquiry;
-use AppBundle\Entity\Complaint;
 use AppBundle\Form\EnquiryForm;
-use AppBundle\Form\ComplaintForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
@@ -42,9 +39,16 @@ class PageController extends Controller
      */
     public function testAction() 
     {
-        $str = "If you are interested in completing exterior improvements please be aware of the guidelines set by your Covenants and Deed Restrictions. For pre-approval and acceptance of your proposed improvements, please complete this form and submit to the management company for review. Upon verification that your proposed changes are within the guidelines of your Association, you will be notified, in writing, within 30 days of the receipt of your request at the management office. Your association account balance must be current and in good standing before an improvement will be approved.";
+        //test1
+//        $str = "If you are interested in completing exterior improvements please be aware of the guidelines set by your Covenants and Deed Restrictions. For pre-approval and acceptance of your proposed improvements, please complete this form and submit to the management company for review. Upon verification that your proposed changes are within the guidelines of your Association, you will be notified, in writing, within 30 days of the receipt of your request at the management office. Your association account balance must be current and in good standing before an improvement will be approved.";
+//        $ar = str_split($str, 130);
         
-        $ar = str_split($str, 130);
+        //test2
+        $haystack = 'APPROVED - Other reason ~ see details';
+        $needle = 'APPROVED';
+        if (strpos($haystack, $needle) !== false) {
+            $ar = 'TRUE:    The string "'.$haystack.'" contains the word "'.$needle.'".';
+        }   
         
         return $this->render('pages/test.twig', array(
             'var' => $ar,
@@ -96,58 +100,6 @@ class PageController extends Controller
         }
 
         return $this->render('pages/contact.html.twig', array(
-             'form'  =>  $form->createView(),
-        ));
-    }    
-       
-    
-    /**
-     * @Route("/complaint/new", name="complaintNew")
-     */    
-    public function complaintAction(Request $request)
-    {
-        $complaint = new Complaint();
-        $form = $this->createForm(ComplaintForm::class, $complaint, array(
-            'action' => $this->generateUrl('complaintNew'),
-            'method' => 'POST',
-        ));
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                
-                $em = $this->getDoctrine()->getManager();
-                $complaint->setUser($this->getUser());
-                $complaint->setAssignedTo('unassigned');
-                $complaint->setIsResolved(0);
-                $em->persist($complaint);
-                $em->flush();
-                
-                
-                $message = \Swift_Message::newInstance();
-                $message    ->setSubject('New Complaint')
-                            ->setFrom($this->getUser()->getEmail())
-                            ->setTo($this->container->getParameter('bmehoa.emails.contact_email'))
-                            ->setBody(
-                                $this->renderView(
-                                    'emailTemplates/complaint.html.twig',
-                                    array('complaint' => $complaint)
-                                ),
-                                'text/html'
-                            );
-                $this->get('mailer')->send($message);
-                
-                $this->addFlash(
-                    'notice',
-                    'Your complaint was successfully submitted.  A response will be provided within 10 to 14 days.'
-                );
-                
-                return $this->redirect($this->generateUrl('home'));
-            }
-        }
-
-        return $this->render('pages/complaint.html.twig', array(
              'form'  =>  $form->createView(),
         ));
     }    

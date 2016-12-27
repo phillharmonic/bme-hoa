@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
-
+use Doctrine\Common\Collections\Criteria;
 /**
  * ComplaintRepository
  *
@@ -10,4 +10,32 @@ namespace AppBundle\Entity\Repository;
  */
 class ComplaintRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getUnresolvedComps($user = null){
+        if($user == null){
+            $qb = $this->createQueryBuilder('c')->select('c');
+            $qb->where('c.is_resolved = false');
+            return $qb->getQuery()->getResult();
+        }else{
+            $complaints = $user->getComplaints();
+            $newerCriteria = Criteria::create()
+                            ->where(Criteria::expr()->gt("is_resolved", false));
+        
+            return $complaints->matching($newerCriteria);
+        }
+        
+    }
+    
+    public function getResolvedComps($user = null){
+        if($user == null){
+            $qb = $this->createQueryBuilder('c')->select('c');
+            $qb->where('c.is_resolved = true');
+            return $qb->getQuery()->getResult();
+        }else{
+            $complaints = $user->getComplaints();
+            $newerCriteria = Criteria::create()
+                            ->where(Criteria::expr()->gt("is_resolved", true));
+        
+            return $complaints->matching($newerCriteria);
+        }
+    }
 }

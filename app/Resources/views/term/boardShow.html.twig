@@ -27,17 +27,19 @@
     </ol>
     <hr>
     
-    {% if bods is not null %}
-        {%  for bod in bods %}
+    {% if bods is not null %}  {# collection of users entity #}
+        {%  for bod in bods %}  {# a user entity #}
             {%  for term in bod.term %}
                 <h2>Trustee Profile</h2>    
                 <h5><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;TERM [{{ loop.index }}]&nbsp;: {{ term.startDate|date('F Y') }} to PRESENT</h5>
                 <hr>
-                <h3>{{term.trusteePosition}}&nbsp;&nbsp;|&nbsp;&nbsp;{{term.user.honorific}} {{term.user.firstname}} {{term.user.mi}} {{term.user.lastname}}</h3>
-                
+                <h3>{{term.trusteePosition}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    {# for user in term.user %}
+                        {{user.honorific}} {{user.firstname}} {{user.mi}} {{user.lastname}}</h3>
+                    {% endfor #}
                 <p style="white-space: pre-wrap;">{% for pic in term.photos|slice(0, 1) %}<img class="img-responsive" src='{{ pic.path }}' style="max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;" />{% endfor %}<span style="font-size: 18pt; color: grey;">Introduction</span></br></br>{{ term.aboutme }}</p>
                 <p>Sincerely,</p>
-                <p style='font-family: Yellowtail; font-size: 16pt; '>{{term.user.fullname}}</p>
+                <p style='font-family: Yellowtail; font-size: 16pt; '>{#term.user.fullname#}</p>
                 <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
                 <hr>
             {% endfor %}

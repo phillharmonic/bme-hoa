@@ -1,7 +1,9 @@
-{% extends 'alt-layout.html.twig' %}
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block javascripts %}{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/add_delete.js') }}"></script>
+{% endblock %}
 {% block title %}Log Complaint{% endblock %}
 {% block pageheader %}<h1>Official Business</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
-{% block sidenav %} {{ include('sidebars/alt-legal.html.twig') }}  {% endblock %}
 {% block content %}
     
     <ol class="breadcrumb">
@@ -17,8 +19,19 @@
 {% form_theme form 'form/bootstrap_3_layout.html.twig' %}
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.type) }}
+    {{ form_row(form.details) }}
+    {{ form_row(form.defendent_name) }}
+    {{ form_row(form.defendent_address) }}
+    {{ form_row(form.reg_violated) }}
+    <div class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+        {% for picture in form.photos %}
+            <section>
+                {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
+            </section>
+        {% endfor %}
+    </div>
+    {{ form_row(form.save) }}
     {{ form_end(form) }}    
-    </br></br>
-    Upload a Picture: <input type="file"></input>
+    
 {% endblock %}
