@@ -29,16 +29,15 @@ class ComplaintForm extends AbstractType {
             ),
         ));
         $builder->add('details', TextareaType::class, array(
-//            'label'         =>  'Type'
         ));
         $builder->add('defendent_name', TextType::class, array(
-            'label'         =>  'Accused\'s name'
+            'label'         =>  'Accused\'s name',
         ));
         $builder->add('defendent_address', TextType::class, array(
-            'label'         =>  'Accused\'s address'   
+            'label'         =>  'Accused\'s address',
         ));
         $builder->add('reg_violated', TextareaType::class, array(
-            'label'         =>  'Regulation in violation'
+            'label'         =>  'Regulation in violation',
         ));
         $builder->add('photos', CollectionType::class, array(
             'entry_type'   => PhotoAltForm::class,

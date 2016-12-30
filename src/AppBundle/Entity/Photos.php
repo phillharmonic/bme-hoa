@@ -48,10 +48,16 @@ class Photos
     private $terms;
     
     /**
-     * Many Photos have Many Terms.
+     * Many Photos have Many complaints.
      * @ORM\ManyToMany(targetEntity="Complaint", mappedBy="photos")
      */    
     private $complaint;
+    
+    /**
+     * Many Photos have Many vehicles.
+     * @ORM\ManyToMany(targetEntity="Complaint", mappedBy="photos")
+     */    
+    private $vehicles;    
     
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -273,5 +279,39 @@ class Photos
     public function getComplaint()
     {
         return $this->complaint;
+    }
+
+    /**
+     * Add vehicle
+     *
+     * @param \AppBundle\Entity\Complaint $vehicle
+     *
+     * @return Photos
+     */
+    public function addVehicle(\AppBundle\Entity\Complaint $vehicle)
+    {
+        $this->vehicles[] = $vehicle;
+
+        return $this;
+    }
+
+    /**
+     * Remove vehicle
+     *
+     * @param \AppBundle\Entity\Complaint $vehicle
+     */
+    public function removeVehicle(\AppBundle\Entity\Complaint $vehicle)
+    {
+        $this->vehicles->removeElement($vehicle);
+    }
+
+    /**
+     * Get vehicles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVehicles()
+    {
+        return $this->vehicles;
     }
 }

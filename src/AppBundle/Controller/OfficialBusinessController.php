@@ -19,4 +19,30 @@ class OfficialBusinessController extends Controller
         ));
     }
     
+    /**
+     * @Route(
+     *      "/protected/minutes/show/", 
+     *      name="showMinutesProtected"
+     * )
+     */       
+    public function showMinutesProtectedAction()
+    {
+        return $this->render('officialBusiness/showMinutesProtected.html.twig', array(
+            
+        ));
+    }
+    
+    /**
+     * @Route(
+     *      "/protected/agenda/show/", 
+     *      name="showAgendaProtected"
+     * )
+     */       
+    public function showAgendaProtectedAction()
+    {
+        return $this->render('officialBusiness/showAgendaProtected.html.twig', array(
+            
+        ));
+    }
+    
 }

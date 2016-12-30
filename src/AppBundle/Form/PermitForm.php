@@ -39,7 +39,7 @@ class PermitForm extends AbstractType {
             'label'         =>  'Please provide location(s) of improvement and drawing showing proposed installation'
         ));
         $builder->add('drawings', FileType::class, array(
-            'label' => 'Please include drawings/pictures of improvements and a copy of the plat showing placement upon the Lot (PDF file)'
+            'label' => 'Include drawings/pictures showing placement upon the Lot (PDF file)'
         ));
         
         $builder->add('save', SubmitType::class, array('label' => 'Submit'));

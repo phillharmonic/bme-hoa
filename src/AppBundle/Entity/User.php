@@ -141,7 +141,7 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", inversedBy="user", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
-    protected $term;    
+    protected $term;   
     
 //    /**
 //     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Account", mappedBy="users")
@@ -155,12 +155,23 @@ class User extends BaseUser
      */
     protected $account;
 
+    /**
+     * Get fullname
+     *
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->firstname.' '.$this->mi.'. '.$this->lastname;
+    }
+    
     
     /**
      * @ORM\Column(type="boolean")
      */
     protected $is_trustee;
     
+
     /**
      * Set firstname
      *
@@ -234,6 +245,54 @@ class User extends BaseUser
     }
 
     /**
+     * Set housenumber
+     *
+     * @param integer $housenumber
+     *
+     * @return User
+     */
+    public function setHousenumber($housenumber)
+    {
+        $this->housenumber = $housenumber;
+
+        return $this;
+    }
+
+    /**
+     * Get housenumber
+     *
+     * @return integer
+     */
+    public function getHousenumber()
+    {
+        return $this->housenumber;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     *
+     * @return User
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
      * Set bday
      *
      * @param \DateTime $bday
@@ -279,6 +338,30 @@ class User extends BaseUser
     public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * Set maritalStatus
+     *
+     * @param string $maritalStatus
+     *
+     * @return User
+     */
+    public function setMaritalStatus($maritalStatus)
+    {
+        $this->marital_status = $maritalStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get maritalStatus
+     *
+     * @return string
+     */
+    public function getMaritalStatus()
+    {
+        return $this->marital_status;
     }
 
     /**
@@ -330,95 +413,51 @@ class User extends BaseUser
     }
 
     /**
-     * Add dependentId
+     * Set honorific
      *
-     * @param \AppBundle\Entity\Dependents $dependentId
+     * @param string $honorific
      *
      * @return User
      */
-    public function addDependentId(\AppBundle\Entity\Dependents $dependentId)
+    public function setHonorific($honorific)
     {
-        $this->dependent_ids[] = $dependentId;
+        $this->honorific = $honorific;
 
         return $this;
     }
 
     /**
-     * Remove dependentId
-     *
-     * @param \AppBundle\Entity\Dependents $dependentId
-     */
-    public function removeDependentId(\AppBundle\Entity\Dependents $dependentId)
-    {
-        $this->dependent_ids->removeElement($dependentId);
-    }
-
-    /**
-     * Get dependentIds
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDependentIds()
-    {
-        return $this->dependent_ids;
-    }
-
-    /**
-     * Add photoId
-     *
-     * @param \AppBundle\Entity\Photos $photoId
-     *
-     * @return User
-     */
-    public function addPhotoId(\AppBundle\Entity\Photos $photoId)
-    {
-        $this->photo_ids[] = $photoId;
-
-        return $this;
-    }
-
-    /**
-     * Remove photoId
-     *
-     * @param \AppBundle\Entity\Photos $photoId
-     */
-    public function removePhotoId(\AppBundle\Entity\Photos $photoId)
-    {
-        $this->photo_ids->removeElement($photoId);
-    }
-
-    /**
-     * Get photoIds
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotoIds()
-    {
-        return $this->photo_ids;
-    }
-
-    /**
-     * Set maritalStatus
-     *
-     * @param string $maritalStatus
-     *
-     * @return User
-     */
-    public function setMaritalStatus($maritalStatus)
-    {
-        $this->marital_status = $maritalStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get maritalStatus
+     * Get honorific
      *
      * @return string
      */
-    public function getMaritalStatus()
+    public function getHonorific()
     {
-        return $this->marital_status;
+        return $this->honorific;
+    }
+
+    /**
+     * Set occupation
+     *
+     * @param string $occupation
+     *
+     * @return User
+     */
+    public function setOccupation($occupation)
+    {
+        $this->occupation = $occupation;
+
+        return $this;
+    }
+
+    /**
+     * Get occupation
+     *
+     * @return string
+     */
+    public function getOccupation()
+    {
+        return $this->occupation;
     }
 
     /**
@@ -470,167 +509,27 @@ class User extends BaseUser
     }
 
     /**
-     * Set honorific
+     * Set isTrustee
      *
-     * @param string $honorific
+     * @param boolean $isTrustee
      *
      * @return User
      */
-    public function setHonorific($honorific)
+    public function setIsTrustee($isTrustee)
     {
-        $this->honorific = $honorific;
+        $this->is_trustee = $isTrustee;
 
         return $this;
     }
 
     /**
-     * Get honorific
+     * Get isTrustee
      *
-     * @return string
+     * @return boolean
      */
-    public function getHonorific()
+    public function getIsTrustee()
     {
-        return $this->honorific;
-    }
-
-    /**
-     * Set occupation
-     *
-     * @param string $occupation
-     *
-     * @return User
-     */
-    public function setOccupation($occupation)
-    {
-        $this->occupation = $occupation;
-
-        return $this;
-    }
-
-    /**
-     * Get occupation
-     *
-     * @return string
-     */
-    public function getOccupation()
-    {
-        return $this->occupation;
-    }
-
-    /**
-     * Add petId
-     *
-     * @param \AppBundle\Entity\Pets $petId
-     *
-     * @return User
-     */
-    public function addPetId(\AppBundle\Entity\Pets $petId)
-    {
-        $this->pet_ids[] = $petId;
-
-        return $this;
-    }
-
-    /**
-     * Remove petId
-     *
-     * @param \AppBundle\Entity\Pets $petId
-     */
-    public function removePetId(\AppBundle\Entity\Pets $petId)
-    {
-        $this->pet_ids->removeElement($petId);
-    }
-
-    /**
-     * Get petIds
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPetIds()
-    {
-        return $this->pet_ids;
-    }
-
-    /**
-     * Add vehicleId
-     *
-     * @param \AppBundle\Entity\Vehicles $vehicleId
-     *
-     * @return User
-     */
-    public function addVehicleId(\AppBundle\Entity\Vehicles $vehicleId)
-    {
-        $this->vehicle_ids[] = $vehicleId;
-
-        return $this;
-    }
-
-    /**
-     * Remove vehicleId
-     *
-     * @param \AppBundle\Entity\Vehicles $vehicleId
-     */
-    public function removeVehicleId(\AppBundle\Entity\Vehicles $vehicleId)
-    {
-        $this->vehicle_ids->removeElement($vehicleId);
-    }
-
-    /**
-     * Get vehicleIds
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVehicleIds()
-    {
-        return $this->vehicle_ids;
-    }
-
-    /**
-     * Set housenumber
-     *
-     * @param integer $housenumber
-     *
-     * @return User
-     */
-    public function setHousenumber($housenumber)
-    {
-        $this->housenumber = $housenumber;
-
-        return $this;
-    }
-
-    /**
-     * Get housenumber
-     *
-     * @return integer
-     */
-    public function getHousenumber()
-    {
-        return $this->housenumber;
-    }
-
-    /**
-     * Set street
-     *
-     * @param string $street
-     *
-     * @return User
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
-
-        return $this;
-    }
-
-    /**
-     * Get street
-     *
-     * @return string
-     */
-    public function getStreet()
-    {
-        return $this->street;
+        return $this->is_trustee;
     }
 
     /**
@@ -768,64 +667,39 @@ class User extends BaseUser
     {
         return $this->vehicles;
     }
-    
-    public function getUsernames()
-    {
-        return $this->lastname.', '.$this->firstname;
-    }
-    
-    public function getFullname()
-    {
-        return $this->firstname.' '.$this->lastname;
-    }
-    
 
     /**
-     * Set account
+     * Add complaint
      *
-     * @param \AppBundle\Entity\Account $account
+     * @param \AppBundle\Entity\Complaint $complaint
      *
      * @return User
      */
-    public function setAccount(\AppBundle\Entity\Account $account = null)
+    public function addComplaint(\AppBundle\Entity\Complaint $complaint)
     {
-        $this->account = $account;
+        $this->complaints[] = $complaint;
 
         return $this;
     }
 
     /**
-     * Get account
+     * Remove complaint
      *
-     * @return \AppBundle\Entity\Account
+     * @param \AppBundle\Entity\Complaint $complaint
      */
-    public function getAccount()
+    public function removeComplaint(\AppBundle\Entity\Complaint $complaint)
     {
-        return $this->account;
+        $this->complaints->removeElement($complaint);
     }
 
     /**
-     * Set isTrustee
+     * Get complaints
      *
-     * @param boolean $isTrustee
-     *
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setIsTrustee($isTrustee)
+    public function getComplaints()
     {
-        $this->is_trustee = $isTrustee;
-
-        return $this;
-    }
-
-    /**
-     * Get isTrustee
-     *
-     * @return boolean
-     */
-    public function getIsTrustee()
-    {
-        return $this->is_trustee;
+        return $this->complaints;
     }
 
     /**
@@ -863,36 +737,26 @@ class User extends BaseUser
     }
 
     /**
-     * Add complaint
+     * Set account
      *
-     * @param \AppBundle\Entity\Complaint $complaint
+     * @param \AppBundle\Entity\Account $account
      *
      * @return User
      */
-    public function addComplaint(\AppBundle\Entity\Complaint $complaint)
+    public function setAccount(\AppBundle\Entity\Account $account = null)
     {
-        $this->complaints[] = $complaint;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Remove complaint
+     * Get account
      *
-     * @param \AppBundle\Entity\Complaint $complaint
+     * @return \AppBundle\Entity\Account
      */
-    public function removeComplaint(\AppBundle\Entity\Complaint $complaint)
+    public function getAccount()
     {
-        $this->complaints->removeElement($complaint);
-    }
-
-    /**
-     * Get complaints
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComplaints()
-    {
-        return $this->complaints;
+        return $this->account;
     }
 }

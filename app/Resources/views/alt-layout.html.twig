@@ -16,21 +16,18 @@
         
     <div class="fill-gap"></div>
     <div class="jumbotron">
-        <div class="container text-center">
-            {% block pageheader %}
-                <h1>My Portfolio</h1>      
-                <p>Some text that represents "Me"...</p>
-            {% endblock %}
-            {% for flash_message in app.session.flashBag.get('notice') %}
-                <div class="flash-notice" style='background-color: yellow; margin: 10px 0;'>
-                    {{ flash_message }}
-                </div>
-            {% endfor %}
-        </div>
+        {% block pageheader %}
+            <h1>Heading/h1>      
+            <p>Generic text....</p>
+        {% endblock %}
+        {% block alerts %}
+            {{ include('pages/alerts.twig') }}
+        {% endblock %} 
     </div>    
         
     <div class="container-fluid">
         <div class="row content">
+            
             <div class="col-sm-3 sidenav">
                 {% block sidenav %} {% endblock %}
             </div>

@@ -57,7 +57,7 @@ class Vehicles
     protected $user;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", mappedBy="photos", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", inversedBy="vehicles", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $photos;
@@ -222,5 +222,29 @@ class Vehicles
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Vehicles
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
     }
 }

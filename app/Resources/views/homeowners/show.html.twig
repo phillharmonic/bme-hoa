@@ -1,28 +1,86 @@
-{% extends 'alt-layout.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}<link href="{{ asset('bundles/main/css/content.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
-{% block title %}The Association{% endblock %}
-{% block sidenav %}
-    <p>Google Map & Auditor Parcel View goes here</p>
-    <ul> 
-        <li>Store Longetude & Lattitude in property entity</li>
-        <li>Store Licking county Parcel Number in property entity</li>
-    </ul>
-{% endblock %}
-{% block pageheader %}<h1>Homeowners</small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block title %}Show Property {{property.id}}{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-th-large">&nbsp;</span>Property | <small><small>THE DETAILS OF THE PROPERTY & RESIDENTS</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-
+    {# BREADCRUMB #}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Homeowners</a></li>
-        <li class="breadcrumb-item"><a href="#">My Neighbors</a></li>
-        <li class="breadcrumb-item">{{ property.houseNumber }} {{ property.street }}</li>
+        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
+        <li class="breadcrumb-item"><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
+        <li class="breadcrumb-item active">Property {{property.id}}</li>
     </ol>
+    {# PAGE SUMMARY #}        
+    <h3><small>SHOW</small></h3>
+    <hr style="padding: 0; margin:0;">
+    <h2>Property {{property.id}}</h2>    
+    <h5>
+        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+        <span style="">Public</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
+        <span style="padding-left: 5px">Protected</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
+        <span style="padding-left: 5px">Private</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
+        <span style="padding-left: 5px">Admin</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> 
+    </h5>
     <hr>
-    <h2>Property <small>PUBLIC VIEW</small></h2>    
-    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
-    <hr>
+    {# PAGE CONTENTS #}  
+    
+        {#
+            Design: I want 3 columns, and as many rows as necessary.  No blank contents on any row, except last.  Each content
+            will summarize each of: property, homeower(s), dependent(s), pet(s), car(s).  
+    
+            1) count items
+            2) divide count by 3 = rows to create
+            3) slice the array into arrays = the row count
+        #}
+    
+    {% set props = testAr.props|length%} 
+    {% set homeowners = testAr.homeowners|length%} 
+    {% set spouses = testAr.spouse|length%} 
+    {% set kids = testAr.kids|length %}  
+    {% set pets = testAr.pets|length%}  
+    {% set cars = testAr.cars|length%}  
+    {% set objSum = props + homeowners + spouses + kids + pets + cars %}
+    {% set rows = objSum / 3 %}
+    {% set rows = rows|round(0, 'ceil')%}
+    
+    {% set data = {} %}
+    {% for i in 1..rows %}
+       {# * row {{ i }} </br> #}
+        {% set data = {'key': i} %}
+    {% endfor %}
+    
+    {#
+    Property Count: {{props}}   </br>
+    Homeowner Count: {{homeowners}}   </br>
+    Spouse Count: {{spouses}}   </br>
+    Kid Count: {{kids}}  </br>
+    Pet Count: {{pets}}  </br>
+    Car Count: {{cars}}  </br>
+    Sum of Objects: {{objSum}}</br>
+    Number of Rows Needed: {{rows}}  </br>
+    {{dump(data)}}
+    {{dump(testAr)}}
+    
+    
+    <div class="container-fluid bg-3 text-center">    
+        {% for i in 1..rows %}
+            * row {{ i }}
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+                    <p>row_{{i}} cell_{{i}} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+                <div class="col-sm-4"> 
+                    <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+                    <p>row_{{i}} cell_{{i+i}} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+                <div class="col-sm-4"> 
+                    <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+                    <p>row_{{i}} cell_{{i+i+i}} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    #}
     
     {#
         TODO:   This page is currently listing EVERYTHING about the property AND it's current resident(s).  The current resident(s) need to have control
@@ -55,6 +113,46 @@
                     - occupation_ispublic
                     - occupation_ispermitted
     #}
+    
+    <div class="container-fluid bg-3 text-center">    
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>{{ testAr.props.0.houseNumber }} {{ testAr.props.0.street }}</h3>
+                {% for pic in testAr.props.0.photos|slice(0, 1) %}
+                    <img src='{{ pic.path }}' class="img-responsive margin" style="width:100%; height: 400px" alt="Image" />
+                {% endfor %} 
+                <p style="text-align: left; margin-top: 10px; font-size: 1.2em; background-color: #555; color: white; padding: 10px; height: 160px;"><strong>{{ testAr.props.0.houseNumber }} {{ testAr.props.0.street }}</strong> is a {{ testAr.props.0.type|lower }} property located on platted lot #{{ testAr.props.0.lotNumber}}
+                    in the Brandy Mill Estates Subdivision of Etna Township in Licking County, Ohio. The home was built {{ testAr.props.0.dateBuilt|date('M d, Y') }}, has a 
+                    {{ testAr.props.0.color|lower }} facade, and is {{ testAr.props.0.isOccupied ? 'occupied':'not occupied' }} by {{ testAr.props.0.status|lower }}.  The property 
+                    currently {{ testAr.props.0.hasHoaLien ? 'shows it has one or more liens':'is clear of any liens' }} and is {{  testAr.props.0.inArrears ? 'not current':'current' }} financial standing with the HOA.
+                    The property last sold November 30, 2004 for a sale price of $194,000, according to the Licking County Auditors office.    
+                </p>
+            </div>
+            <div class="col-sm-4"> 
+                <h3>HOMEOWNER</h3>
+                {% for pic in testAr.homeowners.0.photos|slice(0, 1) %}
+                    <img src='{{ pic.path }}' class="img-responsive margin" style="width:100%; height: 400px" alt="Image" />
+                {% endfor %} 
+                <p style="text-align: left; margin-top: 10px; font-size: 1.2em; background-color: #555; color: white; padding: 10px; height: 160px;"><strong>{{ testAr.homeowners.0.fullname|upper }}</strong></p>
+            </div>
+            <div class="col-sm-4"> 
+                <h3>HOMEOWNER</h3>
+                {% for pic in testAr.homeowners.1.photos|slice(0, 1) %}
+                    <img src='{{ pic.path }}' class="img-responsive margin" style="width:100%; height: 400px" alt="Image" />
+                {% endfor %} 
+                <p style="text-align: left; margin-top: 10px; font-size: 1.2em; background-color: #555; color: white; padding: 10px; height: 160px;"><strong>{{ testAr.homeowners.1.fullname|upper }}</strong></p>
+            </div>
+        </div>
+    </div>
+            
+            <div>
+                <p>
+                    The above format will work.  Only going to have 3 cells.  1st, cell is a photo carousel that scrolls through ALL of the photos for the user(s)
+                    of the property.  These photos will be captioned in the paragraph below with summaries of the object.  These summaries will be a function of the object
+                    stored in the entity so we can access them in the twig.  The middle and right cells will be stationary and will have photos of the user(s) and a brief summary
+                    of the stored information.
+                </p>
+            </div>
     
     <h3>{{ property.houseNumber }} {{ property.street }}</h3>
     <span class="label label-success"><a id="a-buttons" href="#" target="_blank" title="Edit photos for {{ property.houseNumber }} {{ property.street }}">Edit Photos</a></span>
@@ -220,7 +318,7 @@
     {% if vehicles is not null%}      
         {% for vhcl in vehicles %}  
             <h4><small>{{ vhcl.make|upper }} {{ vhcl.model|upper }}</small></h4>
-            <h3>{{ vhcl.user.firstname}}'s Vehicle </h3>
+            <h3>{{ vhcl.user.0.firstname}}'s Vehicle </h3>
             <hr class="invisible"> 
             <div class="row">
                 <div class="col-md-6">
@@ -306,4 +404,6 @@
     </div>
     #}
                 
+    
+    
 {% endblock %}

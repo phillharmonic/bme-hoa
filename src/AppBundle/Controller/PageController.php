@@ -13,6 +13,15 @@ class PageController extends Controller
 {
     
     /**
+     * @Route("/dev-notes", name="devNotes")
+     */
+    public function devNotedAction() 
+    {
+        return $this->render('pages/devNotes.twig', array(
+        ));
+    }
+    
+    /**
      * @Route("/exp", name="exp")
      */
     public function expAction() 
@@ -21,18 +30,18 @@ class PageController extends Controller
         ));
     }
     
-    /**
-     * @Route("/", name="home")
-     */
-    public function homeAction() 
-    {
-        $number = mt_rand(0, 100);
-        
-        return $this->render('pages/home.html.twig', array(
-            'number' => $number,
-        ));
-        
-    }
+//    /**
+//     * @Route("/", name="home")
+//     */
+//    public function homeAction() 
+//    {
+//        $number = mt_rand(0, 100);
+//        
+//        return $this->render('pages/home.html.twig', array(
+//            'number' => $number,
+//        ));
+//        
+//    }
     
     /**
      * @Route("/test", name="test")

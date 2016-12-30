@@ -1,0 +1,27 @@
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block javascripts %}{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/add_delete.js') }}"></script>
+{% endblock %}
+{% block title %}New Comment{% endblock %}
+{% block pageheader %}<h1>Homeowners</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Homeowners</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('indexBlogPublic') }}">Announcements</a></li>
+        <li class="breadcrumb-item active">Comment</li>
+    </ol>
+    <hr>
+        <h2>Comment&nbsp;&nbsp;<small><small>NEW</small></small></h2>    
+        <h5><span class="glyphicon glyphicon-edit"></span> RE: {{blog.title}}</h5>
+    <hr>
+    
+{% form_theme form 'form/bootstrap_3_layout.html.twig' %}
+<div class="col-md-6">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }} 
+</div>
+<div class="col-md-6"></div>
+{% endblock %}

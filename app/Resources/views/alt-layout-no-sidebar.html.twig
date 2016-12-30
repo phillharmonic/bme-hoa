@@ -21,14 +21,12 @@
                 <h1>My Portfolio</h1>      
                 <p>Some text that represents "Me"...</p>
             {% endblock %}
-            {% for flash_message in app.session.flashBag.get('notice') %}
-                <div class="flash-notice" style='background-color: yellow; margin: 10px 0;'>
-                    {{ flash_message }}
-                </div>
-            {% endfor %}
+            {% block alerts %}
+                {{ include('pages/alerts.twig') }}
+            {% endblock %}
         </div>
     </div>    
-        
+    
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-12">

@@ -9,13 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 //use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class HomeownersController extends Controller
+class PropertyController extends Controller
 {
     
     /**
-     * @Route("/homeowners/index", name="homeownersIndex")
+     * @Route("/public/properties/index", name="indexPropertiesPublic")
      */     
-    public function indexAction()
+    public function indexPropertiesPublicAction()
     {
 //        $em = $this->getDoctrine()
 //                   ->getEntityManager();
@@ -76,8 +76,8 @@ class HomeownersController extends Controller
     
     /**
      * @Route(
-     *      "/homeowners/show/{id}", 
-     *      name="homeownersShow",
+     *      "/public/property/show/{id}", 
+     *      name="showPropertyPublic",
      *      requirements={
      *         "id": "\d+"
      *     }
@@ -120,12 +120,19 @@ class HomeownersController extends Controller
         
 //  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
         
-        
+        $testAr = array();
         $spouses = new ArrayCollection();
         $dependents = new ArrayCollection();
         $children = new ArrayCollection();
         $pets = new ArrayCollection();
         $vhcls = new ArrayCollection();
+        
+        $testAr['props'][] = $property;
+        $testAr['props'][] = $property;
+        //OWNERS
+        foreach($homeowners as $homeowner){
+            $testAr['homeowners'][] = $homeowner;
+        }   
         
         //SPOUSE & DEPENDENTS
         foreach($homeowners as $homeowner){
@@ -136,10 +143,12 @@ class HomeownersController extends Controller
                     //SPOUSE
                     if($dependent->getSpouse() == 1){
                         $spouses[] = $dependent;
+                        $testAr['spouse'][] = $dependent;
                     }
                     //CHILDREN
                     else{
                         $children[] = $dependent;
+                        $testAr['kids'][] = $dependent;
                     }
                 }
             }
@@ -150,6 +159,7 @@ class HomeownersController extends Controller
             if(!empty($homeowner->getPets())){
                 foreach($homeowner->getPets() as $animal){
                     $pets[] = $animal;
+                    $testAr['pets'][] = $animal;
                 }
             }
         }        
@@ -160,10 +170,14 @@ class HomeownersController extends Controller
             if(!empty($homeowner->getVehicles())){
                 foreach($homeowner->getVehicles() as $car){
                     $vhcls[] = $car;
+                    $testAr['cars'][] = $car;
                 }
             }
         }    
         $cars = $em->getRepository('AppBundle:Vehicles')->removeDupes($vhcls);
+        
+//        $testAr = array(1,2,3,4,5,6,7,8,9,10,11,12);
+        
         return $this->render('homeowners/show.html.twig', array(
             'property'   =>  $property,
             'homeowners' =>  $homeowners,
@@ -171,6 +185,7 @@ class HomeownersController extends Controller
             'dependents' =>  $children,
             'vehicles'   =>  $cars,
             'pets'       =>  $animals,
+            'testAr'     => $testAr,
         ));
     }
     
