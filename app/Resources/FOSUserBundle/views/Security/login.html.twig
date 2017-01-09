@@ -1,22 +1,22 @@
 {# OVERRIDES DEFAULT FOS TEMPLATE #}
-
-
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "alt-layout-no-sidebar.html.twig" %}
 {% block stylesheets %}
     {{ parent() }} <link href="{{ asset('bundles/main/css/forms.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
-
+{% block title %}Login{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-log-in">&nbsp;</span>Login | <small><small>REQUIRED</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
 {% trans_default_domain 'FOSUserBundle' %}
     
     {% block fos_user_content %}
         {% if error %}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-        <div class="section-header"><h1>Login</h1>
-            <ul class="page-nav">
-                <li><a href='{{ path('fos_user_registration_register') }}'>Register</a></li>
-            </ul>
-        </div>
+        
+        <h2>Login&nbsp;|&nbsp;&nbsp;<small>OR REGISTER&nbsp;<a href='{{ path('fos_user_registration_register') }}'>HERE</a></small></h2>    
+        <hr>    
+        
         <form class='form'  action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <div class="block">
@@ -32,4 +32,7 @@
                 <input type="submit" id="_submit" name="_submit" value="{{ 'Submit'|trans }}" />
             </div>
         </form>
+        
     {% endblock fos_user_content %}
+    
+{% endblock %}

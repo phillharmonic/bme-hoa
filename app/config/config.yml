@@ -36,11 +36,14 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+    translator: { fallbacks: [en] }
 
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        minutes_controller: '@minutes'
 #    form:
 #        resources: ["%kernel.root_dir%/views/form/bootstrap_3_layout.html.twig"]
 
@@ -68,6 +71,8 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        resolve_target_entities:
+            Symfony\Component\Security\Core\User\UserInterface: AppBundle\Entity\User
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -101,3 +106,29 @@ knp_paginator:
         #KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
         #KnpPaginatorBundle:Pagination:twitter_bootstrap_pagination.html.twig
         #KnpPaginatorBundle:Pagination:foundation_v5_pagination.html.twig
+        
+# Stof Doctrine Extensions
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+            
+# Configuration for discutea forum
+discutea_forum:
+    preview:
+        enabled: true
+    knp_paginator:
+        page_name: page  #see knp_paginator.default_option.page_name
+        topics:
+            enabled: true
+            per_page: 10
+        posts:
+            enabled: true
+            per_page: 10
+            
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ DForumBundle ]
+    filters:
+        cssrewrite: ~

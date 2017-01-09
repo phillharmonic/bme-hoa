@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -82,12 +84,113 @@ class UserForm extends AbstractType {
             ),
             'choices_as_values' => true,
         ));
+        $builder->add('race', ChoiceType::class, array(
+            'label'         =>  'Race - optional',
+            'required'      => false,
+            'choices'       => array(
+                'White'    => 'White',
+                'Black or African American'   => 'Black or African American',
+                'Hispanic or Latino'    => 'Hispanic or Latino',
+                'Asian'   => 'Asian',
+                'American Indian or Alaska Native'  => 'American Indian or Alaska Native',
+                'Hawaiian Native & Pacific Islander' => 'Hawaiian Native & Pacific Islander.',
+                'Some other'      => 'Some other',
+                '2+ races'     => '2+ races',
+            ),
+            'choices_as_values' => true,
+        ));
         $builder->add('mi', TextType::class, array(
             'label'         =>  'MI'
         ));
         $builder->add('occupation', TextType::class, array(
             'label'         =>  'Occupation'
-        ));
+        ));  
+        $builder->add('occupation_public', CheckboxType::class, array(
+            'label'         =>  'Occupation & Employer public',
+            'required'      => false,
+        ));  
+        $builder->add('occupation_protected', CheckboxType::class, array(
+            'label'         =>  'Occupation & Employer protected',
+            'required'      => false,
+        )); 
+        $builder->add('employer', TextType::class, array(
+            'required'      => false,
+        ));        
+        $builder->add('facebook', TextType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('twitter', TextType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('google', TextType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('linkedin', TextType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('bio', TextareaType::class, array(
+            'label'         =>  'Bio - A Family Summary'
+        )); 
+        $builder->add('bio_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('bio_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('bday_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('bday_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('age_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('age_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('facebook_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('facebook_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('twitter_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('twitter_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('google_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('google_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('linkedin_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('linkedin_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('cellphone_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('cellphone_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('homephone_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('homephone_protected', CheckboxType::class, array(
+            'required'      => false,
+        ));   
+        $builder->add('email_public', CheckboxType::class, array(
+            'required'      => false,
+        ));  
+        $builder->add('email_protected', CheckboxType::class, array(
+            'required'      => false,
+        )); 
         $builder->add('occupy_date', DateType::class, array(
             'years' => range(date('Y') -15, date('Y')),
             'label'         =>  'Occupy Date '

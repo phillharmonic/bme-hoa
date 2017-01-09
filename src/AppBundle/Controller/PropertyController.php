@@ -121,6 +121,7 @@ class PropertyController extends Controller
 //  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
         
         $testAr = array();
+        $pictures = new ArrayCollection();
         $spouses = new ArrayCollection();
         $dependents = new ArrayCollection();
         $children = new ArrayCollection();
@@ -128,10 +129,18 @@ class PropertyController extends Controller
         $vhcls = new ArrayCollection();
         
         $testAr['props'][] = $property;
-        $testAr['props'][] = $property;
+
+        foreach ($property->getPhotos() as $photo){
+            $pictures[] = $photo;
+        }
+        
         //OWNERS
         foreach($homeowners as $homeowner){
             $testAr['homeowners'][] = $homeowner;
+            $photos = $homeowner->getPhotos();
+            foreach ($photos as $photo){
+                $pictures[] = $photo;
+            }
         }   
         
         //SPOUSE & DEPENDENTS
@@ -140,6 +149,10 @@ class PropertyController extends Controller
                 $dependents = $homeowner->getDependents();
                 //foreach dependent check to see if it is a spouse
                 foreach($dependents as $dependent){
+                    $photos = $dependent->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
                     //SPOUSE
                     if($dependent->getSpouse() == 1){
                         $spouses[] = $dependent;
@@ -153,11 +166,16 @@ class PropertyController extends Controller
                 }
             }
         }
-            
+        $kids = $em->getRepository('AppBundle:Dependents')->removeDupes($children);    
         //PETS
         foreach($homeowners as $homeowner){
             if(!empty($homeowner->getPets())){
+                
                 foreach($homeowner->getPets() as $animal){
+                    $photos = $animal->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
                     $pets[] = $animal;
                     $testAr['pets'][] = $animal;
                 }
@@ -169,6 +187,10 @@ class PropertyController extends Controller
         foreach($homeowners as $homeowner){
             if(!empty($homeowner->getVehicles())){
                 foreach($homeowner->getVehicles() as $car){
+                    $photos = $car->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
                     $vhcls[] = $car;
                     $testAr['cars'][] = $car;
                 }
@@ -182,10 +204,11 @@ class PropertyController extends Controller
             'property'   =>  $property,
             'homeowners' =>  $homeowners,
             'spouses'    =>  $spouses,
-            'dependents' =>  $children,
+            'dependents' =>  $kids,
             'vehicles'   =>  $cars,
             'pets'       =>  $animals,
             'testAr'     => $testAr,
+            'pics'      => $pictures,
         ));
     }
     

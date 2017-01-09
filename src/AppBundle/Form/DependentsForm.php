@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class DependentsForm extends AbstractType {
@@ -25,7 +26,7 @@ class DependentsForm extends AbstractType {
         $builder->add('mi', TextType::class, array(
             'label'         =>  'MI'            
         ));
-        $builder->add('bday', DateType::class, array(
+        $builder->add('bday', BirthdayType::class, array(
             'label'         =>  'Birthday ',
         ));
         $builder->add('gender', ChoiceType::class, array(

@@ -1,22 +1,24 @@
 <?php
 
 namespace AppBundle\Form;
-use AppBundle\Entity\Comment;
+use AppBundle\Entity\Minutes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class CommentForm  extends AbstractType{
+class MinutesForm  extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('comment', TextareaType::class, array(
-                'attr'  => array(
-                    'style' => "height: 250px",
-                    )
-            ))
+            ->add('title', TextType::class, array(
+                'label' =>  'Title [ format: YEAR QUARTER ] ',
+                ))
+            ->add('embed_code', TextareaType::class, array(
+                'label' =>  'Published Link (not embeded code)',
+                ))
             ->add('save', SubmitType::class, array('label' => 'Submit'))
         ;
     }
@@ -24,12 +26,12 @@ class CommentForm  extends AbstractType{
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Comment::class,
+            'data_class' => Minutes::class,
         ));
     }
     
     public function getName()
     {
-        return 'comment';
+        return 'minutes';
     }
 }

@@ -11,10 +11,7 @@
     <h2>Annoucements</h2>    
     <h5>
         <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
-        <span style="padding-left: 5px">Protected</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
-        <span style="padding-left: 5px">Private</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
-        <span style="padding-left: 5px">Admin</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> 
+        <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
     </h5>
     <hr>
     
@@ -28,7 +25,8 @@
                 <span class="label label-{{ random(['danger', 'warning', 'success', 'default', 'primary', 'info']) }}">{{tag}}</span> 
             {% endfor %}
         </h5><br >
-        <p style="white-space: pre-wrap; min-height: 250px; display: inline-block;"><img src="{{ asset(['../web/uploads/blog_images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" style="max-width: 250px; float: left; padding-right: 10px; padding-bottom: 5px;" />{%if blog.blog|length > 2000 %}{{ blog.blog|slice(0, 2000) }}... <a href="{{path('showBlogPublic', {'id': blog.id} )}}" >see more</a>{% else %}{{ blog.blog }}{% endif %}</p>
+        <p style="white-space: pre-wrap; min-height: 150px; display: inline-block;"><img src="{{ asset(['../web/uploads/blog_images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" style="max-width: 250px; float: left; padding-right: 10px; padding-bottom: 5px;" />{%if blog.blog|length > 2000 %}{{ blog.blog|slice(0, 2000) }}... <a href="{{path('showBlogPublic', {'id': blog.id} )}}" >see more</a>{% else %}{{ blog.blog }}{% endif %}</p>
+        <a href='{{path('newCommentProtected', {'id': blog.id} )}}'>- Add Comment</a>
         <section>
             <h3><span class="badge" style="margin-top: -5px;">{{blog.comments|length}}</span>&nbsp;&nbsp;Comments&nbsp;&nbsp;<small><a data-toggle="collapse" href="#blog_{{blog.id}}">view</a></small></h3><hr>
             <section id="blog_{{blog.id}}" class="collapse" >{% include 'comment/index.html.twig' with { 'comments': blog } %}</section>

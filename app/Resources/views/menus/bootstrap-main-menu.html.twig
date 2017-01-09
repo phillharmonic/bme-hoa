@@ -12,26 +12,20 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Community <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li {% if 'Propert' in app.request.attributes.get( '_route' ) %} class="active"{% endif %}><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
-              <li ><a href="#">Forum</a></li>
+              <li {% if app.request.attributes.get( '_route' ) starts with 'discutea' %} class="active"{% endif %}><a href="{{path('discutea_forum_homepage')}}">Forums</a></li>
               <li {% if app.request.attributes.get( '_route' ) == 'mapsShow' %} class="active"{% endif %}><a href="{{ path('mapsShow') }}">Maps</a></li>
-              <li><a href="#">Utility Providers</a></li>
-              <li><a href="#">Neighborhood Watch</a></li>
-              <li><a href="#">Block Party</a></li>
-              <li><a href="#">Gardeners Club</a></li>
-              <li><a href="#">Garage Sales</a></li>
-              <li><a href="#">Trading Post</a></li>
             </ul>
         </li>
         
         
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">HOA<b class="caret"></b></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">HOA&nbsp;<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li class="dropdown-submenu">
               <a class="test" tabindex="-1" href="#">Board of Directors <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li {% if app.request.attributes.get( '_route' ) == 'boardOfDirectorsShow' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('boardOfDirectorsShow') }}">Current Board</a></li>
-                <li {% if app.request.attributes.get( '_route' ) == 'showMinutesProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showMinutesProtected') }}">Minutes</a></li>
+                <li {% if app.request.attributes.get( '_route' ) == 'showMinutesProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showMinutesProtected', {'id' : minutes_controller.getLast}) }}">Minutes</a></li>
                 <li {% if app.request.attributes.get( '_route' ) == 'showAgendaProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showAgendaProtected') }}">Agenda</a></li>
                 <li {% if app.request.attributes.get( '_route' ) == 'indexComplaintProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('indexComplaintProtected') }}">Complaints</a></li>
                 <li {% if app.request.attributes.get( '_route' ) == 'permitIndex' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('permitIndex') }}">Permits</a></li>
@@ -48,7 +42,7 @@
         
         
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ADMIN <b class="caret"></b></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
           <ul class="dropdown-menu">
                 <li><a tabindex="-1" href="#">Issues</a></li>
                 <li {% if app.request.attributes.get( '_route' ) == 'admin' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('admin') }}">Properties</a></li>
@@ -61,9 +55,11 @@
                 <li><a tabindex="-1" href="#">Statement(s)</a></li>
                 <li><a tabindex="-1" href="#">Assessment</a></li>
                 <li><a tabindex="-1" href="#">Upload</a></li>
+                <li><a tabindex="-1" href="{{path('newMinutesAdmin')}}">Upload Minutes</a></li>
                 <li><a tabindex="-1" href="#">Email</a></li>
                 <li><a tabindex="-1" href="#">Text</a></li>
                 <li {% if app.request.attributes.get( '_route' ) == 'test' %} class="active"{% endif %}><a href="{{ path('test') }}">Code Tester</a></li>
+                <li><a href="{{ path('discutea_forum_admin_dashboard') }}">Forum</a></li>
           </ul>
         </li>
         

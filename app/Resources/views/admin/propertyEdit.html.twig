@@ -42,6 +42,9 @@
     
     {{ form_start(form) }}
     {#<form action="{{ path('propertyEdit', {'id' : prop.id}) }}" method="post" {{ form_enctype(form) }} class="user">#}
+        {{ form_row(form.auditors_pin) }}
+        {{ form_row(form.last_sale_price) }}
+        <div class='dates'>{{ form_row(form.last_sale_date) }}</div>
         {{ form_row(form.color) }}
         <div class='dates'>{{ form_row(form.dateBuilt) }}</div>
         <label for="plant_resistsDeer">Has HOA Lien</label>

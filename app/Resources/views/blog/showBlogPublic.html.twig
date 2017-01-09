@@ -13,24 +13,23 @@
     <h2>Annoucement {{blog.id}}</h2>    
     <h5>
         <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
-        <span style="padding-left: 5px">Protected</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
-        <span style="padding-left: 5px">Private</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
-        <span style="padding-left: 5px">Admin</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> 
+        <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
     </h5>
     <hr>
-    {# PAGE CONTENTS #}    
-    <h3><small><a href="{{path('editBlogPrivate', {'id': blog.id} )}}">EDIT POST {{blog.id}} </a> <span style="padding-left: 5px"> Admin only</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> </small></h3>
-    <hr style="margin:8px 0;padding:0;">
+    {# PAGE CONTENTS #}   
+    {% if (blog.user == app.user or is_granted('ROLE_TRUSTEE') or is_granted('ROLE_ADMIN')) %}
+        <a class="btn btn-default btn-sm" href="{{path('editBlogAdmin', {'id': blog.id} )}}">EDIT POST {{blog.id}} </a>  </small></h3>
+        <hr style="margin:8px 0;padding:0;">
+    {% endif %}
     <h3>{{ blog.title|upper }}</h3>    
     <h5><span class="glyphicon glyphicon-time"></span> Posted by {{blog.user.fullname}}, <time datetime="{{ blog.created|date('c') }}">{{ blog.created|date('l, F j, Y') }}</time>.</h5>
     <h5>
         {% for tag in tags %}
             <span class="label label-{{ random(['danger', 'warning', 'success', 'default', 'primary', 'info']) }}">{{tag}}</span> 
         {% endfor %}
-    </h5><br>
+    </h5></br>
     <p style="white-space: pre-wrap;"><img src="{{ asset(['../web/uploads/blog_images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" style="max-width: 250px; float: left; padding-right: 10px; padding-bottom: 5px;" />{{ blog.blog }}
-    <br><br>
+    </br><a href='{{path('newCommentProtected', {'id' : blog.id})}}'>- New Comment</a>
     <section style="width: 100%">
         <h3><span class="badge" style="margin-top: -5px;">{{ pagination.getTotalItemCount }}</span>&nbsp;&nbsp;Comments</h3><hr>
         <div style="width: 100%; display: inline-block;">

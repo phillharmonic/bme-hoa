@@ -19,18 +19,7 @@ class OfficialBusinessController extends Controller
         ));
     }
     
-    /**
-     * @Route(
-     *      "/protected/minutes/show/", 
-     *      name="showMinutesProtected"
-     * )
-     */       
-    public function showMinutesProtectedAction()
-    {
-        return $this->render('officialBusiness/showMinutesProtected.html.twig', array(
-            
-        ));
-    }
+    
     
     /**
      * @Route(

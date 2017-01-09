@@ -64,4 +64,24 @@ class DependentsRepository extends EntityRepository
         return $this->getDepsCollectionByIds($depIds);        
     }
     
+    public function removeDupes($depsCollection){
+        //since multiple users of the same household can have an account and create their own instance of a pet, we have
+        //to remove duplicate pets not by ID (bc they will be differnt), but by name.  
+        
+        $deps = array();
+        foreach($depsCollection as $dep){
+            $deps[$dep->getId()] = $dep->getFirstname();
+        }
+        $deps = array_unique($deps);
+        
+        //create an array of the pet's ids
+        $depsIds = array();
+        foreach($deps as $k => $v){
+            $depsIds[] = $k;
+        }
+        //retreive a collection of pets by their ids in an array:
+        return $this->getDepsCollectionByIds($depsIds);
+        
+    }
+    
 }

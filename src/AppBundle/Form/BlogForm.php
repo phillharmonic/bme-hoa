@@ -20,7 +20,10 @@ class BlogForm extends AbstractType {
             'label'         =>  'Title'
         ));
         $builder->add('blog', TextareaType::class, array(
-            'label'         =>  'Blog Post'
+            'label'         =>  'Blog Post',
+            'attr'  => array(
+                'style' => "height: 250px",
+            )
         ));
         $builder->add('tags', TextareaType::class, array(
             'label'         =>  'Tags (separate each word with a comma)'

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use AppBundle\Form\PhotoForm;
@@ -22,6 +23,18 @@ class PropertyForm extends AbstractType {
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('auditors_pin', TextType::class, array(
+            'attr' => array('style' => 'width: 150px')
+        ));
+        
+        $builder->add('last_sale_price', IntegerType::class, array(
+            'attr' => array('style' => 'width: 150px')
+        ));
+        
+        $builder->add('last_sale_date', DateType::class, array(
+            'years' => range(date('Y') -15, date('Y')),
+        ));
+        
         $builder->add('color', TextType::class, array(
             'attr' => array('style' => 'width: 150px')
         ));
@@ -96,7 +109,7 @@ class PropertyForm extends AbstractType {
             'required'      => false,
             'multiple'      => true,
             'class'         =>  'AppBundle:User',
-            'choice_label'  =>  'usernames',
+//            'choice_label'  =>  'usernames',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->addOrderBy('u.lastname', 'ASC')

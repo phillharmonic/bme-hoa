@@ -64,23 +64,19 @@ class BlogController extends Controller{
     
     /**
      * @Route(
-     *      "/private/blog/edit/{id}", 
-     *      name="editBlogPrivate",
+     *      "/admin/blog/edit/{id}", 
+     *      name="editBlogAdmin",
      *      requirements={
      *         "id": "\d+"
      *     }
      * )
      */      
-    public function editBlogPrivateAction(Request $request, $id){
+    public function editBlogAdminAction(Request $request, $id){
         $em = $this->getDoctrine()->getManager ();
-//        $dir = $this->getParameter('blog_images');
         $blog = $em->getRepository('AppBundle:Blog')->find($id);
-//        $img = $blog->getImage();
-//        $imgPath = new File($dir."/".$img);
-//        $blog->setImage($imgPath);
         $blog->setImage(new File($this->getParameter('blog_images')."/".$blog->getImage()));
         $form = $this->createForm(BlogForm::class, $blog, array(
-            'action' => $this->generateUrl('editBlogPrivate', array('id' => $id)),
+            'action' => $this->generateUrl('editBlogAdmin', array('id' => $id)),
             'method' => 'POST',
         ));
         
@@ -121,7 +117,7 @@ class BlogController extends Controller{
         }
         
         
-        return $this->render('blog/editBlogPrivate.html.twig', array(
+        return $this->render('blog/editBlogAdmin.html.twig', array(
             'form'  =>  $form->createView(),
             'blog'   => $blog,
         ));

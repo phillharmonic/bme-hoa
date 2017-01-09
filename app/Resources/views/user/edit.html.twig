@@ -1,0 +1,107 @@
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block javascripts %}{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/main/js/add_delete.js') }}"></script>
+{% endblock %}
+{% block title %}Edit Profile{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-pencil">&nbsp;</span>Edit Profile  | <small><small>MAKE NO MISTAKE</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}  
+    
+{% form_theme form 'form/bootstrap_3_layout.html.twig' %}
+
+    {# BREADCRUMB #}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; My Account </li>
+        <li class="breadcrumb-item active">Edit Profile</li>
+    </ol>
+    
+    {# PAGE SUMMARY #}        
+    <h3><small>EDIT</small></h3>
+    <hr style="padding: 0; margin:0;">
+    <h2>User Profile</h2>    
+    <h5>
+        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+        <span style="">Public</span><span class="glyphicon glyphicon-eye-close" style="padding:0 5px;"></span> | 
+        <span style="padding-left: 5px">Protected</span><span class="glyphicon glyphicon-eye-close" style="padding:0 5px;"></span> | 
+        <span style="padding-left: 5px">Private</span><span class="glyphicon glyphicon-eye-open" style="padding:0 5px;"></span> | 
+        <span style="padding-left: 5px">Admin</span><span class="glyphicon glyphicon-eye-close" style="padding:0 5px;"></span> 
+    </h5>
+    <hr>
+        
+
+    <div class="container" >
+	<div class="row" >
+            <div class="list-group" >
+                <div class="list-group-item clearfix" >
+    
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {{ form_row(form.honorific) }}
+                    {{ form_row(form.firstname) }}
+                    {{ form_row(form.mi) }}
+                    {{ form_row(form.lastname) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.race) }}
+                    {{ form_row(form.gender) }}
+                    <div class='dates'>{{ form_row(form.bday) }}</div>
+                    {{ form_row(form.bday_public) }}
+                    {{ form_row(form.bday_protected) }}
+                    {{ form_row(form.age_public) }}
+                    {{ form_row(form.age_protected) }}
+                    {{ form_row(form.marital_status) }}
+                    {{ form_row(form.housenumber) }}
+                    {{ form_row(form.street) }}
+                    {{ form_row(form.occupation) }}
+                    {{ form_row(form.employer) }}
+                    {{ form_row(form.occupation_public) }}
+                    {{ form_row(form.occupation_protected) }}
+                    {{ form_row(form.bio) }}
+                    {{ form_row(form.bio_public) }}
+                    {{ form_row(form.bio_protected) }}
+                    {{ form_row(form.homephone) }}
+                    {{ form_row(form.homephone_public) }}
+                    {{ form_row(form.homephone_protected) }}
+                    {{ form_row(form.cellphone) }}
+                    {{ form_row(form.cellphone_public) }}
+                    {{ form_row(form.cellphone_protected) }}
+                    {{ form_row(form.email) }} 
+                    {{ form_row(form.email_public) }}
+                    {{ form_row(form.email_protected) }}
+                    {{ form_row(form.facebook) }} 
+                    {{ form_row(form.facebook_public) }}
+                    {{ form_row(form.facebook_protected) }}
+                    {{ form_row(form.twitter) }} 
+                    {{ form_row(form.twitter_public) }}
+                    {{ form_row(form.twitter_protected) }}
+                    {{ form_row(form.google) }} 
+                    {{ form_row(form.google_public) }}
+                    {{ form_row(form.google_protected) }}
+                    {{ form_row(form.linkedin) }} 
+                    {{ form_row(form.linkedin_public) }}
+                    {{ form_row(form.linkedin_protected) }}
+                    <div class='dates'>{{ form_row(form.occupy_date) }}</div>
+
+                    <div class="section-header"><h6>Pictures</h6></div>
+                    {#  data-prototype becomes available after adding the 'allow-add' option in the collection builder 
+                        of the form.  This "prototype" is a little "template" that contains all the HTML to be able to 
+                        render any new "photo" forms: #}
+                    <div class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+                        {# iterate over each existing tag and render its only field: description #}
+                        {% for picture in form.photos %}
+                            <section>
+                                {{ form_row(picture.name) }}
+                                {{ form_row(picture.description) }}
+                                {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
+                            </section>
+                        {% endfor %}
+                    </div>
+
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+{% endblock %}

@@ -19,4 +19,11 @@
             <strong>SUCCESS:</strong>&nbsp;&nbsp; {{ flash_message }}
         </div>
     {% endfor %}
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-success">
+                <div class="alert alert-{{ label }}">{{ flash }}</div>
+            </div>
+        {% endfor %}
+    {% endfor %}
 </div>
