@@ -16,7 +16,7 @@ class ComplaintForm extends AbstractType {
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
+
         $builder->add('type', ChoiceType::class, array(
             'required' => true,
             'placeholder'   => 'Choose an option',
@@ -26,21 +26,36 @@ class ComplaintForm extends AbstractType {
                 'Complaint Against Board Member'                => 'Complaint Against Board Member',
                 'Complaint Against Contractor'                  => 'Complaint Against Contractor',
                 'Complaint Against Regulation(s)'               => 'Complaint Against Regulation(s)',
+                'Other - Complaint Not Listed'                  => 'Other - Complaint Not Listed',
             ),
         ));
         $builder->add('details', TextareaType::class, array(
+            'attr'  =>  array(
+                'style' =>  'height: 200px',
+                'placeholder'   =>  'Provide a thourough account of your complaint.  Be explicit.'
+            )
         ));
         $builder->add('defendent_name', TextType::class, array(
             'label'         =>  'Accused\'s name',
+            'attr'  =>  array(
+                'placeholder'   =>  'Who are you accusing?'
+            )
         ));
         $builder->add('defendent_address', TextType::class, array(
             'label'         =>  'Accused\'s address',
+            'attr'  =>  array(
+                'placeholder'   =>  'Where do they live?'
+            )
         ));
         $builder->add('reg_violated', TextareaType::class, array(
             'label'         =>  'Regulation in violation',
+            'attr'  =>  array(
+                'style' =>  'height: 150px',
+                'placeholder'   =>  'Be sure the accused is in violation of a regulation before you complain.  Reference the Legal section from the menu above and document the regulation here.'
+            )
         ));
         $builder->add('photos', CollectionType::class, array(
-            'entry_type'   => PhotoAltForm::class,
+            'entry_type'   => PhotoForm::class,
             'allow_add'    => true,
             'by_reference' => false,
         ));

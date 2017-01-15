@@ -1,0 +1,131 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 12, 2017, 11:56:58 AM
+    Author     : User
+*/
+
+@page {  }
+	table { border-collapse:collapse; border-spacing:0; empty-cells:show }
+	td, th { vertical-align:top; font-size:12pt;}
+	h1, h2, h3, h4, h5, h6 { clear:both }
+	ol, ul { margin:0; padding:0;}
+	li { list-style: none; margin:0; padding:0;}
+	<!-- "li span.odfLiEnd" - IE 7 issue-->
+	li span. { clear: both; line-height:0; width:0; height:0; margin:0; padding:0; }
+	span.footnodeNumber { padding-right:1em; }
+	span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-color:#fff000;  margin:0; border:0; padding:0;  }
+	* { margin:0;}
+	.P1 { font-size:10.5pt; font-family:Arial; writing-mode:page; text-align:center ! important; font-weight:bold; }
+	.P10 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P11 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P12 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P13 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P14 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P15 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P16 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P17 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P18 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P19 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P2 { font-size:10.5pt; font-family:Arial; writing-mode:page; text-align:center ! important; font-weight:bold; }
+	.P20 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P21 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P22 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P23 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:center ! important; text-indent:0.4953in; font-weight:normal; }
+	.P24 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P25 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P26 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P27 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:center ! important; text-indent:0.4953in; font-weight:bold; }
+	.P28 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:bold; }
+	.P3 { font-size:10.5pt; font-family:Arial; writing-mode:page; text-align:center ! important; font-weight:bold; }
+	.P31 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P32 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; }
+	.P33 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.5035in; font-weight:bold; }
+	.P34 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.5035in; font-weight:normal; }
+	.P35 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:center ! important; text-indent:0.5035in; font-weight:normal; }
+	.P36 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.5035in; font-weight:normal; }
+	.P39 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.5035in; }
+	.P4 { font-size:10.5pt; font-family:Arial; writing-mode:page; text-align:left ! important; font-weight:normal; }
+	.P40 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.9811in; margin-right:0in; text-align:left ! important; text-indent:-0.478in; font-weight:normal; }
+	.P41 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.9984in; font-weight:normal; }
+	.P42 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-align:left ! important; text-indent:0in; font-weight:normal; }
+	.P43 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-align:left ! important; text-indent:0in; }
+	.P44 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-align:left ! important; text-indent:0in; }
+	.P45 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.5035in; margin-right:0in; text-align:left ! important; text-indent:0.3646in; font-weight:normal; }
+	.P46 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.5035in; margin-right:0in; text-indent:0.3646in; }
+	.P47 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.5035in; margin-right:0in; text-indent:0.3646in; }
+	.P48 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.85in; margin-right:0in; text-indent:-0.35in; }
+	.P49 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.85in; margin-right:0in; text-align:center ! important; text-indent:-0.35in; font-weight:bold; }
+	.P5 { font-size:10.5pt; font-family:Arial; writing-mode:page; text-align:center ! important; font-weight:normal; }
+	.P50 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-indent:0.3646in; }
+	.P51 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-align:left ! important; text-indent:0.3646in; font-weight:normal; }
+	.P52 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-indent:0.3646in; }
+	.P53 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-indent:0.3646in; }
+	.P54 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-indent:0.3646in; }
+	.P55 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-indent:0.3646in; }
+	.P56 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-indent:0.3646in; }
+	.P57 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-indent:0.3646in; }
+	.P58 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-align:center ! important; text-indent:-0.3472in; font-weight:bold; background-color:transparent; }
+	.P59 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-indent:-0.3472in; }
+	.P6 { font-size:10.5pt; font-family:Arial; writing-mode:page; }
+	.P60 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-indent:-0.3472in; }
+	.P61 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-indent:-0.3472in; background-color:transparent; }
+	.P62 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-indent:-0.3472in; font-weight:normal; background-color:transparent; }
+	.P63 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-align:center ! important; text-indent:-0.3472in; font-weight:normal; background-color:transparent; }
+	.P64 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.8508in; margin-right:0in; text-indent:-0.3472in; }
+	.P65 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-indent:0.5035in; }
+	.P66 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-indent:0.5035in; }
+	.P67 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-indent:0.5035in; }
+	.P68 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0.0091in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:normal; background-color:transparent; }
+	.P69 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.0091in; font-weight:normal; }
+	.P7 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0in; font-weight:normal; }
+	.P70 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:center ! important; text-indent:0.0091in; font-weight:bold; }
+	.P71 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.0091in; font-weight:bold; }
+	.P72 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:center ! important; text-indent:0.0091in; }
+	.P73 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.0091in; }
+	.P8 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:center ! important; text-indent:0in; font-weight:bold; }
+	.P9 { font-size:10.5pt; font-family:Arial; writing-mode:page; margin-left:0in; margin-right:0in; text-align:left ! important; text-indent:0.4953in; font-weight:bold; }
+	.T1 { font-weight:normal; }
+	.T10 { text-decoration:underline; font-weight:bold; }
+	.T19 { vertical-align:super; font-size:58%;}
+	.T2 { font-weight:normal; }
+	.T20 { vertical-align:super; font-size:58%;font-weight:bold; }
+	.T21 { vertical-align:super; font-size:58%;font-weight:bold; }
+	.T22 { vertical-align:super; font-size:58%;font-weight:bold; }
+	.T23 { vertical-align:super; font-size:58%;}
+	.T24 { vertical-align:super; font-size:58%;text-decoration:none ! important; }
+	.T27 { text-decoration:underline; font-weight:bold; }
+	.T28 { font-weight:bold; }
+	.T29 { vertical-align:super; font-size:58%;font-weight:bold; }
+	.T3 { text-decoration:underline; }
+	.T33 { font-weight:bold; }
+	.T34 { font-weight:bold; }
+	.T35 { font-weight:bold; }
+	.T4 { text-decoration:underline; font-weight:bold; }
+	.T40 { font-weight:bold; }
+	.T41 { font-weight:bold; }
+	.T42 { font-weight:bold; }
+	.T43 { font-weight:bold; }
+	.T45 { vertical-align:super; font-size:58%;font-weight:bold; }
+	.T47 { text-decoration:underline; font-weight:bold; }
+	.T48 { text-decoration:none ! important; }
+	.T5 { text-decoration:underline; font-weight:bold; }
+	.T51 { text-decoration:none ! important; }
+	.T52 { text-decoration:none ! important; }
+	.T53 { text-decoration:none ! important; }
+	.T54 { text-decoration:none ! important; }
+	.T55 { text-decoration:none ! important; }
+	.T56 { text-decoration:none ! important; }
+	.T57 { text-decoration:none ! important; font-weight:bold; }
+	.T58 { text-decoration:none ! important; }
+	.T59 { text-decoration:none ! important; }
+	.T6 { text-decoration:underline; font-weight:bold; }
+	.T61 { background-color:transparent; }
+	.T7 { text-decoration:underline; font-weight:bold; }
+	.T8 { text-decoration:underline; font-weight:bold; }
+	.T9 { text-decoration:underline; font-weight:bold; }
+	<!-- ODF styles with no properties representable as CSS -->
+	.T11 .T13 .T14 .T15 .T16 .T17 .T18 .T26 .T30 .T32 .T36 .T37 .T38 .T39 .T46 .T49 .T60  { }

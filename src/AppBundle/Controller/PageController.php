@@ -6,7 +6,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Enquiry;
-use AppBundle\Form\EnquiryForm;
+use AppBundle\Form\ContactForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
@@ -66,13 +66,13 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/contact", name="contact")
+     * @Route("/public/contact/new", name="newContactPublic")
      */    
-    public function contactAction(Request $request)
+    public function newContactPublicAction(Request $request)
     {
         $enquiry = new Enquiry();
-        $form = $this->createForm(EnquiryForm::class, $enquiry, array(
-            'action' => $this->generateUrl('contact'),
+        $form = $this->createForm(ContactForm::class, $enquiry, array(
+            'action' => $this->generateUrl('newContactPublic'),
             'method' => 'POST',
         ));
 
@@ -108,7 +108,7 @@ class PageController extends Controller
             }
         }
 
-        return $this->render('pages/contact.html.twig', array(
+        return $this->render('pages/newContactPublic.html.twig', array(
              'form'  =>  $form->createView(),
         ));
     }    

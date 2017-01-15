@@ -28,6 +28,16 @@ class Minutes {
     protected $user;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $year;
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $quarter;
+    
+    /**
      * @ORM\Column(type="string")
      */
     protected $title;
@@ -190,5 +200,53 @@ class Minutes {
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     *
+     * @return Minutes
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set quarter
+     *
+     * @param integer $quarter
+     *
+     * @return Minutes
+     */
+    public function setQuarter($quarter)
+    {
+        $this->quarter = $quarter;
+
+        return $this;
+    }
+
+    /**
+     * Get quarter
+     *
+     * @return integer
+     */
+    public function getQuarter()
+    {
+        return $this->quarter;
     }
 }

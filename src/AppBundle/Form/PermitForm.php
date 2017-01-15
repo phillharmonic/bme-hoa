@@ -33,13 +33,16 @@ class PermitForm extends AbstractType {
             ),
         ));
         $builder->add('description', TextareaType::class, array(
-            'label'         =>  'Please describe in detail the proposed improvement'
+            'label'         =>  'Details - BE EXPLICIT',
+            'attr'  =>  array(
+                'style' => "height: 150px;"
+            )
         ));
         $builder->add('location', TextType::class, array(
-            'label'         =>  'Please provide location(s) of improvement and drawing showing proposed installation'
+            'label'         =>  'Location - BE EXPLCIT'
         ));
         $builder->add('drawings', FileType::class, array(
-            'label' => 'Include drawings/pictures showing placement upon the Lot (PDF file)'
+            'label' => 'Drawings & Pictures (PDF file)'
         ));
         
         $builder->add('save', SubmitType::class, array('label' => 'Submit'));

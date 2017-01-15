@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Discutea\DForumBundle\DForumBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new APY\DataGridBundle\APYDataGridBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

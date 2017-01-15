@@ -11,83 +11,90 @@ class LegalController extends Controller
 {
     
     /**
-     * @Route("/legal/original_ccrs", name="legalOriginalCCRs")
+     * @Route("/public/legal/original-restrictions", name="originalRestrictionsLegalPublic")
      */
-    public function ccrsAction(){
-        return $this->render('legal/ccrs.html.twig');
+    public function originalRestrictionsLegalPublicAction(){
+        return $this->render('legal/originalRestrictionsLegalPublic.html.twig');
     }
     
     /**
-     * @Route("/legal/code_of_regs", name="legalCodeOfRegs")
+     * @Route("/public/legal/regulations", name="regulationsLegalPublic")
      */
-    public function codeOfRegulationsAction(){
-        return $this->render('legal/codeOfRegulations.html.twig');
+    public function regulationsLegalPublicAction(){
+        return $this->render('legal/regulationsLegalPublic.html.twig');
     }
     
     /**
-     * @Route("/legal/contract_garden_and_landscape", name="contractGardenLandscape")
+     * @Route("/public/legal/landscape", name="landscapingLegalPublic")
      */
-    public function contractGardenLandscapeAction(){
+    public function landscapingLegalPublicAction(){
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/WINNSCAPES.pdf');
     }
     
     /**
-     * @Route("/legal/contract_lawncare", name="contractLawncare")
+     * @Route("/public/legal/lawncare", name="lawncareLegalPublic")
      */
-    public function contractLawncareAction(){
+    public function lawncareLegalPublicAction(){
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/CREATIVE.pdf');
     }
     
     /**
-     * @Route("/legal/contract_pond_maintenance", name="contractPondMaint")
+     * @Route("/public/legal/ponds", name="pondsLegalPublic")
      */
-    public function contractPondMaintAction(){
+    public function pondsLegalPublicAction(){
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/AUQADOC.pdf');
     }
     
     /**
-     * @Route("/legal/contract_sbs_management", name="contractSBSManagement")
+     * @Route("/public/legal/management", name="managementLegalPublic")
      */
-    public function contractSbsAction(){
-        return $this->render('legal/contractSBSManagement.html.twig');
+    public function managementLegalPublicAction(){
+        return $this->render('legal/managementLegalPublic.html.twig');
     }
     
     /**
-     * @Route("/legal/current_ccrs", name="legalCurrentCCRs")
+     * @Route("/public/legal/current-restrictions", name="currentRestrictionsLegalPublic")
      */
-    public function currentCcrsAction(){
-        return $this->render('legal/currentccrs.html.twig');
+    public function currentRestrictionsLegalPublicAction(){
+        return $this->render('legal/currentRestrictionsLegalPublic.html.twig');
     }
     
     /**
-     * @Route("/legal", name="legalHome")
+     * @Route("/public/legal/home", name="homeLegalPublic")
      */
-    public function indexAction()
+    public function homeLegalPublicAction()
     {
-        return $this->render('legal/index.html.twig', array(
+        return $this->render('legal/homeLegalPublic.html.twig', array(
         ));        
     }
     
+    
     /**
-     * @Route("/legal/first_amendment", name="legalFirstAmendment")
+     * @Route("/public/legal/amendment-1", name="amendment1LegalPublic")
      */
-    public function firstAmendmentAction(){
-        return $this->render('legal/firstAmendment.html.twig');
+    public function amendment1LegalPublicAction(){
+        return $this->render('legal/amendment-1.html.twig');
+    }    
+    /**
+     * @Route("/public/legal/amendment-2", name="amendment2LegalPublic")
+     */    
+    public function amendment2LegalPublicAction(){
+        return $this->render('legal/amendment-2.html.twig');
     }
     
     /**
-     * @Route("/legal/fourth_amendment", name="legalFourthAmendment")
-     */    
-    public function fourthAmendmentAction(){
-        return $this->render('legal/fourthAmendment.html.twig');
+     * @Route("/public/legal/amendment-3", name="amendment3LegalPublic")
+     */
+    public function amendment3LegalPublicAction(){
+        return $this->render('legal/amendment-3.html.twig');
     }
     
     /**
-     * @Route("/legal/second_amendment", name="legalSecondAmendment")
+     * @Route("/public/legal/amendment-4", name="amendment4LegalPublic")
      */    
-    public function secondAmendmentAction(){
-        return $this->render('legal/secondAmendment.html.twig');
-    }
+    public function amendment4LegalPublicAction(){
+        return $this->render('legal/amendment-4.html.twig');
+    }    
     
     /**
      * @Route("/legal/declarations_pdf", name="declarationsPDF")
@@ -139,11 +146,6 @@ class LegalController extends Controller
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/SBSMGT.pdf');
     }
     
-    /**
-     * @Route("/legal/third_amendment", name="legalThirdAmendment")
-     */
-    public function thirdAmendmentAction(){
-        return $this->render('legal/thirdAmendment.html.twig');
-    }
+
     
 }

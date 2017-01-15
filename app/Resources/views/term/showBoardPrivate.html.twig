@@ -1,0 +1,58 @@
+{% extends 'alt-layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+    <style>
+        img {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;
+    }
+    </style>
+{% endblock %}
+{% block title %}Trustee Profile{% endblock %}
+{% block pageheader %}<h1>My Account</small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block sidenav %} {{ include('sidebars/account.html.twig') }}  {% endblock %}
+{% block content %}
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('personalAccountSummary') }}">My Account</a></li>
+        <li class="breadcrumb-item">Trustee Profile</li>
+    </ol>
+    <hr>
+    
+    {#
+        TODO: Show all terms.  There can be more than one.  Don't worry about an index page.  Just show them 
+        all on one page and include EDIT buttons for CURRENT terms... lock them down if it isn't the current
+        term - than way there can be a record.
+    #}
+    
+{% if terms is empty %}
+    <h2>Trustee Profile</h2>    
+    <h5><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;TERM: Looks like you don't have a Trustee Profile yet... create one <a href='{{ path('newBoardPrivate') }}'>here</a>.</h5>
+    <hr>
+{% else %}
+    {% for term in terms %}
+    <h2>Trustee Profile</h2>    
+    <h5><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;TERM [{{ loop.index }}]&nbsp;: {{ term.startDate|date('F Y') }} to PRESENT</h5>
+    <h3><small><a href="{{ path('editBoardPrivate', {'id' : term.id }) }}">Edit</a> | <a href='{{ path('newBoardPrivate') }}'>New</a></small></h3>
+    <hr>
+    <h3>{{term.trusteePosition}}&nbsp;&nbsp;|&nbsp;&nbsp;{{user.honorific}} {{user.firstname}} {{user.mi}} {{user.lastname}}</h3>
+    
+    
+    <p style="white-space: pre-wrap;">{% for pic in term.photos|slice(0, 1) %}<img class="img-responsive" src='{{ pic.path }}' style="max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;" />{% endfor %}<span style="font-size: 18pt; color: grey;">Introduction</span></br></br>{{ term.aboutme }}</p>
+    <p>Sincerely,</p>
+    <p style='font-family: Yellowtail; font-size: 16pt; '>{{user.fullname}}</p>
+    <hr>
+    <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:someone@yoursite.com">email</a>  </p>
+    <hr>
+    
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

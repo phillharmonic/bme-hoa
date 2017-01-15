@@ -1,43 +1,40 @@
 {% extends 'alt-base.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}
 {% block title %}Experimental Page{% endblock %}
-
+{# BODY #}
 {% block body %} 
+    {# TOP NAV BAR #}
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             {% block nav %} {{ include('menus/bootstrap-main-menu.html.twig') }} {% endblock %}
         </div>
     </nav>
-        
+    {# JUMBOTRON #}    
     <div class="fill-gap"></div>
     <div class="jumbotron">
-        {% block pageheader %}
-            <h1>Heading Heading</h1>      
-            <p>Generic text....</p>
-        {% endblock %}
-        {% block alerts %}
-            {{ include('pages/alerts.twig') }}
-        {% endblock %} 
-    </div>    
-        
-    <div class="container-fluid">
-        <div class="row content">
-            
-            <div class="col-sm-3 sidenav">
-                {% block sidenav %} {% endblock %}
-            </div>
-            <div class="col-sm-9">
-                {% block content %} {% endblock %}
-            </div>
+        <div class="container text-center">
+            {% block pageheader %}
+                <h1>Generic Headline | </h1>      
+                <p>generic tag line</p>
+            {% endblock %}
+            {% block alerts %}
+                {{ include('pages/alerts.twig') }}
+            {% endblock %}
         </div>
-    </div>
+    </div>   
         
-    <footer class="container-fluid">
+    <div class="col-md-1"></div>
+    
+    <div class="col-md-10">
+        {% block content %} 
+        
+        {% endblock %}
+    </div> 
+        
+    <div class="col-md-1"></div>
+    
+    <footer class="container-fluid col-md-12">
         {% block footer %}{{ include('pages/alt-footer.html.twig') }} {% endblock %} 
     </footer>
         

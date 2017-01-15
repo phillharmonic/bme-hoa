@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Validator\Constraints\DateTime;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Complaint
@@ -31,11 +32,13 @@ class Complaint
     
     /**
      * @ORM\Column(type="date")
+     * @GRID\Column(title="Submitted", size="150", type="date", filterable=false)
      */
     protected $timestamp;
     
     /**
      * @ORM\Column(type="string", length=100)
+     * @GRID\Column(title="Summary", safe=false, filterable=false )
      */
     protected $type;
     
@@ -66,6 +69,7 @@ class Complaint
     
     /**
      * @ORM\Column(type="boolean")
+     * @GRID\Column(title="Resolved", size="100", type="boolean")
      */
     protected $is_resolved;
     
@@ -82,6 +86,7 @@ class Complaint
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Action", inversedBy="complaints", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     * 
      */
     protected $actions;
     

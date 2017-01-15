@@ -24,23 +24,22 @@
             <li class="dropdown-submenu">
               <a class="test" tabindex="-1" href="#">Board of Directors <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li {% if app.request.attributes.get( '_route' ) == 'boardOfDirectorsShow' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('boardOfDirectorsShow') }}">Current Board</a></li>
-                <li {% if app.request.attributes.get( '_route' ) == 'showMinutesProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showMinutesProtected', {'id' : minutes_controller.getLast}) }}">Minutes</a></li>
-                <li {% if app.request.attributes.get( '_route' ) == 'showAgendaProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showAgendaProtected') }}">Agenda</a></li>
+                <li {% if app.request.attributes.get( '_route' ) == 'showBoardPublic' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showBoardPublic') }}">Current Board</a></li>
+                <li {% if app.request.attributes.get( '_route' ) == 'showMinutesProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showMinutesProtected') }}">Minutes</a></li>
+                {#<li {% if app.request.attributes.get( '_route' ) == 'showMinutesProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('showMinutesProtected', {'id' : minutes_controller.getLast}) }}">Minutes</a></li>#}
                 <li {% if app.request.attributes.get( '_route' ) == 'indexComplaintProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('indexComplaintProtected') }}">Complaints</a></li>
-                <li {% if app.request.attributes.get( '_route' ) == 'permitIndex' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('permitIndex') }}">Permits</a></li>
-                <li {% if app.request.attributes.get( '_route' ) == 'devNotes' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('devNotes') }}">Website Notes</a></li>
+                <li {% if app.request.attributes.get( '_route' ) == 'indexPermitProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('indexPermitProtected') }}">Permits</a></li>
               </ul>
             </li>
-            <li {% if app.request.attributes.get( '_route' ) == 'legalHome' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('legalHome') }}">Legal</a></li>
-            <li {% if app.request.attributes.get( '_route' ) == 'financialsIndex' %} class="active"{% endif %}><a tabindex="-1" href="{{path('financialsIndex')}}">Financial</a></li>
-            <li {% if app.request.attributes.get( '_route' ) == 'permitNew' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('permitNew') }}">Submit Permit</a></li>
-            <li {% if app.request.attributes.get( '_route' ) == 'complaintNew' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('complaintNew')}}#">Log Complaint</a></li>
-            <li {% if app.request.attributes.get( '_route' ) == 'contact' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('contact') }}">Contact Us</a></li>
+            <li {% if 'Legal' in app.request.attributes.get( '_route' ) %} class="active"{% endif %}><a tabindex="-1" href="{{ path('homeLegalPublic') }}">Legal</a></li>
+            <li {% if 'Finance' in app.request.attributes.get( '_route' ) %} class="active"{% endif %}><a tabindex="-1" href="{{path('homeFinanceProtected')}}">Finances</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'newPermitProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('newPermitProtected') }}">Submit Permit</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'newComplaintProtected' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('newComplaintProtected')}}">Log Complaint</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'newContactPublic' %} class="active"{% endif %}><a tabindex="-1" href="{{ path('newContactPublic') }}">Contact Us</a></li>
           </ul>
         </li>
         
-        
+       {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -60,9 +59,12 @@
                 <li><a tabindex="-1" href="#">Text</a></li>
                 <li {% if app.request.attributes.get( '_route' ) == 'test' %} class="active"{% endif %}><a href="{{ path('test') }}">Code Tester</a></li>
                 <li><a href="{{ path('discutea_forum_admin_dashboard') }}">Forum</a></li>
+                <li><a href="{{ path('newAgendaAdmin') }}">New Annual Agenda</a></li>
           </ul>
         </li>
+        {% endif %}
         
+        {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ACCOUNTING') %}
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Accounting <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -80,6 +82,7 @@
                 </li>
             </ul>
         </li>
+        {% endif %}
         
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -87,13 +90,13 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Account <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Pay Dues</a></li>
-                  <li {% if app.request.attributes.get( '_route' ) starts with 'personalAccountSummary' %} class="active"{% endif %}><a href="{{ path('personalAccountSummary') }}">Summary</a></li>
-                  <li {% if app.request.attributes.get( '_route' ) starts with 'personalAccountShow' %} class="active"{% endif %}><a href="{{path('personalAccountShow', {'id' : app.user.id })}}">Profile</a></li>
-                  <li {% if app.request.attributes.get( '_route' ) starts with 'userPermitIndex' %} class="active"{% endif %}><a href="{{path('userPermitIndex')}}">My Permits</a></li>
-                  <li {% if app.request.attributes.get( '_route' ) starts with 'indexComplaintPrivate' %} class="active"{% endif %}><a href="{{path('indexComplaintPrivate')}}">My Complaints</a></li>
-                  <li><a href="#">Statements</a></li>
-                  <li><a href="#">Notices</a></li>
+                    <li {% if app.request.attributes.get( '_route' ) starts with 'personalAccountSummary' %} class="active"{% endif %}><a href="{{ path('personalAccountSummary') }}">Dashboard</a></li>
+                    <li><a href="#">Pay Dues</a></li>
+                    <li {% if app.request.attributes.get( '_route' ) starts with 'personalAccountShow' %} class="active"{% endif %}><a href="{{path('personalAccountShow', {'id' : app.user.id })}}">Profile</a></li>
+                    <li {% if app.request.attributes.get( '_route' ) starts with 'userPermitIndex' %} class="active"{% endif %}><a href="{{path('userPermitIndex')}}">My Permits</a></li>
+                    <li {% if app.request.attributes.get( '_route' ) starts with 'indexComplaintPrivate' %} class="active"{% endif %}><a href="{{path('indexComplaintPrivate')}}">My Complaints</a></li>
+                    <li><a href="#">Statements</a></li>
+                    <li><a href="#">Notices</a></li>
                 </ul>
             </li>
             <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp; Logout</a></li>

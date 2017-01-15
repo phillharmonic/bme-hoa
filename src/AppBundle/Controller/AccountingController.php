@@ -78,20 +78,6 @@ class AccountingController extends Controller
     }
     
     /**
-     * @Route(
-     *      "/financials/index", 
-     *      name="financialsIndex",
-     *      requirements={
-     *     }
-     * )
-     */       
-    public function financialsIndexAction()
-    {
-        return $this->render('accounting/financialsIndex.html.twig', array(
-        ));
-    }    
-    
-    /**
      * @Route("/financial/2016-4th-quarter-pdf", name="2016-4th-quarter-pdf")
      */
     public function pdf20164thquarterAction(){

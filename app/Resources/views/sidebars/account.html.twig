@@ -12,7 +12,7 @@
 {% if app.user.isTrustee == true %}
     <h5>Trustee Menu</h5>
     <ul class="nav nav-pills nav-stacked">
-        <li {% if app.request.attributes.get( '_route' ) starts with 'trusteeTermShow' %} class="active"{% endif %} ><a title="Public Trustee Profile" href="{{path('trusteeTermShow', {'id' : app.user.id })}}">Public Trustee Profile</a></li>
+        <li {% if app.request.attributes.get( '_route' ) starts with 'showBoardPrivate' %} class="active"{% endif %} ><a title="Public Trustee Profile" href="{{path('showBoardPrivate', {'id' : app.user.id })}}">Public Trustee Profile</a></li>
     </ul><br>
 {% endif %}
 <div class="input-group">

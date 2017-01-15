@@ -1,0 +1,349 @@
+{% extends 'alt-layout.html.twig' %}
+{% block title %}Finance 2016 Quarter 1{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Finances | <small><small>2016 Quarter 1</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    {% block breadcrumb %} 
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Finances Home</li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp; <a href="{{ path('showSummary2016FinanceProtected') }}">2016</a></li>
+            <li class="breadcrumb-item active"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;2016 Quarter 1</li>
+        </ol>
+    {% endblock %}   
+    <div class="col-md-3">{% block sidebar %} {{ include('sidebars/financeSidebar.html.twig') }} {% endblock %}</div>
+    <div class="col-md-9">
+    {# PAGE SUMMARY #}        
+        <ul class="nav nav-tabs">
+            <li {% if app.request.attributes.get( '_route' ) == 'showSummary2016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showSummary2016FinanceProtected')}}">2016</a></li>
+            {#<li {% if app.request.attributes.get( '_route' ) == 'showSummaryQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showSummaryQ12016FinanceProtected')}}">Q1 Summary</a></li>#}
+            <li {% if app.request.attributes.get( '_route' ) == 'showIncomeStatementQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showIncomeStatementQ12016FinanceProtected')}}">Q1 Income Statement</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'showBalanceSheetQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showBalanceSheetQ12016FinanceProtected')}}">Q1 Balance Sheet</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'showArQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showArQ12016FinanceProtected')}}">Q1 A/R</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'showApQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showApQ12016FinanceProtected')}}">Q1 A/P</a></li>
+        </ul>
+        <h2>Balance Sheet</h2>    
+        {# SECURITY #}  
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+        </h5>
+        <hr>
+        {# CONTENT #}
+        <style>
+            .tab-1{padding-left: 1.5em;}
+            .tab-2{padding-left: 3em;}
+            .tab-3{padding-left: 4.5em;}
+            .tab-4{padding-left: 6em;}
+            .bul{border-bottom: solid 3px;}
+            .dbul{border-bottom: double 6px;}
+        </style>
+        
+        <div id="balance-sheet" class="container-fluid" >
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 ">&nbsp;</div>
+                <div class="col-md-2 text-center"><strong>January</strong></div>
+                <div class="col-md-2 text-center"><strong>February</strong></div>
+                <div class="col-md-2 text-center"><strong>March</strong></div>
+                <div class="col-md-2 text-center"><strong>Quarter</strong></div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4"><strong>ASSETS</strong></div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 tab-1">Current Assets</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 tab-2">Checking/Savings</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 tab-3">1010 - Checking</div>
+                <div class="col-md-2">10,600.42</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 tab-3">1030 - Investments</div>
+                <div class="col-md-2 bul">14,917.68</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 tab-2">Total Checking/Savings</div>
+                <div class="col-md-2">25,518.10</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Accounts Receivable</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-3">1200 - ACCOUNTS RECEIVABLE</div>
+                <div class="col-md-2 bul">8,053.35</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Total Accounts Receivable</div>
+                <div class="col-md-2">8,053.35</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Other Current Assets</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-3">1250 - ALLOWANCE FOR BAD DEBTS</div>
+                <div class="col-md-2 bul">-2,750.00</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Total Other Current Assets</div>
+                <div class="col-md-2 bul">-2,750.00</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-1">Total Current Assets</div>
+                <div class="col-md-2">30,821.45</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2s">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4"><strong>TOTAL ASSETS</strong></div>
+                <div class="col-md-2 dbul">30,821.45</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4"><strong>LIABILITIES & EQUITY</strong></div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-1">Liabilities</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Current Liabilities</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-3">Other Current Liabilities</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-4">2010 - ACCOUNTS PAYABLE - other</div>
+                <div class="col-md-2 bul">3.33</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-3">Total Other Liabilities</div>
+                <div class="col-md-2 bul">3.33</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Total Current Liabilities</div>
+                <div class="col-md-2 bul">3.33</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div> 
+            <div class="row">  
+                <div class="col-md-4 tab-1">Total Liabilities</div>
+                <div class="col-md-2">3.33</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-1">Equity</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">2820 - BEGINNING FUND BALANCE</div>
+                <div class="col-md-2">9,358.30</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-2">Net Income</div>
+                <div class="col-md-2 bul">21,459.82</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4 tab-1">Total Equity</div>
+                <div class="col-md-2 bul">30,818.12</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+            <div class="row">
+                <div class="col-md-4"><strong>TOTAL LIABILITIES & EQUITY</strong></div>
+                <div class="col-md-2 dbul">30,821.45</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>  
+        </div>
+    </div>
+{% endblock %}

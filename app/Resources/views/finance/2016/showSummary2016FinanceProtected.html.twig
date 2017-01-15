@@ -1,0 +1,40 @@
+{% extends 'alt-layout.html.twig' %}
+{% block title %}Finance 2016{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Finances | <small><small>2016</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    {% block breadcrumb %} 
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Finances Home</li>
+            <li class="breadcrumb-item active"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;2016</li>
+        </ol>
+    {% endblock %}   
+    <div class="col-md-3">{% block sidebar %} {{ include('sidebars/financeSidebar.html.twig') }} {% endblock %}</div>
+    <div class="col-md-9">
+    {# PAGE SUMMARY #}        
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">2016</a></li>
+            <li><a href="{{path('showIncomeStatementQ12016FinanceProtected')}}">Quarter 1</a></li>
+            <li><a href="#">Quarter 2</a></li>
+            <li><a href="#">Quarter 3</a></li>
+            <li><a href="#">Quarter 4</a></li>
+        </ul>
+        <h2>2016 Finances</h2>    
+        {# SECURITY #}  
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+        </h5>
+        <hr>
+        {# CONTENT #}
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="{{ path('2016-1st-quarter-pdf') }}" target="_blank">Quarter 1 PDF</a></li>
+                <li><a href="{{ path('2016-2nd-quarter-pdf') }}" target="_blank">Quarter 2 PDF</a></li>
+                <li><a href="{{ path('2016-2nd-quarter-pdf') }}" target="_blank">Quarter 3 PDF</a></li>
+                <li><a href="{{ path('2016-2nd-quarter-pdf') }}" target="_blank">Quarter 4 PDF</a></li>
+            </ul></br></br></br>
+        </div>
+    </div>
+{% endblock %}

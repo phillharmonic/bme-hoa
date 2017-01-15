@@ -45,7 +45,7 @@ services:
             - { name: form.type }
             
     minutes:
-        class:        AppBundle\Controller\MinutesController
+        class:        AppBundle\Controller\MinutesControllers\MinutesController
         calls:
             - [setContainer, ["@service_container"]]
 

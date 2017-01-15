@@ -1,0 +1,7 @@
+<ul class="nav nav-pills nav-stacked flex-column">
+    <li {% if app.request.attributes.get( '_route' ) == 'homeFinanceProtected' %} class="active"{% endif %} ><a href="{{path('homeFinanceProtected')}}">Finance Home</a></li>
+    <li {% if '2016' in app.request.attributes.get( '_route' ) %} class="active" {% endif %} ><a href="{{path('showSummary2016FinanceProtected')}}" >2016</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'originalRestrictionsLegalPublic' %} class="active" {% endif %}><a href="{{path('originalRestrictionsLegalPublic')}}" >2015</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'amendment1LegalPublic' %} class="active" {% endif %}><a href="{{path('amendment1LegalPublic')}}" >2014</a></li>
+    <li {% if app.request.attributes.get( '_route' ) starts with 'amendment2LegalPublic' %} class="active" {% endif %}><a href="{{path('amendment2LegalPublic')}}" >2013</a></li>
+</ul>

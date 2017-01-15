@@ -5,7 +5,6 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,11 +17,27 @@ class TermForm extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('start_date', DateType::class, array(
-            'years' => range(date('Y') -15, date('Y')),
+        $builder->add('start_date', DateType::class,
+                [   'widget' => 'single_text', 
+                    'format' => 'dd-MM-yyyy', 
+                    'attr' => [
+                        'class' => 'form-control input-inline datepicker',
+                        'data-provide' => 'datepicker',
+                        'data-date-format' => 'dd-mm-yyyy'
+                ]],
+                array(
+            'attr' => array('style' => 'width: 150px')
         ));
-        $builder->add('end_date', DateType::class, array(
-            'years' => range(date('Y') -15, date('Y')),
+        $builder->add('end_date', DateType::class, 
+                [   'widget' => 'single_text', 
+                    'format' => 'dd-MM-yyyy', 
+                    'attr' => [
+                        'class' => 'form-control input-inline datepicker',
+                        'data-provide' => 'datepicker',
+                        'data-date-format' => 'dd-mm-yyyy'
+                ]],
+                array(
+            'attr' => array('style' => 'width: 150px')
         ));
         $builder->add('trustee_position', ChoiceType::class, array(
             'required' => true,
@@ -36,7 +51,7 @@ class TermForm extends AbstractType {
             ),
         ));
         $builder->add('aboutme', TextareaType::class, array(
-            'attr' => array('style' => 'width: 50px')
+//            'attr' => array('style' => 'width: 50px')
         ));
         $builder->add('photos', CollectionType::class, array(
             'entry_type'   => PhotoForm::class,

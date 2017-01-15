@@ -1,0 +1,54 @@
+{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% block stylesheets %}
+{{parent()}}    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
+{% endblock %}
+{% block javascripts %}
+{{parent()}}    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+{% endblock %}
+{% block title %}New Board Term {% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-plus">&nbsp;</span>New | <small><small>ADD A NEW BOARD TERM</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    {# BREADCRUMB #}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+        <li class="breadcrumb-item"><a href="">My Account </a></li>
+        <li class="breadcrumb-item active">Profile</li>
+        <li class="breadcrumb-item active">New Board Term</li>
+    </ol>
+    {# PAGE SUMMARY #}        
+    <h3><small>New</small></h3>
+    <hr style="padding: 0; margin:0;">
+    <h2>Board Term </h2>    
+    {# SECURITY #}  
+    <h5>
+        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+        <span style="">Private</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+    </h5>
+    <hr>
+    {# PAGE CONTENTS #}
+    {% form_theme form 'form/bootstrap_3_layout.html.twig' %}
+    <div style="width: 75%;" >
+        {{ form_start(form) }}
+        <div style='width: 200px;'>{{ form_row(form.start_date) }}</div>
+        <div style='width: 200px;'>{{ form_row(form.end_date) }}</div>
+        {{ form_row(form.trustee_position) }}
+        {{ form_row(form.aboutme) }}
+        <h3><small>Add Picture</small></h3>
+        <hr>
+        <div style="padding-left: 10%" class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+            {% for picture in form.photos %}
+                <section>
+                    {{ form_row(picture.name) }}
+                    {{ form_row(picture.description) }}
+                    {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
+                    {{ form_row(picture.public) }}
+                </section>
+            {% endfor %}
+        </div>
+        {{ form_row(form.save) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

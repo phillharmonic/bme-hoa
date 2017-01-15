@@ -14,18 +14,18 @@ class TermController extends Controller
     
     /**
      * @Route(
-     *      "/board-of-directors/show", 
-     *      name="boardOfDirectorsShow",
+     *      "/public/board/show", 
+     *      name="showBoardPublic",
      *      requirements={
      *     }
      * )
      */      
-    public function boardShowAction(){
+    public function showBoardPublicAction(){
         
         $em = $this->getDoctrine()->getManager();
         $bods = $em->getRepository('AppBundle:User')->getCurrentBoard();
         
-        return $this->render('term/boardShow.html.twig', array(
+        return $this->render('term/showBoardPublic.html.twig', array(
             'bods'       =>  $bods,
         ));
         
@@ -33,19 +33,19 @@ class TermController extends Controller
     
     /**
      * @Route(
-     *      "/trustee/term/show/{id}", 
-     *      name="trusteeTermShow",
+     *      "/private/board/show/{id}", 
+     *      name="showBoardPrivate",
      *      requirements={
      *         "id": "\d+"
      *     }
      * )
      */      
-    public function showAction($id){
+    public function showBoardPrivateAction($id){
         $user = $this->getUser();
         if (!$user) {
             throw $this->createNotFoundException('Unable to find specified term.');
         }
-        return $this->render('term/show.html.twig', array(
+        return $this->render('term/showBoardPrivate.html.twig', array(
             'terms'      => $user->getTerm(),
             'user'       => $user
         ));
@@ -54,13 +54,13 @@ class TermController extends Controller
     
     /**
      * @Route(
-     *      "/trustee/term/new", 
-     *      name="trusteeTermNew",
+     *      "/private/board/new", 
+     *      name="newBoardPrivate",
      *      requirements={
      *     }
      * )
      */      
-    public function newAction(Request $request){
+    public function newBoardPrivatection(Request $request){
         $term = new Term();
         $photo = new Photos();
 //        $term->getPhotos()->add($photo);
@@ -88,12 +88,12 @@ class TermController extends Controller
 
                 // Redirect - This is important to prevent users re-posting
                 // the form if they refresh the page
-                return $this->redirect($this->generateUrl('trusteeTermShow', array(
+                return $this->redirect($this->generateUrl('showBoardPrivate', array(
                     'id'    => $user->getId(),
                 )));
         }}  
 
-        return $this->render('term/new.html.twig', array(
+        return $this->render('term/newBoardPrivate.html.twig', array(
             'form' => $form->createView() 
         ));
         
@@ -101,33 +101,33 @@ class TermController extends Controller
     
 /**
      * @Route(
-     *      "/trustee/term/edit/{id}", 
-     *      name="trusteeTermEdit",
+     *      "/private/board/edit/{id}", 
+     *      name="editBoardPrivate",
      *      requirements={
      *          "id": "\d+"
      *     }
      * )
      */      
-    public function editAction(Request $request){
-//        $term = new Term();
+    public function editBoardPrivateAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+        $term = $em->getRepository('AppBundle:Term')->find($id);
 //        $photo = new Photos();
-////        $term->getPhotos()->add($photo);
+//        $term->getPhotos()->add($photo);
 //        $term->addPhoto($photo);
-//        $user = $this->getUser();
-//        
-//        if (!$user && !$request->isMethod('POST')) {
-//            throw $this->createNotFoundException(
-//                    'No term found for id ' 
-//            );
-//        }
+        $user = $this->getUser();
+        
+        if (!$user && !$request->isMethod('POST')) {
+            throw $this->createNotFoundException(
+                    'No term found for id ' 
+            );
+        }
 //        
 //        //send the entity manager to the Form - so we can assign default choices for related data:
-//        $form = $this->createForm(TermForm::class, $term);
+        $form = $this->createForm(TermForm::class, $term);
 //
 //        if ($request->getMethod() == 'POST') {
 //            $form->handleRequest($request);
 //            if ($form->isValid()) {
-//                $em = $this->getDoctrine()->getManager();
 //                $user->addTerm($term);
 //                $term->setUser($user);
 //                !isset($photo)?:$em->persist($photo);
@@ -141,8 +141,8 @@ class TermController extends Controller
 //                )));
 //        }}  
 
-        return $this->render('term/edit.html.twig', array(
-//            'form' => $form->createView() 
+        return $this->render('term/editBoardPrivate.html.twig', array(
+            'form' => $form->createView() 
         ));
         
     }    

@@ -173,11 +173,6 @@ class BlogController extends Controller{
             $request->query->getInt('page', 1)/*page number*/,
             3/*limit per page*/
         );
-        //test alerts:
-//        $this->addFlash(
-//            'success',
-//            'Your Permit Application was successfully submitted.'
-//        );
         return $this->render('blog/indexBlogPublic.html.twig', compact('posts', 'pagination'));
     }
 }

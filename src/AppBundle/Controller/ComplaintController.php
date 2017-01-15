@@ -10,6 +10,8 @@ use AppBundle\Entity\Complaint;
 use AppBundle\Entity\Photos;
 use AppBundle\Entity\Action;
 use AppBundle\Form\ActionComplaintForm;
+use APY\DataGridBundle\Grid\Source\Entity;
+
 
 class ComplaintController extends Controller{
     
@@ -70,6 +72,10 @@ class ComplaintController extends Controller{
      *     })
      */  
     public function showComplaintProtectedAction($id){
+        
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $complaint = $em->getRepository('AppBundle:Complaint')->find($id);
         
@@ -113,21 +119,41 @@ class ComplaintController extends Controller{
      * @Route("/protected/complaint/index", name="indexComplaintProtected")
      */  
     public function indexComplaintProtectedAction(){
-        $em = $this->getDoctrine()->getManager();
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+        // Creates a simple grid based on your entity (ORM)
+        $source = new Entity('AppBundle:Complaint');
         
-        $unresolvedComps = $em->getRepository('AppBundle:Complaint')->getUnresolvedComps();
-        $resolvedComps = $em->getRepository('AppBundle:Complaint')->getResolvedComps();
-        
-        return $this->render('complaint/indexComplaintProtected.html.twig', array(
-            'unresolvedComps' => $unresolvedComps,
-            'resolvedComps' => $resolvedComps,
-        ));
+        $source->manipulateRow(function ($complaint) {
+            $url = $this->generateUrl('showComplaintProtected', array('id' =>   $complaint->getField('id')));
+            
+            if ($complaint->getField('type')) {
+                $complaint->setField('type', "<a href='".$url."'>".$complaint->getField('type')."</a>" );
+            }
+
+            return $complaint;
+        });
+        // Get a Grid instance
+        $grid = $this->get('grid');
+        // Attach the source to the grid
+        $grid->setSource($source);
+        $grid->hideColumns(array('id', 'assigned_to', 'details', 'reg_violated', 'defendent_name', 'defendent_address', 'date_resolved', 'date_updated'));
+        // Set the limits
+        $grid->setLimits(array(2, 10, 15));
+        // Set the default limit
+        $grid->setDefaultLimit(2);
+        // Return the response of the grid to the template
+        return $grid->getGridResponse('complaint/indexComplaintProtected.html.twig');
     }
     
     /**
      * @Route("/private/complaint/index", name="indexComplaintPrivate")
      */  
     public function indexComplaintPrivateAction(){
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         
@@ -142,16 +168,20 @@ class ComplaintController extends Controller{
     
     
     /**
-     * @Route("/complaint/new", name="complaintNew")
+     * @Route("/protected/complaint/new", name="newComplaintProtected")
      */    
-    public function newComplaintAction(Request $request)
-    {
+    public function newComplaintProtectedAction(Request $request) {
+        
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+        
         $complaint = new Complaint();
         $photo = new Photos();
         $complaint->getPhotos()->add($photo);
         
         $form = $this->createForm(ComplaintForm::class, $complaint, array(
-            'action' => $this->generateUrl('complaintNew'),
+            'action' => $this->generateUrl('newComplaintProtected'),
             'method' => 'POST',
         ));
 
@@ -191,7 +221,7 @@ class ComplaintController extends Controller{
             }
         }
 
-        return $this->render('complaint/newComplaint.html.twig', array(
+        return $this->render('complaint/newComplaintProtected.html.twig', array(
              'form'  =>  $form->createView(),
         ));
     }    

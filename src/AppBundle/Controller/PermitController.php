@@ -13,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Permit;
 use AppBundle\Form\PermitForm;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Column\BooleanColumn;
 
 /**
  * Description of PermitController
@@ -23,42 +25,58 @@ class PermitController extends Controller {
 
     /**
      * @Route(
-     *      "/permit/index/", 
-     *      name="permitIndex",
+     *      "/protected/permit/index/", 
+     *      name="indexPermitProtected",
      *      requirements={
      *     }
      * )
      */  
-    public function permitIndexAction(){
-        $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager ();
-        //unresolved permits
-        $unresolvedPermits = $em->getRepository('AppBundle:Permit')->getAllUnresolvedPermits();
+    public function indexPermitProtectedAction(){    
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+        $source = new Entity('AppBundle:Permit');
+        $source->manipulateRow(function ($permit) {
+            $url = $this->generateUrl('showPermitProtected', array('id' =>   $permit->getField('id')));
+            
+            if ($permit->getField('type')) {
+                $permit->setField('type', "<a href='".$url."'>".$permit->getField('type')."</a>" );
+            }
+
+            return $permit;
+        });
+        // Get a Grid instance
+        $grid = $this->get('grid');
+        // create a column
+        $MyColumn = new BooleanColumn(array('id' => 'pending', 'title' => 'Pending', 'size' => '54', 'filterable' => true, 'sortable' => true));
+        // add this column to the 3rd position
+        $grid->addColumn($MyColumn, 4);
+        // Attach the source to the grid
+        $grid->setSource($source);
+        $grid->hideColumns(array('id', 'description', 'location', 'drawings', 'assoc_name', 'decision_date', 'decided_by'));
+        // Set the limits
+        $grid->setLimits(array(5, 10, 15));
+        // Set the default limit
+        $grid->setDefaultLimit(5);
+        // Return the response of the grid to the template
+        return $grid->getGridResponse('permits/indexPermitProtected.html.twig');
         
-        //approved permits
-        $approvedPermits = $em->getRepository('AppBundle:Permit')->getAllApprovedPermits();
-        
-        //denied permits
-        $deniedPermits = $em->getRepository('AppBundle:Permit')->getAllDeniedPermits();
-        
-        return $this->render('permits/index.html.twig', array(
-            'permits'   => $unresolvedPermits,
-            'approved'  => $approvedPermits,
-            'denied'    => $deniedPermits,
-        ));
     }
     
     
     /**
      * @Route(
-     *      "/admin/permit/show/{id}", 
-     *      name="adminPermitShow",
+     *      "/protected/permit/show/{id}", 
+     *      name="showPermitProtected",
      *      requirements={
      *         "id": "\d+"
      *     }
      * )
      */  
-    public function adminPermitShowAction($id){
+    public function showPermitProtectedAction($id){
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager ();
         $permit = $em->getRepository('AppBundle:Permit')->find($id);
         // get the submitted DESCRIPTION                
@@ -70,7 +88,7 @@ class PermitController extends Controller {
         $locArray  = str_split($locStr, 130);
         
         
-        return $this->render('permits/adminPermitShow.html.twig', array(
+        return $this->render('permits/showPermitProtected.html.twig', array(
             'permit'    => $permit,
             'descArray' => $descArray,
             'locArray'  => $locArray
@@ -99,13 +117,16 @@ class PermitController extends Controller {
     }
     
     /**
-     * @Route("/permit/new", name="permitNew")
+     * @Route("/protected/permit/new", name="newPermitProtected")
      */    
-    public function permitNewAction(Request $request)
-    {
+    public function newPermitProtectedAction(Request $request){
+        
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         $permit = new Permit();
         $form = $this->createForm(PermitForm::class, $permit, array(
-            'action' => $this->generateUrl('permitNew'),
+            'action' => $this->generateUrl('newPermitProtected'),
             'method' => 'POST',
         ));
 
@@ -169,11 +190,11 @@ class PermitController extends Controller {
                     'Your Permit Application was successfully submitted.'
                 );
                 
-                return $this->redirect($this->generateUrl('exp'));
+                return $this->redirect($this->generateUrl('indexPermitProtected'));
             }
         }
 
-        return $this->render('permits/new.html.twig', array(
+        return $this->render('permits/newPermitProtected.html.twig', array(
              'form'  =>  $form->createView(),
         ));
     }        
@@ -182,6 +203,9 @@ class PermitController extends Controller {
      * @Route("/user/permit/index", name="userPermitIndex")
      */ 
     public function userPermitIndexAction(){
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager ();        
         //unresolved permits

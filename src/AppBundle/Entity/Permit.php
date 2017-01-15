@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Permit
@@ -38,11 +39,13 @@ class Permit
     
     /**
      * @ORM\Column(type="date")
+     * @GRID\Column(title="Submitted", filterable=false )
      */
     protected $submit_date;
     
     /**
      * @ORM\Column(type="string", length=250)
+     * @GRID\Column(title="Summary", safe=false, filterable=false )
      */
     protected $type;
     
@@ -70,11 +73,13 @@ class Permit
     
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @GRID\Column(title="Approved" )
      */    
     protected $is_approved;
         
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @GRID\Column(title="Denied" )
      */    
     protected $is_denied;    
     

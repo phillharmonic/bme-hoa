@@ -1,0 +1,18 @@
+{% extends 'alt-layout.html.twig' %}
+{% block title %}New Annual Agenda{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-plus">&nbsp;</span>Agenda | <small><small>CREATE ANNUAL AGENDA</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+        <li class="breadcrumb-item active">Agenda New</li>
+    </ol>
+{% form_theme form 'form/bootstrap_3_layout.html.twig' %}
+<div class="col-md-6">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}    
+</div>
+<div class="col-md-6"></div>
+{% endblock %}

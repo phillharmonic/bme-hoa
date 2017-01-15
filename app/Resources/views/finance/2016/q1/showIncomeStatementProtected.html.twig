@@ -1,0 +1,455 @@
+{% extends 'alt-layout.html.twig' %}
+{% block title %}Finance 2016 Quarter 1{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Finances | <small><small>2016 Quarter 1</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    {% block breadcrumb %} 
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Finances Home</li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp; <a href="{{ path('showSummary2016FinanceProtected') }}">2016</a></li>
+            <li class="breadcrumb-item active"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;2016 Quarter 1</li>
+        </ol>
+    {% endblock %}   
+    <div class="col-md-3">{% block sidebar %} {{ include('sidebars/financeSidebar.html.twig') }} {% endblock %}</div>
+    <div class="col-md-9">
+    {# PAGE SUMMARY #}        
+        <ul class="nav nav-tabs">
+            <li {% if app.request.attributes.get( '_route' ) == 'showSummary2016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showSummary2016FinanceProtected')}}">2016</a></li>
+            {#<li {% if app.request.attributes.get( '_route' ) == 'showSummaryQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showSummaryQ12016FinanceProtected')}}">Q1 Summary</a></li>#}
+            <li {% if app.request.attributes.get( '_route' ) == 'showIncomeStatementQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showIncomeStatementQ12016FinanceProtected')}}">Q1 Income Statement</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'showBalanceSheetQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showBalanceSheetQ12016FinanceProtected')}}">Q1 Balance Sheet</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'showArQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showArQ12016FinanceProtected')}}">Q1 A/R</a></li>
+            <li {% if app.request.attributes.get( '_route' ) == 'showApQ12016FinanceProtected' %} class="active"{% endif %}><a href="{{path('showApQ12016FinanceProtected')}}">Q1 A/P</a></li>
+        </ul>
+        <h2>Income Statement</h2>    
+        {# SECURITY #}  
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+        </h5>
+        <hr>
+        {# CONTENT #}
+        <style>
+            #income-statement .dbul{border-bottom: double 6px; }
+            #income-statement .bul{border-bottom: solid 3px; }
+            #income-statement table{border-collapse: separate; border-spacing: 10px 5px; }
+            #income-statement .money{float: left}
+            #income-statement tr{text-align: right}
+            #income-statement th{text-align: center;}
+            #income-statement .tab-1{padding-left: 2em;  text-align: left;}
+            #income-statement .tab-2{padding-left: 4em;  text-align: left;}
+            #income-statement .tab-3{padding-left: 6em;  text-align: left;}
+            #income-statement th:nth-child(1) { width: 30%; text-align: left; }  
+            #income-statement th:nth-child(2) { width: 12%; }  
+            #income-statement th:nth-child(3) { width: 12%; }  
+            #income-statement th:nth-child(4) { width: 12%; }  
+            #income-statement th:nth-child(5) { width: 12%; }  
+            #income-statement th:nth-child(6) { width: 12%; }  
+            #income-statement td:nth-child(1) { width: 30%; text-align: left; }  
+            #income-statement td:nth-child(2) { width: 12%; }  
+            #income-statement td:nth-child(3) { width: 12%; }  
+            #income-statement td:nth-child(4) { width: 12%; }  
+            #income-statement td:nth-child(5) { width: 12%; }  
+            #income-statement td:nth-child(6) { width: 12%; }              
+        </style>
+        
+        
+        <div class="table-responsive">
+            <h4>For the Period Ended April 30, 2016</h4></br>
+            <table id="income-statement" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Current Period</th>
+                        <th>YTD Actual</th>
+                        <th>YTD Budget</th>
+                        <th>Annual Budget</th>
+                        <th>Year End Projection</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INCOME</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>OPERATING</STRONG></td>
+                        <td><span class="money">$</span>275</td>
+                        <td><span class="money">$</span>20,253</td>
+                        <td><span class="money">$</span>20,087</td>
+                        <td><span class="money">$</span>20,087</td>
+                        <td><span class="money">$</span>20,253</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>CAPITAL RESERVES</STRONG></td>
+                        <td>-</td>
+                        <td>4,772</td>
+                        <td>4,772</td>
+                        <td>4,772</td>
+                        <td>4,772</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>LATE FEES</STRONG></td>
+                        <td>75</td>
+                        <td>350</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>350</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>FINANCE CHARGES</STRONG></td>
+                        <td>75</td>
+                        <td>301</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>301</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>LEGAL ASSESSMENTS</STRONG></td>
+                        <td>-</td>
+                        <td>810</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>810</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>FINES</STRONG></td>
+                        <td>-</td>
+                        <td>100</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>INTEREST EARNED</STRONG></td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td><STRONG>MISCELLANEUOS</STRONG></td>
+                        <td class="bul">-</td>
+                        <td class="bul">-</td>
+                        <td class="bul">-</td>
+                        <td class="bul">-</td>
+                        <td class="bul">-</td>
+                    </tr>
+                    <tr>
+                        <td>Total Income</td>
+                        <td><span class="money">$</span>425</td>
+                        <td><span class="money">$</span>26,587</td>
+                        <td><span class="money">$</span>24,859</td>
+                        <td><span class="money">$</span>24,859</td>
+                        <td><span class="money">$</span>26,587</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>OPERATING COSTS</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>ADMINISTRATIVE</STRONG></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Banking</td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>6</td>
+                        <td><span class="money">$</span>13</td>
+                        <td><span class="money">$</span>40</td>
+                        <td><span class="money">$</span>33</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Copies</td>
+                        <td>78</td>
+                        <td>180</td>
+                        <td>163</td>
+                        <td>490</td>
+                        <td>507</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Ownership Meetings</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Postage/Courier Services</td>
+                        <td>94</td>
+                        <td>196</td>
+                        <td>177</td>
+                        <td>530</td>
+                        <td>549</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Printing/Promotional Materials</td>
+                        <td>-</td>
+                        <td>35</td>
+                        <td>37</td>
+                        <td>110</td>
+                        <td>108</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Records Retention & Storage</td>
+                        <td>18</td>
+                        <td>70</td>
+                        <td>70</td>
+                        <td>210</td>
+                        <td>210</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Supplies</td>
+                        <td>71</td>
+                        <td>304</td>
+                        <td>163</td>
+                        <td>490</td>
+                        <td>631</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Miscellaneous</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>17</td>
+                        <td>50</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>ADMINISTRATIVE</STRONG></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Tax Returns</td>
+                        <td>-</td>
+                        <td>350</td>
+                        <td>350</td>
+                        <td>350</td>
+                        <td>350</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>LEGAL</STRONG></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Collections</td>
+                        <td>600</td>
+                        <td>1,410</td>
+                        <td>583</td>
+                        <td>1,750</td>
+                        <td>2,577</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Miscellaneous</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>33</td>
+                        <td>100</td>
+                        <td>67</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>INSURANCE</STRONG></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>475</td>
+                        <td>1,425</td>
+                        <td>950</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>MANAGEMENT</STRONG></td>
+                        <td>360</td>
+                        <td>1,440</td>
+                        <td>1,448</td>
+                        <td>4,348</td>
+                        <td>4,336</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>GROUNDS / COMPLIANCE</STRONG></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Supplies/Materials</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">General Services</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1,000</td>
+                        <td>1,000</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Contracted Services</td>
+                        <td>559</td>
+                        <td>623</td>
+                        <td>500</td>
+                        <td>4,000</td>
+                        <td>4,123</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>PONDS / LAKES</STRONG></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-2">Contracted Services</td>
+                        <td>206</td>
+                        <td>411</td>
+                        <td>500</td>
+                        <td>2,000</td>
+                        <td>1,911</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>NEWSLETTERS</STRONG></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>100</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>COMMUNITY / SOCIAL EVENTS</STRONG></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>500</td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>BAD DEBTS / WRITE OFFS</STRONG></td>
+                        <td>12</td>
+                        <td>101</td>
+                        <td>-</td>
+                        <td>2,000</td>
+                        <td>2,101</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>CONTINGENCIES</STRONG></td>
+                        <td class="bul">-</td>
+                        <td class="bul">-</td>
+                        <td class="bul">167</td>
+                        <td class="bul">500</td>
+                        <td class="bul">333</td>
+                    </tr>
+                    <tr>
+                        <td>Total Operating Costs</td>
+                        <td><span class="money">$</span>1,998</td>
+                        <td><span class="money">$</span>5,127</td>
+                        <td><span class="money">$</span>4,696</td>
+                        <td><span class="money">$</span>20,089</td>
+                        <td><span class="money">$</span>20,520</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>CAPITAL COSTS</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>LANDSCAPE IMPROVEMENTS</STRONG></td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>-</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>ENTRY SIGN - rprs & upgrds</STRONG></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="tab-1"><STRONG>CONTINGENCIES</STRONG></td>
+                        <td class="bul">-</td>
+                        <td class="bul">-</td>
+                        <td class="bul">1,590</td>
+                        <td class="bul">4,770</td>
+                        <td class="bul">3,180</td>
+                    </tr>
+                    <tr>
+                        <td>Total Capital Costs</td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>-</td>
+                        <td><span class="money">$</span>1,590</td>
+                        <td><span class="money">$</span>4,770</td>
+                        <td><span class="money">$</span>3,180</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Changes in Income</td>
+                        <td class="dbul"><span class="money">$</span>(1,574)</td>
+                        <td class="dbul"><span class="money">$</span>21,460</td>
+                        <td class="dbul"><span class="money">$</span>18,573</td>
+                        <td class="dbul"><span class="money">$</span>-</td>
+                        <td class="dbul"><span class="money">$</span>2,887</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+        
+    </div>
+{% endblock %}

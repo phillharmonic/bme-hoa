@@ -1,0 +1,14 @@
+<ul class="nav nav-pills nav-stacked flex-column">
+    <li {% if app.request.attributes.get( '_route' ) == 'homeLegalPublic' %} class="active"{% endif %}><a title="Fully Amended" href="{{path('homeLegalPublic')}}">Legal Home</a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'currentRestrictionsLegalPublic' %} class="active"{% endif %}><a href="{{path('currentRestrictionsLegalPublic')}}" > Current Restrictions </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'originalRestrictionsLegalPublic' %} class="active"{% endif %}><a href="{{path('originalRestrictionsLegalPublic')}}" > Original Restrictions </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'amendment1LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment1LegalPublic')}}" > Amendment 1 </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'amendment2LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment2LegalPublic')}}" > Amendment 2 </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'amendment3LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment3LegalPublic')}}" > Amendment 3 </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'amendment4LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment4LegalPublic')}}" > Amendment 4 </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'regulationsLegalPublic' %} class="active"{% endif %}><a href="{{path('regulationsLegalPublic')}}" > Regulations </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'managementLegalPublic' %} class="active"{% endif %}><a href="{{path('managementLegalPublic')}}" > Managment </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'lawncareLegalPublic' %} class="active"{% endif %}><a href="{{path('lawncareLegalPublic')}}" target="_blank" > Lawncare </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'landscapingLegalPublic' %} class="active"{% endif %}><a href="{{path('landscapingLegalPublic')}}" target="_blank" > Landscaping </a></li>
+    <li {% if app.request.attributes.get( '_route' ) == 'pondsLegalPublic' %} class="active" {% else %}{% endif %}><a href="{{path('pondsLegalPublic')}}" target="_blank" > Ponds </a></li>
+</ul>

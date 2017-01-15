@@ -30,4 +30,16 @@ class MinutesRepository extends \Doctrine\ORM\EntityRepository
                   ->getResult();
     }
     
+    public function getMinutesFor($year, $quarter){
+        $qb = $this ->createQueryBuilder('m')
+                    ->select('m')
+                    ->where('m.year = :year')
+                    ->andWhere('m.quarter = :quarter')
+                    ->setParameter('year', $year)
+                    ->setParameter('quarter', $quarter);
+        
+        return $qb->getQuery()
+                  ->getSingleResult();
+    }
+    
 }

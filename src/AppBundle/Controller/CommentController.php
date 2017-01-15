@@ -21,6 +21,11 @@ class CommentController extends Controller{
      * )
      */      
     public function newCommentProtectedAction(Request $request, $id){
+        
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+        
         $blog = $this->getBlog($id);
         $comment = new Comment();
         $comment->setBlog($blog);
@@ -45,7 +50,7 @@ class CommentController extends Controller{
                     'Your COMMENT was successfully posted.'
                 );
                 
-                return $this->redirect($this->generateUrl('indexBlogPublic'));
+                return $this->redirect($this->generateUrl('home'));
             }
         }
         

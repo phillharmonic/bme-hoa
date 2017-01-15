@@ -10,6 +10,16 @@ use Doctrine\Common\Collections\Criteria;
  */
 class ComplaintRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAll(){
+        $qb = $this->createQueryBuilder('c')->select('c');
+//        $qb->getQuery()->getResult();
+//        $ar = array();
+//        foreach($qb->getTimestamp() as $result){
+//            
+//        }
+        return $qb->getQuery()->getResult();
+    }
+    
     public function getUnresolvedComps($user = null){
         if($user == null){
             $qb = $this->createQueryBuilder('c')->select('c');
