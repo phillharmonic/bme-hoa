@@ -1,7 +1,8 @@
 <ul class="nav nav-pills nav-stacked flex-column">
-    <li {% if app.request.attributes.get( '_route' ) == 'showMinutesProtected' %} class="active"{% endif %} ><a href="{{path('showMinutesProtected')}}">Minutes</a></li>
-    <li {% if '2016' in app.request.requesturi %} class="active" {% endif %} ><a href="{{path('showAgenda2016Protected')}}" >2016</a></li>
-    <li {% if '2015' in app.request.requesturi %} class="active" {% endif %}><a href="" >2015</a></li>
-    <li {% if '2014' in app.request.requesturi %} class="active" {% endif %}><a href="" >2014</a></li>
-    <li {% if '2013' in app.request.requesturi %} class="active" {% endif %}><a href="" >2013</a></li>
+    <li {% if route == 'homeMinutesProtected' %} class="active"{% endif %} ><a href="{{path('homeMinutesProtected')}}">Minutes</a></li>
+    {% for agenda in agendas %}
+        <li {% if agenda.year in route %} class="active" {% endif %}>
+            <a href="{{path('showAgendaProtected', {'year' : agenda.year } )}}" >{{agenda.year}}</a>
+        </li>
+    {% endfor %}
 </ul>

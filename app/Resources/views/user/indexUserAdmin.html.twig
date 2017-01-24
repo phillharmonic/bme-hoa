@@ -1,0 +1,345 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block javascripts %}{{parent()}}
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+{% endblock %}
+{% block title %}User Index - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>USER INDEX</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Users
+            <small>INDEX</small>
+          </h1>
+          <!-- Breadcrumb -->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Users</li>
+          </ol>
+        </section>
+
+         <!-- Main content -->
+         
+        <section class="content"><!-- content-->
+            
+            <div class="row"><!-- /.columns-->
+          
+                <div class="col-md-6"><!-- /.col (left) -->
+
+                    <div class="box box-warning collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Create New</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            Form - AJAX
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (left) CREATE NEW -->
+        
+                <div class="col-md-6"><!-- /col (right) -->
+                    
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Documentation</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) DOCUMENTATION-->
+        
+            </div><!-- /.columns -->
+        
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-danger collapsed-box">
+                        <div class="box-header">
+                            <h3 class="box-title">ADMIN <small>USERS</small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td><a href="{{ path('editUserAdmin', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></td>
+                                        <td>{{user.houseNumber}} {{user.street}}</td>
+                                        <td>{{user.roles.0}}</td>
+                                        <td>
+                                            {% if user.account.property is defined %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% else %}
+                                                <span>Assigned</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.account is not null %}
+                                                <span>{{user.account.accountNumber}}</span>
+                                            {% else %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!-- /.row ADMIN USERS-->
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-success collapsed-box">
+                        <div class="box-header">
+                            <h3 class="box-title">UNASSIGNED <small>USERS</small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td><a href="{{ path('editUserAdmin', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></td>
+                                        <td>{{user.houseNumber}} {{user.street}}</td>
+                                        <td>{{user.roles.0}}</td>
+                                        <td>
+                                            {% if user.account.property is defined %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% else %}
+                                                <span>Assigned</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.account is not null %}
+                                                <span>{{user.account.accountNumber}}</span>
+                                            {% else %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!-- /.row UNASSIGNED USERS-->
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">CURRENT HOMEOWNERS <small>USERS</small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td><a href="{{ path('editUserAdmin', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></td>
+                                        <td>{{user.houseNumber}} {{user.street}}</td>
+                                        <td>{{user.roles.0}}</td>
+                                        <td>
+                                            {% if user.account.property is defined %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% else %}
+                                                <span>Assigned</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.account is not null %}
+                                                <span>{{user.account.accountNumber}}</span>
+                                            {% else %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!-- /.row CURRENT HOMEOWNERS-->
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header">
+                            <h3 class="box-title">FORMER HOMEOWNERS <small>USERS</small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td><a href="{{ path('editUserAdmin', {'id' : user.id}) }}"> {{ user.lastname }}, {{ user.firstname }} </a></td>
+                                        <td>{{user.houseNumber}} {{user.street}}</td>
+                                        <td>{{user.roles.0}}</td>
+                                        <td>
+                                            {% if user.account.property is defined %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% else %}
+                                                <span>Assigned</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.account is not null %}
+                                                <span>{{user.account.accountNumber}}</span>
+                                            {% else %}
+                                                <span style="color: red">Unassigned</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th>User</th>
+                              <th>Address</th>
+                              <th>Role(s)</th>
+                              <th>Property</th>
+                              <th>Account</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!-- /.row FORMER HOMEOWNERS-->
+            
+        </section><!-- /.content -->
+        
+
+        
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Have different tables for different users:</h3>
+                        </div>
+                        <div class="box-body">
+                            <ul>
+                                <li>Current Homeowners - full access</li>
+                                <li>Former Homeowners - access revoked</li>
+                                <li>Unassigned - new registrations</li>
+                                <li>Admin users - non-homeowners</li>
+                            </ul>
+                        </div><!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+    </div>
+{% endblock %}

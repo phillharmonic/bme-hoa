@@ -13,6 +13,93 @@ class PropertyController extends Controller
 {
     
     /**
+     * @Route("/admin/properties/index", name="indexPropertiesAdmin")
+     */    
+    public function indexPropertiesAdminAction()
+    {
+        $em = $this->getDoctrine()->getManager ();
+        $properties = $em->getRepository('AppBundle:Property')->findAll();
+        
+        return $this->render('property/indexPropertyAdmin.html.twig', array(
+            'bmproperty'                => $properties,
+            'springbrook_homeowners'    => $properties,
+            'springflower_homeowners'   => $properties,
+        ));
+    }
+    
+    /**
+     * @Route(
+     *      "/admin/property/edit/{id}", 
+     *      name="editPropertyAdmin",
+     *      requirements={
+     *         "id": "\d+"
+     *     }
+     * )
+     */       
+    public function editPropertyAdminAction(Request $request, $id)
+    {
+        //insert photos
+        $originalPhotos = new ArrayCollection();
+        
+        $em = $this->getDoctrine()->getManager();
+        $property = $em->getRepository('AppBundle:Property')->find($id);
+        
+        $originalUsers = new ArrayCollection();
+        
+        // Create an ArrayCollection of the current Picture objects in the database
+        foreach ($property->getPhotos() as $photo) {
+            $originalPhotos->add($photo);
+        }
+        
+        $form = $this->createForm(PropertyForm::class, $property);
+        
+        // Create an ArrayCollection of the current user objects in the database
+        foreach ($property->getUser() as $user) {
+            $originalUsers->add($user);
+        }
+        
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                
+                // remove the relationship between the Property and the User
+                foreach ($originalUsers as $user) {
+                    if (false === $property->getUser()->contains($user)) {
+                        // remove the User from the Property
+                        $property->getUser()->removeElement($user);
+                        $em->persist($user);
+                    }
+                }
+                // remove the relationship between the Property and the Picture
+                foreach ($originalPhotos as $photo) {
+                    if (false === $property->getPhotos()->contains($photo)) {
+                        // remove the User from the Photo
+                        $property->getPhotos()->removeElement($photo);
+
+                        // if it was a many-to-one relationship, remove the relationship like this
+                        // $photo->setTask(null);
+
+                        $em->persist($photo);
+
+                        // if you wanted to delete the Photo entirely, you can also do that
+                        // $em->remove($photo);
+                    }
+                }
+                $em->flush();
+                return $this->redirect($this->generateUrl('indexPropertiesAdmin', array(
+                    'id'    => $id
+                )));
+            }
+        }
+        
+        return $this->render('property/editPropertyAdmin.html.twig', array(
+            'prop'  =>  $property,
+            'form'  =>  $form->createView(),
+        ));
+    }
+    
+    /**
      * @Route("/public/properties/index", name="indexPropertiesPublic")
      */     
     public function indexPropertiesPublicAction()
@@ -74,6 +161,111 @@ class PropertyController extends Controller
         ));
     }
     
+    
+    /**
+     * @Route(
+     *      "/admin/property/show/{id}", 
+     *      name="showPropertyAdmin",
+     *      requirements={
+     *         "id": "\d+"
+     *     }
+     * )
+     */    
+    public function showPropertyAdminAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $property   = $em->getRepository('AppBundle:Property')->find($id);
+        $homeowners = $property->getUser(); //this is a collection, but does it get current users assigned to the property, or all of them, past and present?
+        
+        //  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
+        $pictures = new ArrayCollection();
+        $spouses = new ArrayCollection();
+        $dependents = new ArrayCollection();
+        $children = new ArrayCollection();
+        $pets = new ArrayCollection();
+        $vhcls = new ArrayCollection();
+        $testAr = array();
+        
+        $testAr['props'][] = $property;
+
+        foreach ($property->getPhotos() as $photo){
+            $pictures[] = $photo;
+        }
+        
+        //OWNERS
+        foreach($homeowners as $homeowner){
+            $testAr['homeowners'][] = $homeowner;
+            $photos = $homeowner->getPhotos();
+            foreach ($photos as $photo){
+                $pictures[] = $photo;
+            }
+        }   
+        
+        //SPOUSE & DEPENDENTS
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getDependents()) ){
+                $dependents = $homeowner->getDependents();
+                //foreach dependent check to see if it is a spouse
+                foreach($dependents as $dependent){
+                    $photos = $dependent->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
+                    //SPOUSE
+                    if($dependent->getSpouse() == 1){
+                        $spouses[] = $dependent;
+                        $testAr['spouse'][] = $dependent;
+                    }
+                    //CHILDREN
+                    else{
+                        $children[] = $dependent;
+                        $testAr['kids'][] = $dependent;
+                    }
+                }
+            }
+        }
+        $kids = $em->getRepository('AppBundle:Dependents')->removeDupes($children);    
+        //PETS
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getPets())){
+                
+                foreach($homeowner->getPets() as $animal){
+                    $photos = $animal->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
+                    $pets[] = $animal;
+                    $testAr['pets'][] = $animal;
+                }
+            }
+        }        
+        $animals = $em->getRepository('AppBundle:Pets')->removeDupes($pets);
+        
+        //VEHICLES
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getVehicles())){
+                foreach($homeowner->getVehicles() as $car){
+                    $photos = $car->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
+                    $vhcls[] = $car;
+                    $testAr['cars'][] = $car;
+                }
+            }
+        }    
+        $cars = $em->getRepository('AppBundle:Vehicles')->removeDupes($vhcls);
+        return $this->render('property/showPropertyAdmin.html.twig', array(
+            'property'   =>  $property,
+            'homeowners' =>  $homeowners,
+            'spouses'    =>  $spouses,
+            'dependents' =>  $kids,
+            'vehicles'   =>  $cars,
+            'pets'       =>  $animals,
+            'testAr'     => $testAr,
+            'pics'      => $pictures,
+        ));
+    }
+    
     /**
      * @Route(
      *      "/public/property/show/{id}", 
@@ -83,7 +275,7 @@ class PropertyController extends Controller
      *     }
      * )
      */         
-    public function showAction($id)
+    public function showPropertyPublicAction($id)
     {
 
         /*
@@ -200,7 +392,7 @@ class PropertyController extends Controller
         
 //        $testAr = array(1,2,3,4,5,6,7,8,9,10,11,12);
         
-        return $this->render('homeowners/show.html.twig', array(
+        return $this->render('property/showPropertyPublic.html.twig', array(
             'property'   =>  $property,
             'homeowners' =>  $homeowners,
             'spouses'    =>  $spouses,

@@ -69,7 +69,24 @@ class Agenda {
      */    
     protected $creator; //user entity
         
-
+    public function __construct()
+    {
+        $this->creator = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * @ORM\PrePersist
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $agenda = $args->getEntity();
+        if($agenda->getCreated() === null){ 
+            $agenda->setCreated(new \DateTime());
+        }
+    }   
+    
+    
     /**
      * Get id
      *

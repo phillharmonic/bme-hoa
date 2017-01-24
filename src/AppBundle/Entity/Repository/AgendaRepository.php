@@ -10,4 +10,12 @@ namespace AppBundle\Entity\Repository;
  */
 class AgendaRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getIdOfLast() {
+        $query = $this->createQueryBuilder('a')
+                ->select('a')
+                ->orderBy('a.year', 'DESC')
+                ->setMaxResults(1);
+        
+        return $query->getQuery()->getSingleResult();
+    }
 }

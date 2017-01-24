@@ -1,18 +1,25 @@
-{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% extends 'AdminLTE.html.twig' %}
 {% block title %}Complaint Index{% endblock %}
-{% block pageheader %}<h1>Administrative</h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>COMPLAINTS</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-    
-    <ol class="breadcrumb">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Complaints
+        <small>INDEX</small>
+      </h1>
+      <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Administrative</a></li>
+        <li class="breadcrumb-item"><a href="#">Admin</a></li>
         <li class="breadcrumb-item active">Complaints</li>
-    </ol>
-    <hr>
-    <h2>Complaints&nbsp;&nbsp;<small><small>INDEX</small></small></h2>    
-    <h5><span class="glyphicon glyphicon-time"></span> Last updated: Sep 26, 2015</h5>
-    <hr>
+      </ol>
+    </section>
 
+    <!-- Main content -->
+    <section class="content">
+    
     <div class="alert alert-warning">
         <strong>Unresolved</strong> Complaints
     </div>
@@ -92,5 +99,6 @@
     </table>
     
     <hr>
-
+    </section>
+    </div>
 {% endblock %}

@@ -1,0 +1,104 @@
+{# src/MainBundle/Resources/views/Legal/index.html.twig #}
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}Properties Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>PROPERTIES</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Properties
+        <small>INDEX</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+        <li class="breadcrumb-item active">Properties</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content"> 
+ <style>
+        .list_wrapper{
+            width: 100%;
+            height: 25px;
+        }
+        .div1{
+            width: 25%;
+            float: left;
+            padding-left: 10px;
+        }
+        .div2{
+            width: 50%;
+            float: left;
+        }
+        .div3{
+            width: 23%;
+            float: left;
+        }
+        .toprow{
+            background-color: #eee;
+            color: #555555;
+        }
+        .haslien{
+            color: red;
+        }
+        .nolien{
+            color: black;
+        }
+        .toprow ul, .haslien ul, .nolien ul{
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li, .haslien ul li, .nolien ul li{
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+        }
+        .toprow ul li:nth-child(1), .haslien ul li:nth-child(1), .nolien ul li:nth-child(1){
+            padding-left: 5px;
+            width: 175px;
+        }
+        .toprow ul li:nth-child(2), .haslien ul li:nth-child(2), .nolien ul li:nth-child(2){
+            width: 209px;
+        }
+        .toprow ul li:nth-child(3), .haslien ul li:nth-child(3), .nolien ul li:nth-child(3){
+            width: 125px;
+        }
+        .toprow ul li:nth-child(4), .haslien ul li:nth-child(4), .nolien ul li:nth-child(4){
+            width: 120px;
+        }
+        .toprow ul li:nth-child(5), .haslien ul li:nth-child(5), .nolien ul li:nth-child(5){
+            width: 75px;
+        }
+</style>  
+    <div class="section-header"><h1>Admin - Manage Properties</h1></div>
+    <div class="toprow"><ul><li>Address</li><li>Owner(s)</li><li>Property Type</li><li>Occupied</li><li>In Arrears</li></ul></div>
+        {% for property in bmproperty %}
+            <div {% if property.hasHoaLien == false %}class="nolien"{% else %}class="haslien"{% endif %}>
+                <ul><li><a href="{{ path('showPropertyAdmin', {'id' : property.id}) }}">
+                            {% if property.houseNumber is null %} {{ property.street }}
+                                Lot #{{ property.lotNumber }}
+                            {% else %}
+                                {{ property.houseNumber }} {{ property.street }}
+                            {% endif %}
+                        </a>
+                    </li><li>
+                    {% if property.user is not empty %}
+                        {% set arr ={} %}
+                            {% for key,user in property.user %}
+                              {% set arr = arr|merge({(key~'_'): user.fullname}) %}
+                            {% endfor %}
+                        {{ arr|join(', ') }}
+                    {% else %}
+                        {{ property.status }}
+                    {% endif %}
+                    </li><li>{{ property.type }}</li>{% if property.isOccupied == true %}<li>Occupied</li>{% else %}<li>Vacant</li>{% endif %}{% if property.inArrears == true %}<li>Yes</li>{% else %}<li>No</li>{% endif %}</ul>
+            </div>
+        {% endfor %}
+    </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "form_div_layout.html.twig" %}
+
+{# Widgets #}
+
+{%- block choice_widget_collapsed -%}
+    <div class="form-group">
+        {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+            {% set required = false %}
+        {%- endif -%}
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple" class="form-control"{% endif %}>
+            {%- if placeholder is not none -%}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+            {%- endif -%}
+            {%- if preferred_choices|length > 0 -%}
+                {% set options = preferred_choices %}
+                {{- block('choice_widget_options') -}}
+                {%- if choices|length > 0 and separator is not none -%}
+                    <option disabled="disabled">{{ separator }}</option>
+                {%- endif -%}
+            {%- endif -%}
+            {%- set options = choices -%}
+            {{- block('choice_widget_options') -}}
+        </select>
+    </div>
+{%- endblock choice_widget_collapsed -%}
+
+{%- block date_widget -%}
+        {%- if widget == 'single_text' -%}
+            {% spaceless %}
+                <div class="form-group">
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div><!-- /.input group-addon -->    
+                        <input type="text" class="form-control pull-right" data-provide="datepicker-inline" {{ block('widget_attributes') }}  {% if value is not empty %}value="{{ value }}" {% endif %}/>
+                    </div><!-- /.input group -->    
+                </div><!-- /.form group -->    
+            {% endspaceless %}
+        {%- else -%}
+            <div {{ block('widget_container_attributes') }}>
+                {{- date_pattern|replace({
+                    '{{ year }}':  form_widget(form.year),
+                    '{{ month }}': form_widget(form.month),
+                    '{{ day }}':   form_widget(form.day),
+                })|raw -}}
+            </div>
+        {%- endif -%}
+{%- endblock date_widget -%}
+
+{% block checkbox_widget -%}
+    {% set parent_label_class = parent_label_class|default('') %}
+    {% if 'checkbox-inline' in parent_label_class %}
+        {{ form_label(form, null, { widget: parent() }) }}
+    {% else %}
+        <div class="checkbox">
+            {{ form_label(form, null, { widget: parent() }) }}
+        </div>
+    {% endif %}
+{%- endblock checkbox_widget %}
+
+{%- block integer_widget -%}
+    {%- set type = type|default('number') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock integer_widget -%}
+
+{%- block form_widget_simple -%}
+    <div class="form-group">
+        {%- set type = type|default('text') -%}
+        <input type="{{ type }}" class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    </div>
+{%- endblock form_widget_simple -%}
+
+{% block submit_row -%}
+    {% spaceless %}
+        <div class="box-footer">
+            {{form_widget(form, { 'attr': {'class': 'btn btn-primary'} }  )  }}
+        </div><!-- /.box footer --> 
+    {% endspaceless %}
+{%- endblock submit_row %}
+
+{% block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    {{- parent() -}}
+{%- endblock textarea_widget %}
+
+{# Labels #}
+
+{% block form_label -%}
+    {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) %}
+    {{- parent() -}}
+{%- endblock form_label %}
+
+{% block choice_label %}
+    {# remove the checkbox-inline, it's only use full for embed labels #}
+    {% set label_attr = label_attr|merge({class: label_attr.class|default('')|replace({'checkbox-inline': ''})|trim}) %}
+    {{- block('form_label') -}}
+{% endblock %}
+
+{% block checkbox_label -%}
+    {{- block('checkbox_radio_label') -}}
+{%- endblock checkbox_label %}
+
+{% block radio_label -%}
+    {{- block('checkbox_radio_label') -}}
+{%- endblock radio_label %}
+
+{% block checkbox_radio_label %}
+    {% if required %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if parent_label_class is defined %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ parent_label_class)|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ widget|raw }}
+        {{ label|trans({}, translation_domain) }}
+    </label>
+{% endblock checkbox_radio_label %}
+
+{% block checkbox_row -%}
+    <div class="form-group{% if not valid %} has-error{% endif %}">
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{%- endblock checkbox_row %}

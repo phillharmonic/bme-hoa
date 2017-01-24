@@ -13,9 +13,8 @@ class MinutesForm  extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array(
-                'label' =>  'Title [ format: YEAR QUARTER ] ',
-                ))
+            ->add('year')
+            ->add('quarter')
             ->add('embed_code', TextareaType::class, array(
                 'label' =>  'Published Link (not embeded code)',
                 ))

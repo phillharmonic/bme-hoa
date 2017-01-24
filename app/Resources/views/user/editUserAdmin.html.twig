@@ -1,0 +1,342 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}User Index - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>USER INDEX</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!--Content Wrapper. Contains page content -->
+        
+        <section class="content-header"><!-- Content Header (Page header) -->
+          <h1>
+            {{user.fullname}}
+            <small></small>
+          </h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">User</li>
+          </ol>
+        </section><!--/content Header (Page header) -->
+
+        <!-- Main content -->
+         
+        <section class="content"><!-- content-->
+            
+            <div class="row"><!-- /.columns ROW 1-->
+          
+                <div class="col-md-6"><!-- /.col (left) PROFILE CARD -->
+
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget box-success widget-user">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Profile</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                      <!-- Add the bg color to the header using any of the bg-* classes -->
+                      <div class="widget-user-header bg-yellow">
+                        <h3 class="widget-user-username">Matt A. Dorskey</h3>
+                        <h5 class="widget-user-desc">Firefighter; Board Secretary</h5>
+                        
+                      </div>
+                      <div class="widget-user-image">
+                        <img class="img-circle" src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user1-128x128.jpg" alt="User Avatar">
+                      </div>
+                      
+                      <div class="box-footer">
+                        <div class="row">
+                          <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                              <h5 class="description-header">Sarah</h5>
+                              <span class="description-text">SPOUSE</span>
+                            </div>
+                            <!-- /.description-block -->
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                              <h5 class="description-header">Josey | Sam</h5>
+                              <span class="description-text">CHILDREN</span>
+                            </div>
+                            <!-- /.description-block -->
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-4">
+                            <div class="description-block">
+                              <h5 class="description-header">35</h5>
+                              <span class="description-text">COMMENTS</span>
+                            </div>
+                            <!-- /.description-block -->
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        
+                        <div class="box box-warning">
+                            <div class="box-body">
+                                <p>
+                                      Lorem ipsum dolor sit amet, vocent discere ea qui, pro ea noster corrumpit. Cum id idque lucilius, at per admodum dissentiet, eos iudico placerat ea. Cu aeque nobis tollit his. Exerci discere conclusionemque pro ex.
+                                </p><p>
+                                      Sed posse aliquid ne. Meis consul propriae eu nec. Vide ignota ad nam, et agam nobis epicuri per, quis verterem periculis per no. Ex ius suas meis disputando, in porro omnes accusamus vel. Pri an soleat deseruisse ullamcorper, eam affert imperdiet accommodare ei, minim partiendo corrumpit qui te. Eam eu dico liberavisse, dolore electram disputando nec in, ubique vituperatoribus no pro.
+                                </p>
+                            </div>
+                        </div>
+                        
+                      </div>
+                      
+                    </div>
+                    <!-- /.widget-user -->
+                    
+                </div><!-- /.col (left) PROFILE CARD -->
+        
+                <div class="col-md-6"><!-- /col (right) DIRECT CHAT-->
+                    
+                    <!-- Construct the box with style you want. Here we are using box-danger -->
+                    <!-- Then add the class direct-chat and choose the direct-chat-* contexual class -->
+                    <!-- The contextual class should match the box, so we are using direct-chat-danger -->
+                    <div class="box box-warning direct-chat direct-chat-warning">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Direct Chat</h3>
+                        <div class="box-tools pull-right">
+                          <span data-toggle="tooltip" title="3 New Messages" class="badge bg-orange">3</span>
+                          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                          <!-- In box-tools add this button if you intend to use the contacts pane -->
+                          <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
+                          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                      </div><!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="direct-chat-messages">
+                            
+                          <!-- Message. Default to the left -->
+                          <div class="direct-chat-msg">
+                            <div class="direct-chat-info clearfix">
+                              <span class="direct-chat-name pull-left">Matt Dorskey</span>
+                              <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                            </div><!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user1-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                              Hey, Hollis... this website you are creating for the HOA is pretty awesome.  Gotta give you props.
+                            </div><!-- /.direct-chat-text -->
+                          </div><!-- /.direct-chat-msg -->
+
+                          <!-- Message to the right -->
+                          <div class="direct-chat-msg right">
+                            <div class="direct-chat-info clearfix">
+                              <span class="direct-chat-name pull-right">Patrick Hollis</span>
+                              <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                            </div><!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user6-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                              Thanks, man!  You could have helped, you know... 
+                            </div><!-- /.direct-chat-text -->
+                          </div><!-- /.direct-chat-msg -->
+
+                        <!-- Message. Default to the left -->
+                          <div class="direct-chat-msg">
+                            <div class="direct-chat-info clearfix">
+                              <span class="direct-chat-name pull-left">Matt Dorskey</span>
+                              <span class="direct-chat-timestamp pull-right">23 Jan 2:07 pm</span>
+                            </div><!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user1-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                              I would, but I don't know shit about coding.  That... and I sit in a tree stand all day and night playing with my ding-dong.
+                            </div><!-- /.direct-chat-text -->
+                          </div><!-- /.direct-chat-msg -->
+
+                          <!-- Message to the right -->
+                          <div class="direct-chat-msg right">
+                            <div class="direct-chat-info clearfix">
+                              <span class="direct-chat-name pull-right">Patrick Hollis</span>
+                              <span class="direct-chat-timestamp pull-left">23 Jan 2:10 pm</span>
+                            </div><!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user6-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                              That explains a lot, Matt...
+                            </div><!-- /.direct-chat-text -->
+                          </div><!-- /.direct-chat-msg -->
+                        </div><!--/.direct-chat-messages-->
+                        
+                        <!-- Contacts are loaded here -->
+                        <div class="direct-chat-contacts">
+                          <ul class="contacts-list">
+                            <li>
+                              <a href="#">
+                                <img class="contacts-list-img" src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user4-128x128.jpg" alt="Contact Avatar">
+                                <div class="contacts-list-info">
+                                  <span class="contacts-list-name">
+                                    Count Dracula
+                                    <small class="contacts-list-date pull-right">2/28/2015</small>
+                                  </span>
+                                  <span class="contacts-list-msg">How have you been? I was thinking about you... my husband will be out of town this week.  You should stop by for a good time, if you know what I mean  ;)</span>
+                                </div><!-- /.contacts-list-info -->
+                              </a>
+                            </li><!-- End Contact Item -->
+                          </ul><!-- /.contatcts-list -->
+                        </div><!-- /.direct-chat-pane -->
+                      </div><!-- /.box-body -->
+                      <div class="box-footer">
+                        <div class="input-group">
+                          <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-warning btn-flat">Send</button>
+                          </span>
+                        </div>
+                      </div><!-- /.box-footer-->
+                    </div><!--/.direct-chat -->
+                    
+                </div><!-- /.col (right) DIRECT CHAT -->
+        
+            </div><!-- /.columns ROW 1-->
+                        
+            <div class="row"><!-- /.columns ROW 2-->
+          
+                <div class="col-md-6"><!-- /.col (left) MANAGE ROLES-->
+
+                    <!-- Form content-->
+                    {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-success  collapsed-box"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Manage Roles</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(form) }}
+                        </div><!--/box body end -->
+                        {{ form_end(form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (left) MANAGE ROLES -->
+        
+                <div class="col-md-6"><!-- /col (right) DOCUMENTATION-->
+                    
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Documentation</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <h4>TO DO</h4>
+                            <ol>
+                                <li>Embed several different forms here</li>
+                                <li>Assign Role / Trustee</li>
+                                <li>Vacate / Sell the home / remove rights</li>
+                                <li>Enter shell data that can be overridden by user if they sign in and provide data</li>
+                                <li>Never delete a user, just expire them</li>
+                                <li>Add a little profile card here - displaying all info on just the user</li>
+                                <li>Put a direct chat here</li>
+                                <li>Financial summary</li>
+                                <li>Fix the layout so it takes up the full space on different devices</li>
+                            </ol>
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) DOCUMENTATION-->
+        
+            </div><!-- /.columns ROW 2-->
+            
+            <div class="row"><!-- /.columns ROW 3-->
+          
+                <div class="col-md-6"><!-- /.col (left) ASSIGN PROPERTY-->
+
+                    <div class="box box-warning collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Assign Property</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            Form - AJAX
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (left) CREATE NEW -->
+        
+                <div class="col-md-6"><!-- /col (right) VACATE PROPERTY-->
+                    
+                    <div class="box box-danger collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vacate Property</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) VACATE PROPERTY-->
+        
+            </div><!-- /.columns ROW 3-->
+            
+            <div class="row"><!-- /.columns ROW 4-->
+          
+                <div class="col-md-6"><!-- /.col (left) ENTER SHELL DATA-->
+
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Enter Shell Data</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            Form - AJAX
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (left) ENTER SHELL DATA -->
+        
+                <div class="col-md-6"><!-- /col (right) NOTICES, ASSESSMENTS, PERMITS, COMPLAINTS-->
+                    
+                    <div class="box box-primary collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Notices | Assessments | Permits | Complaints</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) NOTICES, ASSESSMENTS, PERMITS, COMPLAINTS -->
+        
+            </div><!-- /.columns ROW 4-->
+            
+            <div class="box box-default"><!-- FINANCIALS -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{user.fullname}}&nbsp;&nbsp;|&nbsp;&nbsp;<small>FINANCIALS</small></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body"><!--.box-body start -->
+
+                </div><!-- /.box-body end-->
+                <div class="box-footer">
+                  Financials Footer
+                </div>
+            </div><!--/ FULL ROW EXAMPLE -->
+            
+        </section><!--/content-->
+            
+    </div><!--/Content Wrapper. Contains page content -->                        
+{% endblock %}

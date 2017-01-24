@@ -1,0 +1,178 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}Agenda Index - Admin{% endblock %}
+{% block javascripts %}{{parent()}}
+    <!-- page script -->
+    <script>
+        $(document).ready(function() {
+                $('#agenda-index').DataTable({
+                  "paging": true,
+                  "lengthChange": false,
+                  "searching": false,
+                  "ordering": true,
+                  "info": true,
+                  "autoWidth": false,
+                  "order": [[ 2, "desc" ]]
+                });
+              } );
+    </script> 
+{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>AGENDA INDEX</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            Agendas&nbsp;&nbsp;|&nbsp;&nbsp;
+            <small><a href="{{app.request.headers.get('referer')}}"><i class="fa fa-history"></i> LAST</a></small>
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">User</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+
+            <div class="row"><!-- INDEX AGENDAS -->
+                <div class="col-xs-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">Index <small></small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="agenda-index" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Created By</th>
+                              <th>Year</th>
+                              <th>Created</th>
+                              <th>Path</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for agenda in agendas %}
+                                    <tr>
+                                        <td><a href="{{ path('showAgendaAdmin', {'id' : agenda.id} ) }}"> {{agenda.year}} Agenda </a></td>
+                                        <td>{{agenda.creator.fullname}}</td>
+                                        <td>{{agenda.year}}</td>
+                                        <td>{{agenda.created|date('M j, Y g:s a')}}</td>
+                                        <td><a href="{{agenda.agendaPath}}" target="_blank"> Link to public document </a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th>ID</th>
+                              <th>Created By</th>
+                              <th>Year</th>
+                              <th>Created</th>
+                              <th>Path</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!--/ INDEX AGENDAS -->
+      
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-6"><!-- /.col (left) CREATE NEW-->
+
+                     <!-- Form content-->
+                    {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-success  collapsed-box"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Create New</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(form) }}
+                        </div><!--/box body end -->
+                        {{ form_end(form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (left) CREATE NEW-->
+        
+                <div class="col-md-6"><!-- /col (right) DOCUMENTATION-->
+                    
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header">
+                          <h3 class="box-title"><i class="glyphicon glyphicon-info-sign"> </i> Documentation</h3>
+                          <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                            
+                            
+                            <div class="small-box bg-aqua"><!-- small box -->
+                              <div class="inner">
+                                <h3>HOW TO:</h3>
+                                <h4>How to publish and embed a Google document:</h4>
+                                <ol>
+                                    <li>Create a Google Document.  </li>
+                                    <li>Share the document using the share button in the top right corner.  Make it Public and Editable for anyone with a link.</li>
+                                    <li>Publish the document by going to File->Publish To Web  </li>
+                                    <li>You will have two options: a LINK and EMBED code.  Copy the LINK code. </li>
+                                    <li>Paste the LINK code into the PATH field here in these forms.</li>
+                                </ol>
+                              </div>
+                              <div class="icon">
+                                <i class="glyphicon glyphicon-info-sign"></i>
+                              </div>
+                              <a href="https://support.google.com/docs/answer/37579?hl=en" class="small-box-footer" target="_blank">
+                                More info <i class="glyphicon glyphicon-info-sign"></i>
+                              </a>
+                            </div><!-- small box -->
+                            
+                            
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) DOCUMENTATION-->
+        
+            </div><!-- /.row of columns-->
+            
+            
+            <div class="box box-default"><!-- MOST CURRENT AGENDA -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Current <small></small></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body"><!--.box-body start -->
+                    <iframe 
+                        width="100%"
+                        height="500"
+                        frameborder="0" style="border:0; margin-bottom: 50px;"
+                        src="{{latestAgenda.agendaPath|raw}}"
+                        allowfullscreen
+                    >
+                    </iframe>
+                </div><!-- /.box-body end-->
+                <div class="box-footer">
+                  Google Doc
+                </div>
+            </div><!--/ MOST CURRENT AGENDA -->
+
+        </section><!--/main content -->
+        
+    </div><!--/content wrapper; contains page content -->
+    
+{% endblock %}

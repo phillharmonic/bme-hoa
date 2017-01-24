@@ -42,4 +42,15 @@ class MinutesRepository extends \Doctrine\ORM\EntityRepository
                   ->getSingleResult();
     }
     
+    public function getMinutesForYear($year){
+        $qb = $this->createQueryBuilder('m')
+                   ->select('m')
+                   ->where('m.year = :year')
+                   ->setParameter('year', $year)
+                   ->addOrderBy('m.created', 'ASC');
+        
+        return $qb->getQuery()
+                  ->getResult();
+    }
+    
 }

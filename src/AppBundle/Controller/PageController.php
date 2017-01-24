@@ -13,6 +13,15 @@ class PageController extends Controller
 {
     
     /**
+     * @Route("/PDH-MGT-CO/home", name="indexPDHMGTCOHomePublic")
+     */
+    public function indexPDHMGTCOHomePublicAction() 
+    {
+        return $this->render('PDHMGTCO/pages/indexHomePublic.html.twig', array(
+        ));
+    }
+    
+    /**
      * @Route("/dev-notes", name="devNotes")
      */
     public function devNotedAction() 

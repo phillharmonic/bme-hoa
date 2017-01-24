@@ -1,0 +1,95 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}Agenda - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>SHOW AGENDA</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            {{agenda.year}} Agenda&nbsp;&nbsp;|&nbsp;&nbsp;
+            <small><a href="{{app.request.headers.get('referer')}}"><i class="fa fa-history"></i> LAST</a></small>
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item">Board</li>
+            <li class="breadcrumb-item"><a href="{{path('indexAgendaAdmin')}}">Agendas</a></li>
+            <li class="breadcrumb-item active">Agenda {{agenda.year}}</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+            
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-6"><!-- EDIT START .col (left) -->
+
+                     <!-- Form content-->
+                    {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-success  collapsed-box"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Edit</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(form) }}
+                        </div><!--/box body end -->
+                        {{ form_end(form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (left) -->
+        
+                <div class="col-md-6"><!-- /EDIT START /col (right) -->
+                    
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header">
+                            <h3 class="box-title">Documentation</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) -->
+        
+            </div><!-- /.row of columns-->
+            
+            <div class="box box-default"><!-- FULL ROW EXAMPLE -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{agenda.year}} Agenda<small></small></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body"><!--.box-body start -->
+                    <div class="content">
+                        <iframe 
+                            width="100%"
+                            height="750"
+                            frameborder="0" style="border:0; margin-bottom: 50px;"
+                            src="{{agenda.agendaPath|trim('pub')~'edit?usp=sharing'}}"
+                            allowfullscreen
+                        >
+                        </iframe>
+                    </div>
+                </div><!-- /.box-body end-->
+                <div class="box-footer">
+                  Google Doc
+                </div>
+            </div><!--/ FULL ROW EXAMPLE -->
+      
+        </section><!--/main content -->
+        
+    </div><!--/content wrapper; contains page content -->
+    
+{% endblock %}

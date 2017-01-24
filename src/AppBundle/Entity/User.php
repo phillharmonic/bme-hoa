@@ -312,6 +312,14 @@ class User extends BaseUser
     */
     protected $linkedIn_protected;    
 
+    
+    public function getTrusteeTitle(){
+//        $honorific = $user->getHonorific();
+//        $roles = $user->getRoles();
+//        $role = (in_array('ROLE_PRESIDENT', $roles)) ? 'President' : 'Nope';
+        return "Mr. President";
+    }
+    
     /**
      * Get fullname
      *

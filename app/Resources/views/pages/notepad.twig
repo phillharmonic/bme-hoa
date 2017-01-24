@@ -1,0 +1,54 @@
+
+        <!-- Main container -->
+        <section class="content">
+            <!-- Column Container -->
+            <div class="container">
+                
+                <!-- Page Left -->
+                <div class="col-lg-6">
+                    
+                    <!-- Form content-->
+                    {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-info col-sm-12"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Manage Roles</h3>
+                        </div><!-- box header End -->
+                        {{ form_start(form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(form) }}
+                        </div><!--/box body end -->
+                        {{ form_end(form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /Page Left -->
+                
+                <!-- Page Right -->
+                <div class="col-lg-6">
+                    
+                        <div class="row col-sm-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">TO DO</h3>
+                                </div>
+                                <div class="box-body">
+                                    <ol>
+                                        <li>Embed several different forms here</li>
+                                        <li>Assign Role / Trustee</li>
+                                        <li>Vacate / Sell the home / remove rights</li>
+                                        <li>Enter shell data that can be overridden by user if they sign in and provide data</li>
+                                        <li>Never delete a user, just expire them</li>
+                                        <li>Add a little profile card here - displaying all info on just the user</li>
+                                        <li>Put a direct chat here</li>
+                                        <li>Financial summary</li>
+                                        <li>Fix the layout so it takes up the full space on different devices</li>
+                                    </ol>
+                                </div><!-- /.box-body -->
+                            </div>
+                        </div>
+                    
+                </div><!-- /page right -->
+                
+            </div><!-- /column container -->
+            
+        </section><!--/main container -->
+    </div>
