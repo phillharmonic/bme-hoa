@@ -1,0 +1,108 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}New Progress Note - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>NEW PROGRESS NOTE</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            Progress Note
+            <small>NEW</small>
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">User</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+            
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-12"><!-- /.col (left) -->
+
+                    <!-- Info Boxes Style 2 -->
+                    <div class="info-box bg-red-gradient">
+                      <span class="info-box-icon"><i class="fa fa-bullseye"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text" style="padding-bottom: 5px;">Goal <span class="pull-right">Created {{progressNote.goal.created|date('M j, Y')}} by {{progressNote.goal.user.fullname}}</span></span>
+                        <p >{{progressNote.goal.action}} {{progressNote.goal.unitsGoal}} {{progressNote.goal.units}} by {{progressNote.goal.completionGoalDate|date('M j, Y')}}</p>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: {{progressNote.goal.percentcomplete}}%"></div>
+                        </div>
+                            <span class="progress-description">
+                              {{progressNote.goal.percentcomplete}}% Achieved
+                              {% if progressNote.goal.percentcomplete is not null %}
+                                  <span class="pull-right">{{ progressNote.goal.totalComplete }} {{progressNote.goal.units|title}} of {{progressNote.goal.unitsGoal}} Currently {{progressNote.goal.action}}ed</span>
+                              {% endif %}
+                            </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    
+                    {% for note in progressNote.goal.progressNotes %}
+                        <!-- Info Boxes Style 2 -->
+                        <div class="info-box bg-yellow-gradient">
+                          <span class="info-box-icon"><i class="fa fa-file-text"></i></span>
+
+                          <div class="info-box-content">
+                            <span class="info-box-text">Progress Note&nbsp;&nbsp;[ {{loop.index}} ]<span class="pull-right">Created {{note.created|date('M j, Y')}} by {{note.user.fullname}}</span></span>
+                            <p style="padding-top: 7px;">{{note.description}}</p>
+
+                            <div class="progress">
+                              <div class="progress-bar" style="width: {{note.completionPercentage}}%"></div>
+                            </div>
+                                <span class="progress-description">
+                                    {{note.completionPercentage}}% {{note.goal.action}}ed  <span class="pull-right">{{note.unitsComplete}} {{note.goal.action}}ed  </span>
+                                </span>
+                          </div>
+                          <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        {% endfor %}
+
+                    
+                     <!-- Form content-->
+                    {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-success"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">New Note</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_row(form.description) }}
+                            {% if progressNote.goal.percentcomplete is not null %}
+                                <div class="callout callout-info">
+                                    <h4>Curently, {{progressNote.goal.totalComplete}} out of {{progressNote.goal.unitsGoal}} {{progressNote.goal.units}} have been {{progressNote.goal.action|lower}}ed. </h4>
+                                    <p>Below, enter how many MORE {{progressNote.goal.units}} have been {{progressNote.goal.action|lower}}ed, NOT the TOTAL amount {{progressNote.goal.action|lower}}ed.  </p>
+                                </div>
+                            {% else %}
+                                <div class="callout callout-info">
+                                    <h4>NO PROGRESS HAS BEEN MADE</h4>
+                                    <p>Below, enter how many {{progressNote.goal.units}} have been {{progressNote.goal.action}}. </p>
+                                </div>
+                            {% endif %}
+                            {{ form_row(form.unitsComplete) }}
+                        </div><!--/box body end -->
+                        {{ form_end(form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (right) -->
+        
+            </div><!-- /.row of columns-->
+            
+            
+
+        </section><!--/main content -->
+        
+    </div><!--/content wrapper; contains page content -->
+    
+{% endblock %}

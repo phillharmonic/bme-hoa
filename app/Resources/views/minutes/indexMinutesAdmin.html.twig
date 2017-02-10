@@ -5,11 +5,11 @@
     <script>
         $(document).ready(function() {
                 $('#minutes-index').DataTable({
-                  "paging": true,
+                  "paging": false,
                   "lengthChange": false,
                   "searching": false,
                   "ordering": true,
-                  "info": true,
+                  "info": false,
                   "autoWidth": false,
                   "order": [[ 0, "desc" ]]
                 });
@@ -23,8 +23,8 @@
 
         <section class="content-header"><!-- content header -->
           <h1><!-- heading -->
-            Minutes&nbsp;&nbsp;|&nbsp;&nbsp;
-            <small><a href="{{app.request.headers.get('referer')}}"><i class="fa fa-history"></i> LAST</a></small>
+            Minutes
+            <small></small>
           </h1><!--/heading -->
           <ol class="breadcrumb"><!--breadcrumb -->
             <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
@@ -36,55 +36,13 @@
 
         <section class="content"><!-- main content -->
 
-            <div class="row"><!-- INDEX MINUTES -->
-                <div class="col-xs-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">Index <small></small></h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                          <table id="minutes-index" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Created By</th>
-                              <th>Path</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {% for minute in minutes %}
-                                    <tr>
-                                        <td><a href="{{ path('showMinutesAdmin', {'id' : minute.id } ) }}"> {{minute.year}} Quarter-{{minute.quarter}}  </a></td>
-                                        <td>{{minute.user.fullname}} on {{minute.created|date('M j. Y g:s a')}}</td>
-                                        <td><a href="{{minute.embedCode}}" target="_blank"> Link to public minutes </a></td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                              <th>ID</th>
-                              <th>Created By</th>
-                              <th>Path</th>
-                            </tr>
-                            </tfoot>
-                          </table>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
-                </div><!-- /.col.xs -->
-            </div><!--/ INDEX AGENDAS -->
-      
             <div class="row"><!-- Row of columns-->
           
                 <div class="col-md-6"><!-- /.col (left) CREATE NEW-->
 
                      <!-- Form content-->
                     {% form_theme form 'form/AdminLTE_layout.html.twig' %}
-                    <div class="box box-success  collapsed-box"><!-- Horizontal Form -->
+                    <div class="box box-default  collapsed-box"><!-- Horizontal Form -->
                         <div class="box-header with-border">
                             <h3 class="box-title">Create New</h3>
                             <div class="box-tools pull-right">
@@ -103,9 +61,9 @@
         
                 <div class="col-md-6"><!-- /col (right) DOCUMENTATION-->
                     
-                    <div class="box box-info collapsed-box">
-                        <div class="box-header">
-                          <h3 class="box-title"><i class="glyphicon glyphicon-info-sign"> </i> Documentation</h3>
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Documentation</h3>
                           <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -141,6 +99,56 @@
                 </div><!-- /.col (right) DOCUMENTATION-->
         
             </div><!-- /.row of columns-->
+            
+            
+            <div class="row"><!-- INDEX MINUTES -->
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Index <small></small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <table id="minutes-index" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Created By</th>
+                              <th>Path</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for minute in minutes %}
+                                    <tr>
+                                        <td><a href="{{ path('showMinutesAdmin', {'id' : minute.id } ) }}"> {{minute.year}} Quarter-{{minute.quarter}}  </a></td>
+                                        <td>{{minute.user.fullname}} on {{minute.created|date('M j. Y g:s a')}}</td>
+                                        <td><a href="{{minute.embedCode}}" target="_blank"> Link to public minutes </a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                          </table>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer with-border">
+                            <div class="row"><!-- Row of columns-->
+                                 <div class="col-md-6 footer-pageinfo"><!-- /.col (left) page info-->
+                                    <span class="">Showing {{minutes.currentPageNumber}} to {{minutes.getPageCount }} of {{ minutes.getTotalItemCount }} entries</span>
+                                 </div><!-- /.col (left) page info-->
+                                 <div class="col-md-6"><!-- /.col (right) paginator-->
+                                    <span class="pull-right">
+                                        <div class="navigation">{{ knp_pagination_render(minutes) }}</div>
+                                    </span>
+                                 </div><!-- /.col (right) paginator-->
+                            </div>
+                        </div>
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!--/ INDEX AGENDAS -->
+      
+            
             
             
             <div class="box box-default"><!-- MOST CURRENT AGENDA -->

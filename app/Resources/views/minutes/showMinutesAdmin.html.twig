@@ -7,8 +7,8 @@
 
         <section class="content-header"><!-- content header -->
           <h1><!-- heading -->
-            {{minutes.year}} Quarter-{{minutes.quarter}} Minutes&nbsp;&nbsp;|&nbsp;&nbsp;
-            <small><a href="{{app.request.headers.get('referer')}}"><i class="fa fa-history"></i> LAST</a></small>
+            {{minutes.year}} Quarter-{{minutes.quarter}} Minutes
+            <small></small>
           </h1><!--/heading -->
           <ol class="breadcrumb"><!--breadcrumb -->
             <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
@@ -27,7 +27,7 @@
 
                      <!-- Form content-->
                     {% form_theme form 'form/AdminLTE_layout.html.twig' %}
-                    <div class="box box-success  collapsed-box"><!-- Horizontal Form -->
+                    <div class="box box-default  collapsed-box"><!-- Horizontal Form -->
                         <div class="box-header with-border">
                             <h3 class="box-title">Edit</h3>
                             <div class="box-tools pull-right">
@@ -46,8 +46,8 @@
         
                 <div class="col-md-6"><!-- /EDIT START /col (right) -->
                     
-                    <div class="box box-info collapsed-box">
-                        <div class="box-header">
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
                             <h3 class="box-title">Documentation</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-
+                            <p>No documentation for this page.</p>
                       </div><!-- /.box-body -->
                     </div><!-- /.box -->
                     
@@ -65,7 +65,8 @@
             
             <div class="box box-default"><!-- FULL ROW EXAMPLE -->
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{minutes.year}} Quarter-{{minutes.year}} Minutes<small></small></h3>
+                    <h3 class="box-title">Show</h3>
+                    <small><br/><a href="{{path('indexMinutesAdmin')}}">INDEX</a> | <a href="#">DELETE</a></small>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>

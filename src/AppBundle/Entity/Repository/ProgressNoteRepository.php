@@ -10,4 +10,5 @@ namespace AppBundle\Entity\Repository;
  */
 class ProgressNoteRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

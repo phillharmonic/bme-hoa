@@ -38,6 +38,6 @@ class AgendaForm extends AbstractType {
     
     public function getName()
     {
-        return 'action';
+        return 'agenda';
     }
 }

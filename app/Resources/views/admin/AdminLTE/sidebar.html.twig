@@ -46,7 +46,8 @@
           <ul class="treeview-menu">
             <li {% if app.request.attributes.get( '_route' ) == 'indexAgendaAdmin' %}class="active"{%endif%} ><a href="{{path('indexAgendaAdmin')}}"><i class="fa fa-circle-o"></i> Agendas</a></li>
             <li {% if app.request.attributes.get( '_route' ) == 'indexMinutesAdmin' %} class="active" {%endif%} ><a href="{{path('indexMinutesAdmin')}}"><i class="fa fa-circle-o"></i> Minutes</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Goals</a></li>
+            <li><a href="{{path('indexGoalAdmin')}}"><i class="fa fa-circle-o"></i> Goals</a></li>
+            <li><a href="{{path('progress_note_index')}}"><i class="fa fa-circle-o"></i> Progress Notes</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Tasks</a></li>
           </ul>
         </li>

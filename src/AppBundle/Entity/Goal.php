@@ -7,11 +7,8 @@
  * 
  * Good Goals & Milestones should:
  * 
- *  Specific
-    Measurable
-    Achievable
-    Relevant
-    Timely
+ *  Units: (emails, collections, houses, etc...)
+ *  unitsGoal: (94, 100, etc... must be number)
  * 
  */
 
@@ -19,20 +16,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Common\Collections\ArrayCollection;
-
-/**
- * Description of Goals
- *
- * Goals are for the HOA and should be set annually.  They are not assigned specifically to any one
- * person, Trustee, or Board member.  They are just that.  Goals.  Goals need to be measureable. At
- * quarterly Board meetings, the Board should assess their goals and their progress.  
- * 
- * At any time, a trustee (any trustee) can provide a progress note and with it, can move the progress
- * completion bar to his/her choosing (example: 50% complete)
- * 
- * Goals should not be confused with TASKS that are assignable.  
- */
-
 
 /**
  * Goal
@@ -59,10 +42,20 @@ class Goal {
     /**
      * @ORM\Column(type="string")
      */   
-    protected $name;  //string
+    protected $action;  //string
     
     /**
      * @ORM\Column(type="string")
+     */   
+    protected $units;  //string
+    
+    /**
+     * @ORM\Column(type="integer")
+     */   
+    protected $unitsGoal;  
+    
+    /**
+     * @ORM\Column(type="string", nullable=true)
      */       
     protected $description;  //string
     
@@ -81,7 +74,43 @@ class Goal {
      */       
     protected $completionGoalDate;  //date
     
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */   
+    protected $percentComplete;      
     
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */   
+    protected $totalComplete;         
+    
+    /**
+     * One Goal has Many Progress Notes
+     * 
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProgressNote", mappedBy="goal")
+     */       
+    protected $progressNotes;
+    
+    
+    public function __construct()
+    {
+        $this->progressNotes = new ArrayCollection();
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }    
+    
+    /**
+     * @ORM\PrePersist
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $goal = $args->getEntity();
+        if($goal->getCreated() === null){ 
+            $goal->setCreated(new \DateTime());
+        }
+        $goal->setUpdated(new \DateTime());
+    }       
 
     /**
      * Get id
@@ -94,27 +123,75 @@ class Goal {
     }
 
     /**
-     * Set name
+     * Set action
      *
-     * @param string $name
+     * @param string $action
      *
      * @return Goal
      */
-    public function setName($name)
+    public function setAction($action)
     {
-        $this->name = $name;
+        $this->action = $action;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get action
      *
      * @return string
      */
-    public function getName()
+    public function getAction()
     {
-        return $this->name;
+        return $this->action;
+    }
+
+    /**
+     * Set units
+     *
+     * @param string $units
+     *
+     * @return Goal
+     */
+    public function setUnits($units)
+    {
+        $this->units = $units;
+
+        return $this;
+    }
+
+    /**
+     * Get units
+     *
+     * @return string
+     */
+    public function getUnits()
+    {
+        return $this->units;
+    }
+
+    /**
+     * Set unitsGoal
+     *
+     * @param integer $unitsGoal
+     *
+     * @return Goal
+     */
+    public function setUnitsGoal($unitsGoal)
+    {
+        $this->unitsGoal = $unitsGoal;
+
+        return $this;
+    }
+
+    /**
+     * Get unitsGoal
+     *
+     * @return integer
+     */
+    public function getUnitsGoal()
+    {
+        return $this->unitsGoal;
     }
 
     /**
@@ -235,5 +312,87 @@ class Goal {
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add progressNote
+     *
+     * @param \AppBundle\Entity\ProgressNote $progressNote
+     *
+     * @return Goal
+     */
+    public function addProgressNote(\AppBundle\Entity\ProgressNote $progressNote)
+    {
+        $this->progressNotes[] = $progressNote;
+
+        return $this;
+    }
+
+    /**
+     * Remove progressNote
+     *
+     * @param \AppBundle\Entity\ProgressNote $progressNote
+     */
+    public function removeProgressNote(\AppBundle\Entity\ProgressNote $progressNote)
+    {
+        $this->progressNotes->removeElement($progressNote);
+    }
+
+    /**
+     * Get progressNotes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProgressNotes()
+    {
+        return $this->progressNotes;
+    }
+
+    /**
+     * Set percentComplete
+     *
+     * @param integer $percentComplete
+     *
+     * @return Goal
+     */
+    public function setPercentComplete($percentComplete)
+    {
+        $this->percentComplete = $percentComplete;
+
+        return $this;
+    }
+
+    /**
+     * Get percentComplete
+     *
+     * @return integer
+     */
+    public function getPercentComplete()
+    {
+        return $this->percentComplete;
+    }
+
+    /**
+     * Set totalComplete
+     *
+     * @param integer $totalComplete
+     *
+     * @return Goal
+     */
+    public function setTotalComplete($totalComplete)
+    {
+        $this->totalComplete = $totalComplete;
+
+        return $this;
+    }
+
+    /**
+     * Get totalComplete
+     *
+     * @return integer
+     */
+    public function getTotalComplete()
+    {
+        return $this->totalComplete;
     }
 }

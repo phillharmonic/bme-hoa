@@ -29,12 +29,19 @@ class AgendaController extends Controller{
      *     }
      * )
      */      
-    public function indexAgendaAdminAction(){
+    public function indexAgendaAdminAction(Request $request){
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agenda');
         $agendas = $repository->findAll();
         $latestAgenda = $this->getLast();
         
         $agenda = new Agenda();
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $agendas, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
         
         $form = $this->createForm(AgendaForm::class, $agenda, array(
             'action' => $this->generateUrl('newAgendaAdmin', array(
@@ -42,7 +49,7 @@ class AgendaController extends Controller{
         ))));
         
         return $this->render('agenda/indexAgendaAdmin.html.twig', array(
-            'agendas'   =>  $agendas,
+            'agendas'   =>  $pagination,
             'latestAgenda'  =>  $latestAgenda,
             'form'  =>  $form->createView(),
         ));

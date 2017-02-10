@@ -1,0 +1,249 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}Goal Show - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>GOAL SHOW</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <script>
+        $("#form_progressnote_edit").submit(function(event)){
+            /* stop form from submitting normally */
+            event.preventDefault();
+            
+            /* get the action attribute from the <form action=""> element */
+            var $form = $( this ),
+                url = $form.attr( 'action' );
+        
+            /* Send the data using post with element id name and name2*/
+            var posting = $.post( url, { 
+                progressnote_description: $('#progressnote_description').val(), 
+                progressnote_unitsComplete: $('#progressnote_unitsComplete').val() 
+            } );
+            
+            /* Alerts the results */
+            posting.done(function( data ) {
+              alert('success');
+            });
+            
+        }
+
+        $(document).ready(function() {
+
+            $("#form_progressnote_edit").submit(function(event)){
+                
+            /* stop form from submitting normally */
+            event.preventDefault();
+            
+            /* get the action attribute from the <form action=""> element */
+            var $form = $( this ),
+                url = $form.attr( 'action' );
+        
+            /* Send the data using post with element id progressnote_description and progressnote_unitsComplete*/
+            var posting = $.post( url, { 
+                progressnote_description: $('#progressnote_description').val(), 
+                progressnote_unitsComplete: $('#progressnote_unitsComplete').val() 
+            } );
+            
+            /* Alerts the results */
+            posting.done(function( data ) {
+              alert('success');
+            });
+            
+        }
+
+        } );
+    </script> 
+    <div class="modal modal-info" id="editProgressNoteModal" role="dialog"><div class="modal-dialog"><div class="modal-content"></div></div></div>
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+        
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            Goal
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Board</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+            
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-6"><!-- EDIT START .col (left) -->
+
+                     <!-- Form content-->
+                    {% form_theme edit_form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-default  collapsed-box"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Edit</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(edit_form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(edit_form) }}
+                        </div><!--/box body end -->
+                        {{ form_end(edit_form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (left) -->
+        
+                <div class="col-md-6"><!-- /EDIT START /col (right) -->
+                    
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Documentation</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <p>No documention for this page.</p>
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) -->
+        
+            </div><!-- /.row of columns-->
+            
+            <div class="row"><!-- SHOW GOAL -->
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Show </h3>
+                            <small>{{ form_start(delete_form) }} <a href="{{path('indexGoalAdmin')}}">INDEX</a> |  <a onclick="return confirm('Are you sure you want to delete?')" href="{{path('deleteGoalAdmin', {'id' : goal.id }) }}">DELETE</a> | <a href="#">ARCHIVE</a></small> {{ form_end(delete_form) }}</small>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Info Boxes Style 2 -->
+                            <div class="
+                                {% if goal.percentcomplete <= 25 %}info-box bg-red-gradient
+                                {% elseif goal.percentcomplete <= 50 and goal.percentcomplete > 25 %}info-box bg-yellow-gradient
+                                {% elseif goal.percentcomplete <= 75 and goal.percentcomplete > 50 %}info-box bg-blue-gradient
+                                {% elseif goal.percentcomplete <= 100 and goal.percentcomplete > 75 %}info-box bg-green-gradient
+                                {% endif %}
+                            ">
+                              <span class="info-box-icon"><i class="fa fa-bullseye"></i></span>
+
+                              <div class="info-box-content">
+                                  <span class="info-box-text" style="padding-bottom: 5px;">Goal <span class="pull-right">Created {{goal.created|date('M j, Y')}} by {{goal.user.fullname}}</span></span>
+                                <p >{{goal.action}} {{goal.unitsGoal}} {{goal.units}} by {{goal.completionGoalDate|date('M j, Y')}}</p>
+                                <div class="progress">
+                                  <div class="progress-bar" style="width: {{goal.percentcomplete}}%"></div>
+                                </div>
+                                    <span class="progress-description">
+                                      {{goal.percentcomplete}}% Achieved 
+                                      {% if goal.percentcomplete is not null %}
+                                          <span class="pull-right">{{ goal.totalComplete }} {{goal.units|title}} of {{goal.unitsGoal}} Currently {{goal.action}}ed</span>
+                                      {% endif %}
+                                    </span>
+                              </div>
+                              <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div><!-- /.box body -->
+                    </div><!-- /.box-box-default -->
+                </div><!-- /.col-xs-12 -->
+            </div><!-- /.row -->
+            
+            <div class="row"><!-- Progress Notes -->
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Progress Notes for Goal <small></small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            {% for note in notes %}
+                                <!-- Info Boxes Style 2 -->
+                                <div
+                                {% if note.id == pnId %}
+                                     class="info-box bg-aqua-gradient"
+                                {%else%}
+                                    class="info-box bg-gray"
+                                {%endif%}
+                                >
+                                    <span class="info-box-icon"><i class="fa fa-file-text"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Progress Note&nbsp; {{ notes.getPaginationData.firstItemNumber + loop.index - 1 }} <span class="pull-right">Created {{note.created|date('M j, Y')}} by {{note.user.fullname}}</span></span>
+                                        <p style="padding-top: 7px;">{{note.description}}</p>
+
+                                        <div class="progress progress-xxs active">
+                                            <div class="progress-bar progress-bar-primary progress-bar-striped" style="width: {{note.completionPercentage}}%">
+                                                <span class="sr-only">{{note.completionPercentage}}% Complete</span>
+                                            </div>
+                                        </div>
+                                        <span class="progress-description">
+                                            {{note.unitsComplete}} {{note.goal.action}}ed ({{note.completionPercentage}}%) 
+                                            <span class="pull-right"> 
+                                                <a href="{{path('editNoteAdmin', {'id' : note.id } )}}" data-toggle="modal" data-target="#editProgressNoteModal">EDIT</a> | 
+                                                <a onclick="return confirm('Are you sure you want to delete?')" href="{{path('deleteProgressNote', {'id' : note.id })}}">DELETE</a> | 
+                                                <a href="#">ARCHIVE</a>
+                                            </span>
+                                        </span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            {% endfor %}
+                        </div><!-- /.box body -->
+                        <div class="box-footer with-border">
+                            <div class="row"><!-- Row of columns-->
+                                 <div class="col-md-6 footer-pageinfo"><!-- /.col (left) page info-->
+                                    <span class="">Showing {{notes.currentPageNumber}} to {{notes.getPageCount }} of {{ notes.getTotalItemCount }} entries</span>
+                                 </div><!-- /.col (left) page info-->
+                                 <div class="col-md-6"><!-- /.col (right) paginator-->
+                                    <span class="pull-right">
+                                        <div class="navigation">{{ knp_pagination_render(notes) }}</div>
+                                    </span>
+                                 </div><!-- /.col (right) paginator-->
+                            </div>
+                        </div>
+                    </div><!-- /.box-box-default -->
+                </div><!-- /.col-xs-12 -->
+            </div><!-- /.row -->
+            
+            <!-- Form content-->
+           {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+           <div class="box box-default"><!-- Horizontal Form -->
+               <div class="box-header with-border">
+                   <h3 class="box-title">New Progress Note</h3>
+                   <div class="box-tools pull-right">
+                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                       <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                   </div>
+               </div><!-- box header End -->
+               {{ form_start(form) }}<!-- Form Start -->
+               <div class="box-body"><!-- box body start -->
+                   {{ form_row(form.description) }}
+                   {% if goal.percentcomplete is not null %}
+                       <div class="callout callout-info">
+                           <h4>Curently, {{goal.totalComplete}} out of {{goal.unitsGoal}} {{goal.units}} have been {{goal.action|lower}}ed. </h4>
+                           <p>Below, enter how many MORE {{goal.units}} have been {{goal.action|lower}}ed, NOT the TOTAL amount {{goal.action|lower}}ed.  </p>
+                       </div>
+                   {% else %}
+                       <div class="callout callout-info">
+                           <h4>NO PROGRESS HAS BEEN MADE</h4>
+                           <p>Below, enter how many {{goal.units}} have been {{goal.action}}. </p>
+                       </div>
+                   {% endif %}
+                   {{ form_row(form.unitsComplete) }}
+               </div><!--/box body end -->
+               {{ form_end(form) }}<!--/Form End -->
+           </div><!-- /Form content -->
+                    
+        </section><!--/main content -->
+        
+    </div><!--/content wrapper; contains page content -->
+    
+{% endblock %}

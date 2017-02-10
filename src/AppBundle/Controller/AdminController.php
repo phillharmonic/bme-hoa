@@ -18,8 +18,12 @@ class AdminController extends Controller
      */    
     public function showDashboardAdminAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $goalRepo = $em->getRepository('AppBundle:Goal');
+        $goals = $goalRepo->getTopGoals(4);
         
         return $this->render('admin/AdminLTE/dashboard.html.twig', array(
+            'goals' => $goals
         ));
     }
     

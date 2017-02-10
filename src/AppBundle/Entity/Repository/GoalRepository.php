@@ -10,4 +10,11 @@ namespace AppBundle\Entity\Repository;
  */
 class GoalRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTopGoals($limit = null){
+        $qb = $this->createQueryBuilder('g')->select('g')->orderBy('g.percentComplete', 'DESC');
+        if($limit != null){
+            $qb->setMaxResults( $limit );
+        }
+        return $qb->getQuery()->getResult();
+    }
 }

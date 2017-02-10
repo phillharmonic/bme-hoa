@@ -43,9 +43,13 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type }
+        
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }            
             
     minutes:
         class:        AppBundle\Controller\MinutesController
         calls:
             - [setContainer, ["@service_container"]]
-

@@ -1,0 +1,96 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}Progress Notes Index - Admin{% endblock %}
+{% block javascripts %}{{parent()}}
+    <!-- page script -->
+    <script>
+        $(document).ready(function() {
+                $('#notes-index').DataTable({
+                  "paging": false,
+                  "lengthChange": false,
+                  "searching": false,
+                  "ordering": true,
+                  "info": false,
+                  "autoWidth": false,
+                  "order": [[ 2, "desc" ]]
+                });
+              } );
+    </script> 
+{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>PROGRESS NOTE INDEX</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <div class="modal modal-info" id="editProgressNoteModal" role="dialog"><div class="modal-dialog"><div class="modal-content"></div></div></div>
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            Progress Notes
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item"><a href="#">Board</a></li>
+            <li class="breadcrumb-item active">Progress Notes</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+            <div class="row"><!-- INDEX GOALS -->
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Index <small></small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            
+                            <table id="notes-index" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Progress</th>
+                                        <th># Complete</th>
+                                        <th>% Complete</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for progressNote in progressNotes %}
+                                    <tr>
+                                        <td><a title="{{progressNote.goal.action}} {{progressNote.goal.unitsGoal}} {{progressNote.goal.units}} by {{progressNote.goal.completionGoalDate|date('M j, Y')}}" href="{{ path('showGoalAdmin', { 'id': progressNote.goal.id, 'pnId' : progressNote.id } ) }}">
+                                            {{ progressNote.description|truncate(60) }}
+                                            </a></td>
+                                        <td>{{ progressNote.unitsComplete }}</td>
+                                        <td>{{ progressNote.completionPercentage }}</td>
+                                        <td>{% if progressNote.created %}{{ progressNote.created|date('M j, Y') }}{% endif %}</td>
+                                         <td>
+                                            <a href="{{ path('editNoteAdmin', { 'id': progressNote.id }) }}" data-toggle="modal" data-target="#editProgressNoteModal" name="Edit"  title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <a href="{{ path('progress_note_show', { 'id': progressNote.id }) }}"  title="Delete"  onclick="return confirm('Are you sure you want to delete?')" ><span class="glyphicon glyphicon-remove"></span></a>  
+                                            <a href="{{ path('editNoteAdmin', { 'id': progressNote.id })}}">Edit</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer with-border">
+                            <div class="row"><!-- Row of columns-->
+                                 <div class="col-md-6 footer-pageinfo"><!-- /.col (left) page info-->
+                                    <span class="">Showing {{progressNotes.currentPageNumber}} to {{progressNotes.getPageCount }} of {{ progressNotes.getTotalItemCount }} entries</span>
+                                 </div><!-- /.col (left) page info-->
+                                 <div class="col-md-6"><!-- /.col (right) paginator-->
+                                    <span class="pull-right">
+                                        <div class="navigation">{{ knp_pagination_render(progressNotes) }}</div>
+                                    </span>
+                                 </div><!-- /.col (right) paginator-->
+                            </div>
+                        </div>
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!--/ INDEX AGENDAS -->
+        </section>
+    </div>
+{% endblock %}

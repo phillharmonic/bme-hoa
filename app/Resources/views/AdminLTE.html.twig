@@ -22,6 +22,48 @@
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins/datatables/dataTables.bootstrap.css')}}">
     <!-- Page styles -->
     <link href="{{ asset('bundles/main/css/AdminLTE-extras.css') }}" type="text/css" rel="stylesheet" />
+    <style>
+        
+        .fill-gap {
+            padding-top: 50px;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+        .footer-pageinfo {
+            padding-top: 30px;  padding-left: 20px;
+        } 
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+        }
+        .modal {
+            text-align: center;
+            padding: 0!important;
+        }
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px; /* Adjusts for spacing */
+        }
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
@@ -30,6 +72,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Bootstrap 3.3.6 - NEWER versions BREAK AdminLTE  -->
     <script src="https://almsaeedstudio.com/themes/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+    <!-- BME HOA Base Script -->
+    <script src=" {{ asset('bundles/main/js/base.js') }} "></script>
     <!-- FastClick -->
     <script src=" {{ asset('AdminLTE/plugins/fastclick/fastclick.js') }} "></script>
     <!-- AdminLTE App -->

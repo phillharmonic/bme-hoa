@@ -38,7 +38,8 @@
         "discutea/forum-bundle": "dev-master",
         "symfony/assetic-bundle": "dev-master",
         "artscorestudio/datagrid-bundle": "dev-master",
-        "almasaeed2010/adminlte": "dev-master"
+        "almasaeed2010/adminlte": "dev-master",
+        "twig/extensions": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

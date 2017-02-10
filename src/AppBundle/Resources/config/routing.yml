@@ -1,4 +1,0 @@
-app_goal_admin:
-    resource: "@AppBundle/Resources/config/routing/goal.php"
-    prefix:   /goal_admin
-

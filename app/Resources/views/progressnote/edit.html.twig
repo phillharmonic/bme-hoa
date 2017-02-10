@@ -1,0 +1,63 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}New Progress Note - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>NEW PROGRESS NOTE</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            Progress Note for {{goal.action}}
+            <small></small>
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Progress Note</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+            
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-6"><!-- /.col (left) -->
+
+                     <!-- Form content-->
+                    {% form_theme edit_form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-warning"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Edit</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(edit_form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(edit_form) }}
+                            {{ form_end(edit_form) }}<!--/Form End -->
+                            <div class="box-footer">
+                                <div class="btn-group pull-right" role="group" aria-label="back-edit-delete">
+                                    {{ form_start(delete_form) }}
+                                        <input type="button" class="btn btn-default" value="Index" onclick="location.href = '{{ path('progress_note_index') }}';" />
+                                        <input type="button" class="btn btn-default" value="Show" onclick="location.href = '{{ path('progress_note_show', { 'id': progressNote.id }) }}';" />
+                                        <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Are you sure you want to delete?')" />
+                                    {{ form_end(delete_form) }}
+                                </div>
+                            </div>
+                        </div><!--/box body end -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (left) -->
+        
+                <div class="col-md-6"><!-- /col (right) -->
+                </div><!-- /.col (right) -->
+        
+            </div><!-- /.row of columns-->
+            
+        </section><!--/main content -->
+        
+    </div><!--/content wrapper; contains page content -->
+    
+{% endblock %}

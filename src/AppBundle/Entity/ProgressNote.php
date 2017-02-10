@@ -1,17 +1,11 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Progress Note:
  * 
- * Good Goals & Milestones should:
+ * The goal stores the Units and the unitsGoal.  The progress note contains the units of progress... example: 20 collected emails out of goalUnits: 94
  * 
- *  Specific
-    Measurable
-    Achievable
-    Relevant
-    Timely
+ * 
  * 
  */
 
@@ -50,7 +44,7 @@ class ProgressNote {
     protected $user;  //entity
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */   
     protected $name;  //string
     
@@ -60,9 +54,9 @@ class ProgressNote {
     protected $description;  //string
     
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="integer")
      */       
-    protected $completionGoalDate;  //date
+    protected $unitsComplete; 
     
     /**
      * @ORM\Column(type="date")
@@ -75,7 +69,9 @@ class ProgressNote {
     protected $updated;
     
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Goal")
+     * Many ProgressNotes have one Goal
+     * 
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Goal", inversedBy="progressNotes")
      */
     protected $goal; //entity
     
@@ -84,6 +80,25 @@ class ProgressNote {
      */   
     protected $completionPercentage;    
     
+    public function __construct()
+    {
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }    
+    
+    /**
+     * @ORM\PrePersist
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $note = $args->getEntity();
+        if($note->getCreated() === null){ 
+            $note->setCreated(new \DateTime());
+        }
+        $note->setUpdated(new \DateTime());
+    }       
+
 
     /**
      * Get id
@@ -144,27 +159,27 @@ class ProgressNote {
     }
 
     /**
-     * Set completionGoalDate
+     * Set unitsComplete
      *
-     * @param \DateTime $completionGoalDate
+     * @param integer $unitsComplete
      *
      * @return ProgressNote
      */
-    public function setCompletionGoalDate($completionGoalDate)
+    public function setUnitsComplete($unitsComplete)
     {
-        $this->completionGoalDate = $completionGoalDate;
+        $this->unitsComplete = $unitsComplete;
 
         return $this;
     }
 
     /**
-     * Get completionGoalDate
+     * Get unitsComplete
      *
-     * @return \DateTime
+     * @return integer
      */
-    public function getCompletionGoalDate()
+    public function getUnitsComplete()
     {
-        return $this->completionGoalDate;
+        return $this->unitsComplete;
     }
 
     /**

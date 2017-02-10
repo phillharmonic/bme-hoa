@@ -27,12 +27,19 @@ class MinutesController extends Controller{
      *     }
      * )
      */      
-    public function indexMinutesAdminAction(){
+    public function indexMinutesAdminAction(Request $request){
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Minutes');
         $minutes = $repository->findAll();
         $latestMinutes = $repository->findOneBy(array('id' => $this->getLast()));
         
         $minute = new Minutes();
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $minutes, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
         
         $form = $this->createForm(MinutesForm::class, $minute, array(
             'action' => $this->generateUrl('newMinutesAdmin', array(
@@ -40,7 +47,7 @@ class MinutesController extends Controller{
         ))));
         
         return $this->render('minutes/indexMinutesAdmin.html.twig', array(
-            'minutes'   =>  $minutes,
+            'minutes'   =>  $pagination,
             'latestMinutes'  =>  $latestMinutes,
             'form'  =>  $form->createView(),
         ));

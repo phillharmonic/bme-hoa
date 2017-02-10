@@ -1,0 +1,74 @@
+<script>
+        $("#form_progressnote_edit").submit(function(event)){
+            /* stop form from submitting normally */
+            event.preventDefault();
+            
+            /* get the action attribute from the <form action=""> element */
+            var $form = $( this ),
+                url = $form.attr( 'action' );
+        
+            /* Send the data using post with element id name and name2*/
+            var posting = $.post( url, { 
+                progressnote_description: $('#progressnote_description').val(), 
+                progressnote_unitsComplete: $('#progressnote_unitsComplete').val() 
+            } );
+            
+            /* Alerts the results */
+            posting.done(function( data ) {
+              alert('success');
+            });
+            
+        }
+
+        $(document).ready(function() {
+
+            $("#form_progressnote_edit").submit(function(event)){
+                
+            /* stop form from submitting normally */
+            event.preventDefault();
+            
+            /* get the action attribute from the <form action=""> element */
+            var $form = $( this ),
+                url = $form.attr( 'action' );
+        
+            /* Send the data using post with element id progressnote_description and progressnote_unitsComplete*/
+            var posting = $.post( url, { 
+                progressnote_description: $('#progressnote_description').val(), 
+                progressnote_unitsComplete: $('#progressnote_unitsComplete').val() 
+            } );
+            
+            /* Alerts the results */
+            posting.done(function( data ) {
+              alert('success');
+            });
+            
+        }
+
+        } );
+    </script> 
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Progress Note</h4>
+    </div>
+    <div class="modal-body">
+        {% form_theme edit_form 'form/AdminLTE_layout.html.twig' %}
+        {{ form_start(edit_form, {'attr': {'id': 'form_progressnote_edit'}}) }}<!-- Form Start -->
+        <div class="box box-default"><!-- Horizontal Form -->
+            <div class="box-header with-border">
+                <h3 class="box-title">Edit</h3>
+            </div><!-- box header End -->
+            <div class="box-body"><!-- box body start -->
+                <label style="color: black">Summary</label>{{ form_row(edit_form.description) }}
+                <label style="color: black">Complete</label>{{ form_row(edit_form.unitsComplete) }}
+            </div><!--/box body end -->
+        </div><!-- /Form content -->
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Submit" class="btn btn-outline pull-left" />
+        <button type="button" class="btn btn-outline" data-dismiss="modal">Close</button>
+        {{ form_end(edit_form) }}<!--/Form End -->
+    </div>
+</div><!-- /.modal-content -->

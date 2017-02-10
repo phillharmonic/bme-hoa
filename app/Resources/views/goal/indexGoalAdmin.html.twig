@@ -1,0 +1,135 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block title %}Goal Index - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>GOAL INDEX</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+              Goals 
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Goals</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-6"><!-- /.col (left) CREATE NEW-->
+
+                     <!-- Form content-->
+                    {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                    <div class="box box-default  collapsed-box"><!-- Horizontal Form -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">New Goal</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- box header End -->
+                        {{ form_start(form) }}<!-- Form Start -->
+                        <div class="box-body"><!-- box body start -->
+                            {{ form_widget(form) }}
+                        </div><!--/box body end -->
+                        {{ form_end(form) }}<!--/Form End -->
+                    </div><!-- /Form content -->
+                    
+                </div><!-- /.col (left) CREATE NEW-->
+        
+                <div class="col-md-6"><!-- /col (right) DOCUMENTATION-->
+                    
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Documentation</h3>
+                          <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                            <p>No documentation for this page.</p>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                </div><!-- /.col (right) DOCUMENTATION-->
+        
+            </div><!-- /.row of columns-->
+            
+            <div class="row"><!-- INDEX GOALS -->
+                <div class="col-xs-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Index <small></small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            
+                          <table id="goals-index" class="table table-bordered table-striped">
+                            <tbody>
+                                {% for goal in pager %}
+                                <tr>
+                                    <!-- Info Boxes Style 2 -->
+                                    <div class="
+                                        {% if goal.percentcomplete <= 25 %}info-box bg-red-gradient
+                                        {% elseif goal.percentcomplete <= 50 and goal.percentcomplete > 25 %}info-box bg-yellow-gradient
+                                        {% elseif goal.percentcomplete <= 75 and goal.percentcomplete > 50 %}info-box bg-blue-gradient
+                                        {% elseif goal.percentcomplete <= 100 and goal.percentcomplete > 75 %}info-box bg-green-gradient
+                                        {% endif %}
+                                    ">
+                                        <span class="info-box-icon"><a style="color: white;" href="{{ path('showGoalAdmin', {'id' : goal.id} ) }}"> <i class="fa fa-bullseye"></i></a></span>
+
+                                      <div class="info-box-content">
+                                          <span class="info-box-text" style="padding-bottom: 5px;">Goal {{ pager.getPaginationData.firstItemNumber + loop.index - 1 }}<span class="pull-right">Created {{goal.created|date('M j, Y')}} by {{goal.user.fullname}}</span></span>
+                                        <p >{{goal.action}} {{goal.unitsGoal}} {{goal.units}} by {{goal.completionGoalDate|date('M j, Y')}}</p>
+                                        <div class="progress">
+                                          <div class="progress-bar" style="width: {{goal.percentcomplete}}%"></div>
+                                        </div>
+                                            <span class="progress-description">
+                                                {% if goal.percentcomplete is null or goal.percentcomplete < 0 %}
+                                                    0% Accomplished.  Add Progress Note.
+                                                {% else %}
+                                                    {{goal.percentcomplete}}% Achieved - <span class="label bg-black">{{goal.progressNotes|length}}</span> Progress Notes
+                                                {% endif %}
+                                              {% if goal.percentcomplete is not null %}
+                                                  <span class="pull-right">{{ goal.totalComplete }} {{goal.units|title}} of {{goal.unitsGoal}} Currently {{goal.action}}ed</span>
+                                              {% endif %}
+                                            </span>
+                                      </div>
+                                      <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                          </table>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer with-border">
+                            <div class="row"><!-- Row of columns-->
+                                 <div class="col-md-6 footer-pageinfo"><!-- /.col (left) page info-->
+                                    <span class="">Showing {{pager.currentPageNumber}} to {{pager.getPageCount }} of {{ pager.getTotalItemCount }} entries</span>
+                                 </div><!-- /.col (left) page info-->
+                                 <div class="col-md-6"><!-- /.col (right) paginator-->
+                                    <span class="pull-right">
+                                        <div class="navigation">{{ knp_pagination_render(pager) }}</div>
+                                    </span>
+                                 </div><!-- /.col (right) paginator-->
+                            </div>
+                        </div>
+                    </div><!-- /.box -->
+                </div><!-- /.col.xs -->
+            </div><!--/ INDEX AGENDAS -->
+        </section><!--/main content -->
+        
+    </div><!--/content wrapper; contains page content -->
+    
+{% endblock %}
+

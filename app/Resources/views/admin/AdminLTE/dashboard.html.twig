@@ -124,21 +124,29 @@
                 <p class="text-center">
                   <strong>Goal Completion</strong>
                 </p>
+                {% for goal in goals%}
+                    <div class="progress-group">
+                        <span class="progress-text">{{goal.action}} {{goal.unitsGoal}} {{goal.units}}</span>
+                        <span class="progress-number"><b>{% if goal.totalComplete <= 0 or goal.totalComplete is null %}0{%else%}{{goal.totalComplete}}{%endif%}</b>/{{ goal.unitsGoal }}</span>
 
-                <div class="progress-group">
-                  <span class="progress-text">Email Address Collection</span>
-                  <span class="progress-number"><b>87</b>/92</span>
-
-                  <div class="progress sm">
-                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                  </div>
-                </div>
-                <!-- /.progress-group -->
+                        <div class="progress sm">
+                          <div style="width: {% if goal.percentcomplete <= 0 or goal.totalComplete is null %}0{%else%}{{goal.percentcomplete}}{%endif%}%" class="
+                            {% if goal.percentcomplete <= 25 %}info-box bg-red-gradient
+                            {% elseif goal.percentcomplete <= 50 and goal.percentcomplete > 25 %}info-box bg-yellow-gradient
+                            {% elseif goal.percentcomplete <= 75 and goal.percentcomplete > 50 %}info-box bg-blue-gradient
+                            {% elseif goal.percentcomplete <= 100 and goal.percentcomplete > 75 %}info-box bg-green-gradient
+                            {% endif %}
+                        "></div>
+                        </div>
+                    </div>
+                      <!-- /.progress-group -->
+                {% endfor %}
+                {# {{ random(['success', 'danger', 'warning', 'info']) }} }}
                 <div class="progress-group">
                   <span class="progress-text">Homeowner Membership</span>
                   <span class="progress-number"><b>20</b>/92</span>
 
-                  <div class="progress sm">
+                  <div class="progress sm"> 
                     <div class="progress-bar progress-bar-danger" style="width: 22%"></div>
                   </div>
                 </div>
@@ -161,6 +169,7 @@
                   </div>
                 </div>
                 <!-- /.progress-group -->
+                #}
               </div>
               <!-- /.col -->
             </div>

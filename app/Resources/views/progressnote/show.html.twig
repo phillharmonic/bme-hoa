@@ -1,0 +1,98 @@
+{% extends 'AdminLTE.html.twig' %}
+{% block stylesheets %}{{parent()}}
+<link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/plugins/bootstrap-slider/slider.css">
+{% endblock %}
+{% block javascripts %}{{parent()}}
+<script src="https://almsaeedstudio.com/themes/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+<script>
+  $(function () {
+    /* BOOTSTRAP SLIDER */
+    $('.slider').slider();
+  });
+</script>
+{% endblock %}
+{% block title %}Show Progress Note - Admin{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Admin | <small><small>SHOW NOTE</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            Progress Note
+            <small>SHOW</small>
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Progress Note</li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content -->
+
+            <div class="row"><!-- Row of columns-->
+          
+                <div class="col-md-6"><!-- /.col (left) -->
+
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">The Goal:</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <dl class="dl-horizontal">
+                                <dt>ID</dt><dd>{{ progressNote.goal.id }}</dd>
+                                <dt>Action</dt><dd>{{ progressNote.goal.action }}</dd>
+                                <dt>Description</dt><dd style="white-space: pre-line;">{{ progressNote.goal.description }}</dd>
+                                <dt>User</dt><dd>{{ progressNote.goal.user.fullname }}</dd>
+                                <dt>Created</dt><dd>{% if progressNote.goal.created %}{{ progressNote.goal.created|date('Y-m-d') }}{% endif %}</dd>
+                                <dt>Updated</dt><dd>{% if progressNote.goal.updated %}{{ progressNote.goal.updated|date('Y-m-d') }}{% endif %}</dd>
+                                <dt>Completion Goal Date</dt><dd>{{ progressNote.goal.completionGoalDate|date('Y-m-d') }}</dd>
+                                <dt>Units</dt><dd>{{ progressNote.goal.units }}</dd>
+                                <dt>Units Goal</dt><dd>{{ progressNote.goal.unitsGoal }}</dd>
+                            </dl>
+                        
+                        <h3><small>The Progress:</small></h3><hr>
+                            <dl class="dl-horizontal">
+                                <dt>ID</dt><dd>{{ progressNote.id }}</dd>
+                                <dt>Name</dt><dd>{{ progressNote.name }}</dd>
+                                <dt>Description</dt><dd style="white-space: pre-line;">{{ progressNote.description }}</dd>
+                                <dt>Units Complete</dt><dd>{{ progressNote.unitsComplete }}</dd>
+                                <dt>Created</dt><dd>{% if progressNote.created %}{{ progressNote.created|date('Y-m-d') }}{% endif %}</dd>
+                                <dt>Updated</dt><dd>{% if progressNote.updated %}{{ progressNote.updated|date('Y-m-d') }}{% endif %}</dd>
+                                <dt>Completion Percentage</dt><dd>{{ progressNote.completionPercentage }}</dd>
+                            </dl>       
+                            
+                            <div class="progress-group">
+                                <span class="progress-text">{{progressNote.goal.action}}</span>
+                                <span class="progress-number"><b>{{ progressNote.unitsComplete }}</b>/{{ progressNote.goal.unitsGoal }}</span>
+
+                                <div class="progress sm">
+                                  <div class="progress-bar progress-bar-success" style="width: {{ progressNote.unitsComplete/progressNote.goal.unitsGoal*100 }}%"></div>
+                                </div>
+                            </div>
+                            
+                        </div><!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="btn-group pull-right" role="group" aria-label="back-edit-delete">
+                                {{ form_start(delete_form) }}
+                                    <input type="button" class="btn btn-default" value="Index" onclick="location.href = '{{ path('progress_note_index') }}';" />
+                                    <input type="button" class="btn btn-default" value="Edit" onclick="location.href = '{{ path('progress_note_edit', { 'id': progressNote.id }) }}';" />
+                                    <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Are you sure you want to delete?')" />
+                                {{ form_end(delete_form) }}
+                            </div>
+                        </div>
+                    </div><!-- /.box -->
+                    
+                </div>
+                            
+                  
+            </div>
+            
+        </section>
+    </div>
+{% endblock %}
