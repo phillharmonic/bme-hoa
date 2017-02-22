@@ -13,7 +13,9 @@
         <li class="breadcrumb-item active">Show Complaint #{{complaint.id}}</li>
     </ol>
     <hr>
-    <h2>Complaint #{{complaint.id}}&nbsp;&nbsp;<small>{% for user in complaint.user %}{{user.lastname}}{% endfor %} Vs. {{ complaint.defendentName }}</small></h2>   
+    <h2>Complaint #{{complaint.id}}&nbsp;&nbsp;<small>
+        {{complaint.user.lastname}} Vs. {{ complaint.defendentName }}</small>
+    </h2>   
     <h5><span class="glyphicon glyphicon-time"></span> Submitted: {{ complaint.timestamp|date('m-d-y') }}</h5>
     {% if complaint.isResolved == 1 %}
         <span class="label label-success">RESOLVED</span>
@@ -36,7 +38,7 @@
                 Complainant
             </div>
             <div class="col-sm-10 col-xs-8 right-block">
-                {% for user in complaint.user %}{{user.fullname}}{% endfor %} 
+                {{complaint.user.fullname}}
             </div>
         </div>
         <div class="block-cont">
@@ -44,7 +46,7 @@
                 Complainant Address
             </div>
             <div class="col-sm-10 col-xs-8 right-block">
-                {% for user in complaint.user %}{{user.houseNumber}} {{user.street}}, Etna, OH 43062{% endfor %}     
+                {{complaint.user.houseNumber}} {{complaint.user.street}}, Etna, OH 43062
             </div>
         </div>
         <div class="block-cont">

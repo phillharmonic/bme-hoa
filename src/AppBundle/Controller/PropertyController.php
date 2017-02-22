@@ -6,12 +6,113 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-//use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class PropertyController extends Controller
 {
     
+    /**
+     * @Route("/public/properties/show/alt/{id}", name="showPropertiesPublicAlt")
+     */  
+    public function AltAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $property   = $em->getRepository('AppBundle:Property')->find($id);
+        $homeowners = $property->getUser(); //this is a collection
+        
+//  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
+        
+        $testAr = array();
+        $pictures = new ArrayCollection();
+        $spouses = new ArrayCollection();
+        $dependents = new ArrayCollection();
+        $children = new ArrayCollection();
+        $pets = new ArrayCollection();
+        $vhcls = new ArrayCollection();
+        
+        $testAr['props'][] = $property;
+
+        foreach ($property->getPhotos() as $photo){
+            $pictures[] = $photo;
+        }
+        
+        //OWNERS
+        foreach($homeowners as $homeowner){
+            $testAr['homeowners'][] = $homeowner;
+            $photos = $homeowner->getPhotos();
+            foreach ($photos as $photo){
+                $pictures[] = $photo;
+            }
+        }   
+        
+        //SPOUSE & DEPENDENTS
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getDependents()) ){
+                $dependents = $homeowner->getDependents();
+                //foreach dependent check to see if it is a spouse
+                foreach($dependents as $dependent){
+                    $photos = $dependent->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
+                    //SPOUSE
+                    if($dependent->getSpouse() == 1){
+                        $spouses[] = $dependent;
+                        $testAr['spouse'][] = $dependent;
+                    }
+                    //CHILDREN
+                    else{
+                        $children[] = $dependent;
+                        $testAr['kids'][] = $dependent;
+                    }
+                }
+            }
+        }
+        $kids = $em->getRepository('AppBundle:Dependents')->removeDupes($children);    
+        //PETS
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getPets())){
+                
+                foreach($homeowner->getPets() as $animal){
+                    $photos = $animal->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
+                    $pets[] = $animal;
+                    $testAr['pets'][] = $animal;
+                }
+            }
+        }        
+        $animals = $em->getRepository('AppBundle:Pets')->removeDupes($pets);
+        
+        //VEHICLES
+        foreach($homeowners as $homeowner){
+            if(!empty($homeowner->getVehicles())){
+                foreach($homeowner->getVehicles() as $car){
+                    $photos = $car->getPhotos();
+                    foreach ($photos as $photo){
+                        $pictures[] = $photo;
+                    }
+                    $vhcls[] = $car;
+                    $testAr['cars'][] = $car;
+                }
+            }
+        }    
+        $cars = $em->getRepository('AppBundle:Vehicles')->removeDupes($vhcls);
+        
+        return $this->render('property/showPropertyPublicAlt.html.twig', array(
+            'property'   =>  $property,
+            'homeowners' =>  $homeowners,
+            'spouses'    =>  $spouses,
+            'dependents' =>  $kids,
+            'vehicles'   =>  $cars,
+            'pets'       =>  $animals,
+            'testAr'     => $testAr,
+            'pics'      => $pictures,
+        ));
+    }
+
+
     /**
      * @Route("/admin/properties/index", name="indexPropertiesAdmin")
      */    
@@ -102,7 +203,7 @@ class PropertyController extends Controller
     /**
      * @Route("/public/properties/index", name="indexPropertiesPublic")
      */     
-    public function indexPropertiesPublicAction()
+    public function indexPropertiesPublicAction(Request $request)
     {
 //        $em = $this->getDoctrine()
 //                   ->getEntityManager();
@@ -152,12 +253,33 @@ class PropertyController extends Controller
      */
         $em = $this->getDoctrine()->getManager();       
         $bmd = $em->getRepository('AppBundle:Property')->getPropertiesByStreet('Brandy Mill Drive', 'Residential');
+        $bmdPaginator  = $this->get('knp_paginator');
+        $bmdPagination = $bmdPaginator->paginate(
+            $bmd, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
         $sbc = $em->getRepository('AppBundle:Property')->getPropertiesByStreet('Spring Brook Court', 'Residential');
+        $sbcPaginator  = $this->get('knp_paginator');
+        $sbcPagination = $sbcPaginator->paginate(
+            $sbc, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
         $sfw = $em->getRepository('AppBundle:Property')->getPropertiesByStreet('Spring Flower Way', 'Residential');
-        return $this->render('homeowners/index.html.twig', array(
-            'bmproperty'     => $bmd,
-            'sbproperty'    => $sbc,
-            'sfproperty'   => $sfw,
+        $sfwPaginator  = $this->get('knp_paginator');
+        $sfwPagination = $sfwPaginator->paginate(
+            $sfw, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
+        return $this->render('property/indexPropertyPublic.html.twig', array(
+            'bmproperty'     => $bmdPagination,
+            'sbproperty'    => $sbcPagination,
+            'sfproperty'   => $sfwPagination,
         ));
     }
     
@@ -174,7 +296,7 @@ class PropertyController extends Controller
     public function showPropertyAdminAction($id){
         $em = $this->getDoctrine()->getManager();
         $property   = $em->getRepository('AppBundle:Property')->find($id);
-        $homeowners = $property->getUser(); //this is a collection, but does it get current users assigned to the property, or all of them, past and present?
+        $homeowners = $property->getUsers(); //this is a collection, but does it get current users assigned to the property, or all of them, past and present?
         
         //  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
         $pictures = new ArrayCollection();
@@ -308,100 +430,111 @@ class PropertyController extends Controller
 //        $property = $em->getRepository('AppBundle:Property')->getUsersProperty($homeowner);
         
         $property   = $em->getRepository('AppBundle:Property')->find($id);
-        $homeowners = $property->getUser(); //this is a collection
+//        $homeowners = $property->getUser(); //this is a collection
+        $comps = $em->getRepository('AppBundle:Comps')->getLast();
+        $settings = $em->getRepository('AppBundle:Settings')->find(1);
+        $schoolDistricts = $em->getRepository('AppBundle:SchoolDistrict')->findAll();
+        $exteriorImprovements = $em->getRepository('AppBundle:Improvements')->getExteriorImprovements($property);
+        $interiorImprovements = $em->getRepository('AppBundle:Improvements')->getInteriorImprovements($property);
         
 //  Spouse: IF the homeowner(s) has a dependent designated as a SPOUSE and the spouse is not a co-homeowner, then list the spouse separately  
         
-        $testAr = array();
-        $pictures = new ArrayCollection();
-        $spouses = new ArrayCollection();
-        $dependents = new ArrayCollection();
-        $children = new ArrayCollection();
-        $pets = new ArrayCollection();
-        $vhcls = new ArrayCollection();
+//        $testAr = array();
+//        $pictures = new ArrayCollection();
+//        $spouses = new ArrayCollection();
+//        $dependents = new ArrayCollection();
+//        $children = new ArrayCollection();
+//        $pets = new ArrayCollection();
+//        $vhcls = new ArrayCollection();
         
-        $testAr['props'][] = $property;
-
-        foreach ($property->getPhotos() as $photo){
-            $pictures[] = $photo;
-        }
+//        $testAr['props'][] = $property;
+//
+//        foreach ($property->getPhotos() as $photo){
+//            $pictures[] = $photo;
+//        }
         
-        //OWNERS
-        foreach($homeowners as $homeowner){
-            $testAr['homeowners'][] = $homeowner;
-            $photos = $homeowner->getPhotos();
-            foreach ($photos as $photo){
-                $pictures[] = $photo;
-            }
-        }   
+//        //OWNERS
+//        foreach($homeowners as $homeowner){
+//            $testAr['homeowners'][] = $homeowner;
+//            $photos = $homeowner->getPhotos();
+//            foreach ($photos as $photo){
+//                $pictures[] = $photo;
+//            }
+//        }   
         
-        //SPOUSE & DEPENDENTS
-        foreach($homeowners as $homeowner){
-            if(!empty($homeowner->getDependents()) ){
-                $dependents = $homeowner->getDependents();
-                //foreach dependent check to see if it is a spouse
-                foreach($dependents as $dependent){
-                    $photos = $dependent->getPhotos();
-                    foreach ($photos as $photo){
-                        $pictures[] = $photo;
-                    }
-                    //SPOUSE
-                    if($dependent->getSpouse() == 1){
-                        $spouses[] = $dependent;
-                        $testAr['spouse'][] = $dependent;
-                    }
-                    //CHILDREN
-                    else{
-                        $children[] = $dependent;
-                        $testAr['kids'][] = $dependent;
-                    }
-                }
-            }
-        }
-        $kids = $em->getRepository('AppBundle:Dependents')->removeDupes($children);    
-        //PETS
-        foreach($homeowners as $homeowner){
-            if(!empty($homeowner->getPets())){
-                
-                foreach($homeowner->getPets() as $animal){
-                    $photos = $animal->getPhotos();
-                    foreach ($photos as $photo){
-                        $pictures[] = $photo;
-                    }
-                    $pets[] = $animal;
-                    $testAr['pets'][] = $animal;
-                }
-            }
-        }        
-        $animals = $em->getRepository('AppBundle:Pets')->removeDupes($pets);
+//        //SPOUSE & DEPENDENTS
+//        foreach($homeowners as $homeowner){
+//            if(!empty($homeowner->getDependents()) ){
+//                $dependents = $homeowner->getDependents();
+//                //foreach dependent check to see if it is a spouse
+//                foreach($dependents as $dependent){
+//                    $photos = $dependent->getPhotos();
+//                    foreach ($photos as $photo){
+//                        $pictures[] = $photo;
+//                    }
+//                    //SPOUSE
+//                    if($dependent->getSpouse() == 1){
+//                        $spouses[] = $dependent;
+//                        $testAr['spouse'][] = $dependent;
+//                    }
+//                    //CHILDREN
+//                    else{
+//                        $children[] = $dependent;
+//                        $testAr['kids'][] = $dependent;
+//                    }
+//                }
+//            }
+//        }
+//        $kids = $em->getRepository('AppBundle:Dependents')->removeDupes($children);    
+//        //PETS
+//        foreach($homeowners as $homeowner){
+//            if(!empty($homeowner->getPets())){
+//                
+//                foreach($homeowner->getPets() as $animal){
+//                    $photos = $animal->getPhotos();
+//                    foreach ($photos as $photo){
+//                        $pictures[] = $photo;
+//                    }
+//                    $pets[] = $animal;
+//                    $testAr['pets'][] = $animal;
+//                }
+//            }
+//        }        
+//        $animals = $em->getRepository('AppBundle:Pets')->removeDupes($pets);
         
-        //VEHICLES
-        foreach($homeowners as $homeowner){
-            if(!empty($homeowner->getVehicles())){
-                foreach($homeowner->getVehicles() as $car){
-                    $photos = $car->getPhotos();
-                    foreach ($photos as $photo){
-                        $pictures[] = $photo;
-                    }
-                    $vhcls[] = $car;
-                    $testAr['cars'][] = $car;
-                }
-            }
-        }    
-        $cars = $em->getRepository('AppBundle:Vehicles')->removeDupes($vhcls);
+//        //VEHICLES
+//        foreach($homeowners as $homeowner){
+//            if(!empty($homeowner->getVehicles())){
+//                foreach($homeowner->getVehicles() as $car){
+//                    $photos = $car->getPhotos();
+//                    foreach ($photos as $photo){
+//                        $pictures[] = $photo;
+//                    }
+//                    $vhcls[] = $car;
+//                    $testAr['cars'][] = $car;
+//                }
+//            }
+//        }    
+//        $cars = $em->getRepository('AppBundle:Vehicles')->removeDupes($vhcls);
         
 //        $testAr = array(1,2,3,4,5,6,7,8,9,10,11,12);
         
         return $this->render('property/showPropertyPublic.html.twig', array(
             'property'   =>  $property,
-            'homeowners' =>  $homeowners,
-            'spouses'    =>  $spouses,
-            'dependents' =>  $kids,
-            'vehicles'   =>  $cars,
-            'pets'       =>  $animals,
-            'testAr'     => $testAr,
-            'pics'      => $pictures,
+//            'homeowners' =>  $homeowners, //should be able to get rid of this one when done
+//            'spouses'    =>  $spouses,
+//            'dependents' =>  $kids,
+//            'vehicles'   =>  $cars,
+//            'pets'       =>  $animals,
+//            'testAr'     => $testAr,
+//            'pics'      =>  $pictures,
+            'comps'     =>  $comps,
+            'settings'  =>  $settings,
+            'schoolDistricts'   => $schoolDistricts,
+            'exteriorImprovements' =>  $exteriorImprovements,
+            'interiorImprovements' => $interiorImprovements
+                
         ));
     }
     
-}
+}   

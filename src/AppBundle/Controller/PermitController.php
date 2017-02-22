@@ -31,35 +31,50 @@ class PermitController extends Controller {
      *     }
      * )
      */  
-    public function indexPermitProtectedAction(){    
+    public function indexPermitProtectedAction(Request $request){    
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        $source = new Entity('AppBundle:Permit');
-        $source->manipulateRow(function ($permit) {
-            $url = $this->generateUrl('showPermitProtected', array('id' =>   $permit->getField('id')));
-            
-            if ($permit->getField('type')) {
-                $permit->setField('type', "<a href='".$url."'>".$permit->getField('type')."</a>" );
-            }
-
-            return $permit;
-        });
-        // Get a Grid instance
-        $grid = $this->get('grid');
-        // create a column
-        $MyColumn = new BooleanColumn(array('id' => 'pending', 'title' => 'Pending', 'size' => '54', 'filterable' => true, 'sortable' => true));
-        // add this column to the 3rd position
-        $grid->addColumn($MyColumn, 4);
-        // Attach the source to the grid
-        $grid->setSource($source);
-        $grid->hideColumns(array('id', 'description', 'location', 'drawings', 'assoc_name', 'decision_date', 'decided_by'));
-        // Set the limits
-        $grid->setLimits(array(5, 10, 15));
-        // Set the default limit
-        $grid->setDefaultLimit(5);
-        // Return the response of the grid to the template
-        return $grid->getGridResponse('permits/indexPermitProtected.html.twig');
+        
+        $em = $this->getDoctrine()->getManager();       
+        $permits = $em->getRepository('AppBundle:Permit')->findAll();
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $permits, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
+        return $this->render('permits/indexPermitProtected.html.twig', array(
+            'permits'     => $pagination,
+        ));
+        
+//        $source = new Entity('AppBundle:Permit');
+//        $source->manipulateRow(function ($permit) {
+//            $url = $this->generateUrl('showPermitProtected', array('id' =>   $permit->getField('id')));
+//            
+//            if ($permit->getField('type')) {
+//                $permit->setField('type', "<a href='".$url."'>".$permit->getField('type')."</a>" );
+//            }
+//
+//            return $permit;
+//        });
+//        // Get a Grid instance
+//        $grid = $this->get('grid');
+//        // create a column
+//        $MyColumn = new BooleanColumn(array('id' => 'pending', 'title' => 'Pending', 'size' => '54', 'filterable' => true, 'sortable' => true));
+//        // add this column to the 3rd position
+//        $grid->addColumn($MyColumn, 4);
+//        // Attach the source to the grid
+//        $grid->setSource($source);
+//        $grid->hideColumns(array('id', 'description', 'location', 'drawings', 'assoc_name', 'decision_date', 'decided_by'));
+//        // Set the limits
+//        $grid->setLimits(array(5, 10, 15));
+//        // Set the default limit
+//        $grid->setDefaultLimit(5);
+//        // Return the response of the grid to the template
+//        return $grid->getGridResponse('permits/indexPermitProtected.html.twig');
         
     }
     

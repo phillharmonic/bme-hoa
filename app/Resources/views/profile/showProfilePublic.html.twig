@@ -1,0 +1,352 @@
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
+{% block stylesheets %} {{ parent() }} 
+    <link href="{{ asset('bundles/main/css/profile.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %} {{ parent() }} 
+    <script src="{{ asset('AdminLTE/plugins/knob/jquery.knob.js') }}" rel="stylesheet"></script>
+    <script>
+        $(function () {
+            $(".knob").knob({
+
+            });
+        });
+    </script>
+{% endblock %}
+{% block title %}Show Profile {{user.fullname}} {% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-user"> </span> Profile | <small><small>{{user.fullname|upper}} </small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <section class="content-header"><!-- content header -->
+        <h1>{{user.fullname}}</h1><!--/heading -->
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+        </h5>
+        <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
+            <li class="breadcrumb-item"><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('showPropertyPublic', {'id' : property.id } ) }}">{{user.houseNumber}} {{user.street}}</a></li>
+            <li class="breadcrumb-item active">Profile: {{user.fullname}}</li>
+        </ol><!--/breadcrumb -->
+    </section><!--/content header -->
+
+    <!-- start: Content -->
+    <div id="content" class="col-md-12">
+
+        <div class="row profile">
+            
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="col-xs-7 col-sm-12">
+                        <img class="profile-image" src="{{user.photos.1.path}}" />
+                    </div>
+                    <div class="col-xs-5 col-sm-12">
+                        <h3>General Information</h3>
+
+                        <ul class="profile-details">
+                            <li>
+                                <div><i class="fa fa-briefcase"></i> position</div>
+                                {{profile.occupation}}
+                            </li>
+                            <li>
+                                <div><i class="fa fa-building-o"></i> company</div>
+                                {{profile.employer}}
+                            </li>
+                        </ul>		
+
+                        <h3>Contact Information</h3>
+
+                        <ul class="profile-details">
+                            <li>
+                                <div><i class="fa fa-phone"></i> phone</div>
+                                {{user.homephone|phone}}
+                            </li>
+                            <li>
+                                <div><i class="fa fa-tablet"></i> mobile phone</div>
+                                {{user.cellphone|phone}}
+                            </li>
+                            <li>
+                                <div><i class="fa fa-envelope"></i> e-mail</div>
+                                {{user.email}}
+                            </li>
+                            <li>
+                                <div><i class="fa fa-map-marker"></i> address</div>
+                                <a href='{{ path('showPropertyPublic', {'id' : property.id } ) }}'>{{property.houseNumber}} {{property.street}}</a><br/>
+                                Etna, Ohio 43062<br/>
+                                United States of America
+                            </li>
+                        </ul>
+                        <h3>My Social Media</h3>
+                        <div>
+                            <a href="{{profile.facebook}}" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="{{profile.twitter}}" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="{{profile.google}}" class="btn btn-social-icon btn-google"><i class="fa fa-google-plus"></i></a>
+                            <a href="{{profile.linkedin}}" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i></a>
+                            <a class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
+                            <a class="btn btn-social-icon btn-github"><i class="fa fa-github"></i></a>
+                        </div>
+                    </div>	
+                </div><!--/row-->	
+            </div><!--/col-->
+
+            <div class="col-sm-9">
+                    <ul class="nav nav-tabs" id="myTab">
+                            <li class="active"><a href="#skills" data-toggle="tab">Summary</a></li>
+                            <li><a href="#family" data-toggle="tab">Family</a></li>
+                            <li><a href="#photos" data-toggle="tab">Photos</a></li>
+                            <li><a href="#resume" data-toggle="tab">Resume</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                            <div class="tab-pane active" id="skills">
+
+                                    <div class="row">
+
+                                            <div class="col-sm-5">
+                                                <h2>About Me</h2>
+                                                <p>{{profile.aboutMe}}</p>
+                                                <h2>Bio</h2>
+                                                <p>{{profile.bio}}</p>
+                                                <h2>Job</h2>
+                                                <p>{{profile.job}}</p>
+                                                <h2>Languages</h2>
+                                                <div class="row">
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="70%" data-width="90" data-height="90" data-fgColor="#1B4F72">
+                                                        <div class="knob-label">PHP</div>
+                                                    </div><!--/col-->
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="90%" data-width="90" data-height="90" data-fgColor="#21618C">
+                                                        <div class="knob-label">HTML5</div>
+                                                    </div><!--/col-->
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="75%" data-width="90" data-height="90" data-fgColor="#2874A6">
+                                                        <div class="knob-label">TWIG</div>
+                                                    </div><!--/col-->
+                                                </div><br/><!--/row-->
+                                                <div class="row">
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="70%" data-width="90" data-height="90" data-fgColor="#2E86C1">
+                                                        <div class="knob-label">Javascript</div>
+                                                    </div><!--/col-->
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="90%" data-width="90" data-height="90" data-fgColor="#3498DB">
+                                                        <div class="knob-label">Symfony 3</div>
+                                                    </div><!--/col-->
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="75%" data-width="90" data-height="90" data-fgColor="#5DADE2">
+                                                        <div class="knob-label">MySQL</div>
+                                                    </div><!--/col-->
+                                                </div><br/><!--/row-->
+                                                <div class="row">
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="70%" data-width="90" data-height="90" data-fgColor="#85C1E9">
+                                                        <div class="knob-label">Bootstrap</div>
+                                                    </div><!--/col-->
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="90%" data-width="90" data-height="90" data-fgColor="#AED6F1">
+                                                        <div class="knob-label">YML</div>
+                                                    </div><!--/col-->
+                                                    <div class="col-xs-4 text-center">
+                                                        <input type="text" class="knob" value="75%" data-width="90" data-height="90" data-fgColor="#D6EAF8">
+                                                        <div class="knob-label">XML</div>
+                                                    </div><!--/col-->
+                                                </div><!--/row-->
+                                            </div><!--/col-->
+
+                                            <div class="col-sm-7">
+                                                <h2>Professional Skills</h2>
+                                                <div class="content">
+                                                    <div class="row grey-scale">
+                                                        <p>Management: <code>74.1% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="74.1" aria-valuemin="0" aria-valuemax="100" style="width: 74.1%">
+                                                                <span class="sr-only">74% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Benefits: <code>80% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                                                <span class="sr-only">80% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Human Resources: <code>85% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="54.2" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+                                                                <span class="sr-only">54.2% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Physician Recruitment: <code>100% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                                <span class="sr-only">100% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Website Development: <code>93.5% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="93.5" aria-valuemin="0" aria-valuemax="100" style="width: 93.5%">
+                                                                <span class="sr-only">93.5% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Relationship Building: <code>65% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                                                <span class="sr-only">60% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                    </div><!--/row-->
+                                                </div>
+                                            
+
+
+                                            <h2>Other Skills</h2>
+                                                <div class="content">
+                                                    <div class="row grey-scale">
+                                                        <p>Computer Programming: <code>78% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="74.1" aria-valuemin="0" aria-valuemax="100" style="width: 74.1%">
+                                                                <span class="sr-only">74% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Gardening: <code>100% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                                <span class="sr-only">100% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Auto Repair: <code>80% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                                                <span class="sr-only">80% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Electrician: <code>85% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="54.2" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+                                                                <span class="sr-only">54.2% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Handyman: <code>85% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="54.2" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+                                                                <span class="sr-only">54.2% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Plumbing: <code>100% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                                <span class="sr-only">100% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Carpentry: <code>93.5% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="93.5" aria-valuemin="0" aria-valuemax="100" style="width: 93.5%">
+                                                                <span class="sr-only">93.5% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Landscaping: <code>65% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                                                <span class="sr-only">60% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                        <p>Woodworking: <code>65% </code></p>
+                                                        <div class="progress xs">
+                                                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                                                <span class="sr-only">60% Complete (success)</span>
+                                                            </div>
+                                                        </div>
+                                                    </div><!--/row-->
+                                                </div><!-- content -->
+                                                
+                                                
+                                            </div><!--/col-->
+
+                                    </div><!--/row-->		
+
+                            </div>
+                                                    
+                            <div class="tab-pane" id="family">
+                                
+                                <div class="spouse">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img class="profile-image" src="{{user.getUsersSpouse.photos.1.path}}" />
+                                        </div>
+                                        <div class="col-md-9">
+                                                Spouse: {{user.getUsersSpouse.firstname}} {{user.getUsersSpouse.mi}}. {{user.getUsersSpouse.lastname}}
+                                        </div>
+                                    </div><!-- end: row -->
+                                </div><!-- end: spouse -->
+                                {% for dep in user.getDepsLessSpouse %}
+                                    <div class="dependent_{{loop.index}}">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="profile-image" src="{{dep.photos.0.path}}" />
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Dependent {{loop.index}}: {{dep.firstname}} {{dep.lastname}}</p>
+                                                <p>Relation: {{dep.type}}</p>
+                                            </div>
+                                        </div><!-- end: row -->
+                                    </div>
+                                {% endfor %}
+                                {% for pet in user.getPets %}
+                                    <div class="pet_{{loop.index}}">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="profile-image" src="{{pet.photos.0.path}}" />
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Pet {{loop.index}}: {{pet.name}} </p>
+                                                <p>Description: {{pet.gender}} {{pet.color}} {{pet.breed}} {{pet.type}}</p>
+                                            </div>
+                                        </div><!-- end: row -->
+                                    </div>
+                                {% endfor %}
+                                {% for car in user.getVehicles %}
+                                    <div class="car_{{loop.index}}">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="profile-image" src="{{car.photos.0.path}}" />
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Vehicle: {{loop.index}} </p>
+                                                <p>Description: {{car.color}} {{car.year}} {{car.make}} {{car.model}} </p>
+                                            </div>
+                                        </div><!-- end: row -->
+                                    </div>
+                                {% endfor %}
+                                    
+                            </div><!-- end: family tab -->
+                                                    
+                            <div class="tab-pane" id="photos">
+                                <div class="row">
+                                    {% for pic in profile.photos %}
+                                        <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                            <img class="img-thumbnail" src="{{ pic.path }}" alt="Slide {{loop.index}}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                                
+                            <div class="tab-pane" id="resume">
+                                <iframe 
+                                    width="100%"
+                                    height="1000"
+                                    frameborder="0" style="border:0; margin-bottom: 50px;"
+                                    src="{{profile.resumeLink|raw}}"
+                                    allowfullscreen
+                                >
+                                </iframe>
+                            </div>
+                    </div>
+
+            </div><!--/col-->	
+
+        </div><!--/profile-->		
+
+    </div>
+    <!-- end: Content -->
+        
+{% endblock %}

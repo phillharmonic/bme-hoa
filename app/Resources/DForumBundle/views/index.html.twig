@@ -1,0 +1,84 @@
+{% extends "DForumBundle::layout.html.twig" %}
+{% block title %}Forums Index{% endblock %}
+{% block pageheader %}
+    <div style='text-align: center;'><h1><span class="glyphicon glyphicon-th">&nbsp;</span>Forums | <small><small>NEIGHBORHOOD CHAT</small></small></h1><p>Brandy Mill Estates Homeowners Association</p></div>
+{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+    <style>
+        .category {
+            padding-top:30px;
+            height:250px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="content-header"><!-- content header -->
+        <!-- heading -->
+        <h1>BME Forum</h1>
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+        </h5>
+        <!--/heading -->
+        <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
+            <li class="breadcrumb-item active">Forum</li>
+        </ol><!--/breadcrumb -->
+    </section><!--/content header -->
+
+    <section class="content"><!-- main content (includes space for sidebar) -->
+        
+    {% for category in categories if is_granted('CanReadCategory', category) %}
+        <div class="box box-default {% if loop.index != 1 %}collapsed-box{% endif %}"><!-- FULL ROW EXAMPLE -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ category.name }}</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body"><!--.box-body start -->
+      
+                    <div class="row forum-category-bloc">
+                        {% for forum in category.forums %}
+                          <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="category thumbnail text-center forum-box color-dark">
+                              <h3><a href="{{ path('discutea_forum_topic', {'slug': forum.slug}) }}" title="{{ forum.name }}">{{ forum.name }}</a></h3>
+                              <p>{{ forum.description }}</p>
+                              <hr />
+                              <div class="text-center">
+                              {% set lastTopic = dfLastTopicInForum(forum) %}
+                              {% if lastTopic is not null %}
+                                  {% if lastTopic.posts.last.poster is not null %}
+                                    {% set username = lastTopic.posts.last.poster.username %}
+                                  {% else %}
+                                    {% set username = 'discutea.forum.deleted.user'|trans %}
+                                  {% endif %}
+                                  <a class="lastComment" href="{{ dfLastPostPages(lastTopic.posts.last) }}">
+                                    <p>
+                                      {{ 'discutea.forum.lastpostby'|trans }} <strong>{{ username }}</strong>
+                                      <br />{{ lastTopic.posts.last.date|date("Y-m-d H:i:s") }}
+                                    </p>
+                                  </a>
+                              {% else %}
+                                  <p>{{ 'discutea.forum.null'|trans }}</p>
+                              {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        {% else %}
+                          <p class="text-center"><a class="btn btn-primary" href="{{ path('discutea_forum_create_forum', {'id': category.id}) }}">{{ 'discutea.forum.category.addforum'|trans }}</a></p>
+                        {% endfor %}
+                        </div>  
+                    </div>
+                </div><!--/ FULL ROW EXAMPLE -->
+            {% else %}
+              <p class="text-center"><a class="btn btn-primary" href="{{ path('discutea_forum_create_category') }}"> {{ 'discutea.forum.category.createnew'|trans }} </a></p>
+            {% endfor %}
+    </section>
+    
+    
+{% endblock %}

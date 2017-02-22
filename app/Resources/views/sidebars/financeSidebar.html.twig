@@ -1,7 +1,56 @@
-<ul class="nav nav-pills nav-stacked flex-column">
-    <li {% if app.request.attributes.get( '_route' ) == 'homeFinanceProtected' %} class="active"{% endif %} ><a href="{{path('homeFinanceProtected')}}">Finance Home</a></li>
-    <li {% if '2016' in app.request.attributes.get( '_route' ) %} class="active" {% endif %} ><a href="{{path('showSummary2016FinanceProtected')}}" >2016</a></li>
-    <li {% if app.request.attributes.get( '_route' ) starts with 'originalRestrictionsLegalPublic' %} class="active" {% endif %}><a href="{{path('originalRestrictionsLegalPublic')}}" >2015</a></li>
-    <li {% if app.request.attributes.get( '_route' ) starts with 'amendment1LegalPublic' %} class="active" {% endif %}><a href="{{path('amendment1LegalPublic')}}" >2014</a></li>
-    <li {% if app.request.attributes.get( '_route' ) starts with 'amendment2LegalPublic' %} class="active" {% endif %}><a href="{{path('amendment2LegalPublic')}}" >2013</a></li>
-</ul>
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar"  style="padding-top: 15px;">
+      
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">Finance Menu</li>
+            <li {% if app.request.attributes.get( '_route' ) == 'homeFinanceProtected' %} class="active"{% endif %} >
+                <a href="{{path('homeFinanceProtected')}}">
+                    <i class="fa fa-home"></i>
+                    <span>Finance Home</span>
+                </a>
+            </li>
+            {% for year in fiscalYears %}
+                <li {% if year in app.request.uri %} class="active" {% endif %} >
+                    <a href="{{path('indexFinanceProtected', {'year' : year } )}}" >
+                        <i class="fa fa-calendar-o"></i>
+                        <span>{{year}}</span>
+                    </a>
+                </li>
+            {% endfor %}
+            {#
+            <li {% if '2015' in app.request.attributes.get( '_route' ) %} class="active" {% endif %} >
+                <a href="{{path('showSummary2016FinanceProtected')}}" >
+                    <i class="fa fa-calendar-o"></i>
+                    <span>2015</span>
+                </a>
+            </li>
+            <li {% if '2014' in app.request.attributes.get( '_route' ) %} class="active" {% endif %} >
+                <a href="{{path('showSummary2016FinanceProtected')}}" >
+                    <i class="fa fa-calendar-o"></i>
+                    <span>2014</span>
+                </a>
+            </li>
+            <li {% if '2013' in app.request.attributes.get( '_route' ) %} class="active" {% endif %} >
+                <a href="{{path('showSummary2016FinanceProtected')}}" >
+                    <i class="fa fa-calendar-o"></i>
+                    <span>2013</span>
+                </a>
+            </li>
+            #}
+        </ul>
+    </section>
+</aside>

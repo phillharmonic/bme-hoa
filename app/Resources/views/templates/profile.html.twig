@@ -1,0 +1,270 @@
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
+{% block stylesheets %} {{ parent() }} 
+    <link href="{{ asset('bundles/main/css/profile.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}Show Property {% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-home"> </span> Property | <small><small>DETAILS </small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <section class="content-header"><!-- content header -->
+        <h1>Heading</h1><!--/heading -->
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+        </h5>
+        <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
+            <li class="breadcrumb-item"><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
+            <li class="breadcrumb-item active">address</li>
+        </ol><!--/breadcrumb -->
+    </section><!--/content header -->
+
+    <!-- start: Content -->
+    <div id="content" class="col-md-12">
+
+        <div class="row profile">
+            
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="col-xs-7 col-sm-12">
+                        <img class="profile-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTihFdSURB-5kMWpsZzBGVaPDzngLUc3t8OCD7vsqGDLQij6ZwTGA" />
+                    </div>
+                    <div class="col-xs-5 col-sm-12">
+                        <h3>General Information</h3>
+
+                        <ul class="profile-details">
+                            <li>
+                                <div><i class="fa fa-briefcase"></i> position</div>
+                                CEO
+                            </li>
+                            <li>
+                                <div><i class="fa fa-building-o"></i> company</div>
+                                creativeLabs
+                            </li>
+                        </ul>		
+
+                        <h3>Contact Information</h3>
+
+                        <ul class="profile-details">
+                            <li>
+                                <div><i class="fa fa-phone"></i> phone</div>
+                                +48 123 456 789
+                            </li>
+                            <li>
+                                <div><i class="fa fa-tablet"></i> mobile phone</div>
+                                +48 123 456 789
+                            </li>
+                            <li>
+                                <div><i class="fa fa-envelope"></i> e-mail</div>
+                                lukasz@bootstrapmaster.com
+                            </li>
+                            <li>
+                                <div><i class="fa fa-map-marker"></i> address</div>
+                                Konopnickiej 42<br/>
+                                43-190 Mikolow<br/>
+                                Slask, Poland
+                            </li>
+                        </ul>
+                    </div>	
+                </div><!--/row-->	
+            </div><!--/col-->
+
+            <div class="col-sm-9">
+
+                    <ul class="nav nav-tabs" id="myTab">
+                            <li class="active"><a href="page-profile.html#skills">Skills</a></li>
+                            <li><a href="page-profile.html#friends">Friends</a></li>
+                            <li><a href="page-profile.html#photos">Photos</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                            <div class="tab-pane active" id="skills">
+
+                                    <div class="row">
+
+                                            <div class="col-sm-5">
+                                                    <h2>About Me</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                                    <h2>Bio</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                                    <h2>Job</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                                    <h2>Languages</h2>
+                                                    <div class="row">
+                                                            <div class="col-xs-4">
+                                                                    <div style="width:100%!important" class="language-skill1" data-percent="90"><span>90</span>%</div>
+                                                <div style="text-align:center">English</div>
+                                                            </div><!--/col-->
+                                                            <div class="col-xs-4">
+                                                                    <div style="width:100%!important" class="language-skill2" data-percent="43"><span>43</span>%</div>
+                                                <div style="text-align:center">Spanish</div>
+                                                            </div><!--/col-->
+                                                            <div class="col-xs-4">
+                                                                    <div style="width:100%!important" class="language-skill3" data-percent="17"><span>17</span>%</div>
+                                                <div style="text-align:center">German</div>
+                                                            </div><!--/col-->
+                                                    </div><!--/row-->
+
+                                            </div><!--/col-->
+
+                                            <div class="col-sm-7">
+                                                    <h2>My Skills</h2>
+                                                    <ul class="skill-bar">
+                                                    <li>
+                                                    <h5>Web Design</h5>
+                                                    <div class="meter"><span class="lightBlue">40%</span></div>
+                                                    </li>
+                                                    <li>
+                                                    <h5>Wordpress</h5>
+                                                    <div class="meter"><span class="green">80%</span></div>
+                                                    </li>
+                                                    <li>
+                                                    <h5>Branding</h5>
+                                                    <div class="meter"><span class="red">100%</span></div>
+                                                    </li>
+                                                    <li>
+                                                    <h5>SEO Optmization</h5>
+                                                    <div class="meter"><span class="lightOrange">60%</span></div>
+                                                    </li>
+
+                                            </ul>
+
+                                                    <h2>Other Skills</h2>
+                                                    <canvas id="canvas" class="chartjs" height="450" width="450"></canvas>
+                                            </div><!--/col-->
+
+                                    </div><!--/row-->		
+
+                            </div>
+                            <div class="tab-pane" id="friends">
+                                    <ul class="friends-list clearfix">
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar.jpg"></a>
+                                                    <div>Lukasz Holeczek</div>
+                                                    <span class="label label-success">active</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar2.jpg"></a>
+                                                    <div>Ann Polansky</div>
+                                                    <span class="label label-warning">busy</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar3.jpg"></a>
+                                                    <div>May Lin</div>
+                                                    <span class="label label-important">blocked</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar4.jpg"></a>
+                                                    <div>Kate Norman</div>
+                                                    <span class="label label-default">offline</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar5.jpg"></a>
+                                                    <div>Mia Lopez</div>
+                                                    <span class="label label-important">blocked</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar6.jpg"></a>
+                                                    <div>Katia Svoboda</div>
+                                                    <span class="label label-success">active</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar7.jpg"></a>
+                                                    <div>Blanka Rosicky</div>
+                                                    <span class="label label-warning">busy</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar8.jpg"></a>
+                                                    <div>Garry Old</div>
+                                                    <span class="label label-success">active</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                            <li>
+                                                    <a class="avatar" href="page-profile.html#"><img src="assets/img/avatar9.jpg"></a>
+                                                    <div>Nick White</div>
+                                                    <span class="label label-success">active</span>
+                                                    <a href="page-profile.html#" class="fa fa-facebook-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-twitter-square"></a>
+                                                    <a href="page-profile.html#" class="fa fa-linkedin-square"></a>
+                                            </li>
+                                    </ul>	
+
+                            </div>
+                            <div class="tab-pane" id="photos">
+
+                                    <div class="row">
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo1.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo2.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo3.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo4.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo5.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo6.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo7.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo8.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo9.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo10.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo11.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo12.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                            <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                                    <img class="img-thumbnail" src="assets/img/gallery/photo13.jpg" alt="Sample Image">
+                                            </div>
+                                                                                                    </div>
+
+                            </div>
+                    </div>
+
+            </div><!--/col-->	
+
+        </div><!--/profile-->		
+
+    </div>
+    <!-- end: Content -->
+        
+{% endblock %}

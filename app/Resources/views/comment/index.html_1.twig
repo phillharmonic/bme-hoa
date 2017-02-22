@@ -1,0 +1,46 @@
+{% set title = blog.title %}{% set blog_id = blog.id %}
+
+<div style="
+    display: flex;
+    flex-direction: column;
+">
+    <div class="col-md-6" style="flex: 1;">   
+        {% if blog.comments is defined %}
+            {% set comment_ar = blog.comments %} 
+        {% elseif comments is defined %}
+            {% set comment_ar = comments %} 
+        {% endif %}
+        {% for comment in comment_ar %}
+            <div style="padding-bottom: 30px; padding-left: 20px;">
+                <blockquote style="border-color: #5cb85c; background-color: #edf7ed; font-size: 11pt;">
+                    <p style="margin:0;padding-bottom: 5px; ">RE: {{title}} &nbsp;<span style="font-size: .7em; color: grey;">COMMENT {{loop.index}}</span></p><hr style="border-color: darkgray; margin: 0;">
+                    <p style="padding-top: 10px;"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Posted&nbsp;|&nbsp;<time datetime="{{ comment.created|date('c') }} ">{{ comment.created|date('l, F j, Y') }} </time></p>
+                    {% if comment.comment|length > 200 %}
+                        {% set slice = comment.comment[:200] %}
+                        {% set therest = comment.comment[200:] %}
+                        <div>
+                            <small style="padding-bottom: 5px;">Excerpt: </small><p>{{ slice }}... </p>
+                            <small><a data-toggle="collapse" href="#comment_{{comment.id}}" >Full comment</a></small>
+                            </br>
+                            <p id="comment_{{comment.id}}" class="collapse" >
+                                {{ comment.comment }}
+                            </p>
+                            {#<a data-toggle="collapse" href="#more_{{loop.index}}" >...more</a>#}
+                        </div>
+                    {%else%}
+                        <p>{{ comment.comment }} </p>
+                    {%endif%}
+                    <footer style="background-color: #275927; color: white; text-align: left; height:18pt; padding: 5px; ">
+                            <div style="display: inline-block">{{ comment.user.fullname }}</div>
+                            <div style="display: inline-block; float: right;"><a href="{{path('newCommentProtected', {'id' : blog_id }) }}" style="color: white;" >Reply</a></div>
+                    </footer>
+                </blockquote>
+            </div>    
+        {% endfor %} 
+        <a href="{{path('newCommentProtected', {'id' : blog_id }) }}">- New Comment</a>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+<hr>
+
+    

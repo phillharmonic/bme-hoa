@@ -65,8 +65,12 @@
 
 {%- block form_widget_simple -%}
     <div class="form-group">
-        {%- set type = type|default('text') -%}
-        <input type="{{ type }}" class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% if type is not defined or 'file' != type %}
+            {%- set type = type|default('text') -%}
+            <input type="{{ type }}" class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% else %}
+            {{- parent() -}}
+        {% endif %}
     </div>
 {%- endblock form_widget_simple -%}
 

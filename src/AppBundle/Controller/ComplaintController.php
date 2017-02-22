@@ -10,7 +10,7 @@ use AppBundle\Entity\Complaint;
 use AppBundle\Entity\Photos;
 use AppBundle\Entity\Action;
 use AppBundle\Form\ActionComplaintForm;
-use APY\DataGridBundle\Grid\Source\Entity;
+//use APY\DataGridBundle\Grid\Source\Entity;
 
 
 class ComplaintController extends Controller{
@@ -118,33 +118,50 @@ class ComplaintController extends Controller{
     /**
      * @Route("/protected/complaint/index", name="indexComplaintProtected")
      */  
-    public function indexComplaintProtectedAction(){
+    public function indexComplaintProtectedAction(Request $request){
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        // Creates a simple grid based on your entity (ORM)
-        $source = new Entity('AppBundle:Complaint');
         
-        $source->manipulateRow(function ($complaint) {
-            $url = $this->generateUrl('showComplaintProtected', array('id' =>   $complaint->getField('id')));
-            
-            if ($complaint->getField('type')) {
-                $complaint->setField('type', "<a href='".$url."'>".$complaint->getField('type')."</a>" );
-            }
-
-            return $complaint;
-        });
+        $em = $this->getDoctrine()->getManager();       
+        $complaints = $em->getRepository('AppBundle:Complaint')->findAll();
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $complaints, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
+        return $this->render('complaint/indexComplaintProtected.html.twig', array(
+            'complaints'     => $pagination,
+        ));
+        
+        // Creates a simple grid based on your entity (ORM)
+        //$source = new Entity('AppBundle:Complaint');
+        
+//        $source->manipulateRow(function ($complaint) {
+//            $url = $this->generateUrl('showComplaintProtected', array('id' =>   $complaint->getField('id')));
+//            
+//            if ($complaint->getField('type')) {
+//                $complaint->setField('type', "<a href='".$url."'>".$complaint->getField('type')."</a>" );
+//            }
+//
+//            return $complaint;
+//        });
+        
         // Get a Grid instance
-        $grid = $this->get('grid');
+        //$grid = $this->get('grid');
         // Attach the source to the grid
-        $grid->setSource($source);
-        $grid->hideColumns(array('id', 'assigned_to', 'details', 'reg_violated', 'defendent_name', 'defendent_address', 'date_resolved', 'date_updated'));
+        //$grid->setSource($source);
+        //$grid->hideColumns(array('id', 'assigned_to', 'details', 'reg_violated', 'defendent_name', 'defendent_address', 'date_resolved', 'date_updated'));
         // Set the limits
-        $grid->setLimits(array(2, 10, 15));
+        //$grid->setLimits(array(2, 10, 15));
         // Set the default limit
-        $grid->setDefaultLimit(2);
+        //$grid->setDefaultLimit(2);
         // Return the response of the grid to the template
-        return $grid->getGridResponse('complaint/indexComplaintProtected.html.twig');
+        
+        //return $grid->getGridResponse('complaint/indexComplaintProtected.html.twig');
     }
     
     /**
@@ -198,7 +215,7 @@ class ComplaintController extends Controller{
                 $em->persist($complaint);
                 $em->flush();
                 
-                
+//                $this->container->getParameter('bmehoa.emails.contact_email')
                 $message = \Swift_Message::newInstance();
                 $message    ->setSubject('New Complaint')
                             ->setFrom($this->getUser()->getEmail())
@@ -217,7 +234,7 @@ class ComplaintController extends Controller{
                     'Your complaint was successfully submitted.  A response will be provided within 10 to 14 days.'
                 );
                 
-                return $this->redirect($this->generateUrl('exp'));
+                return $this->redirect($this->generateUrl('home'));
             }
         }
 

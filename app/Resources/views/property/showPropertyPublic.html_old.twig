@@ -1,0 +1,273 @@
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
+{% block title %}Show Property {{property.id}}{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-home"> </span> Property | <small><small>DETAILS </small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    <section class="content-header"><!-- content header -->
+        <h1>{{property.houseNumber}} {{property.street}}</h1><!--/heading -->
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+        </h5>
+        <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
+            <li class="breadcrumb-item"><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
+            <li class="breadcrumb-item active">{{property.houseNumber}} {{property.street}}</li>
+        </ol><!--/breadcrumb -->
+    </section><!--/content header -->
+
+    <section class="content"><!-- main content -->
+
+        <div class="box box-default"><!-- FULL ROW EXAMPLE -->
+            <div class="box-header with-border">
+                <h3 class="box-title">Property Summary <small> <a href="{{path('showPropertiesPublicAlt', {'id' : property.id } )}}">ALT</a></small></h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body"><!--.box-body start -->
+                <p >{{ property.blurb|raw }}</p>
+            </div><!-- /.box-body end-->
+        </div><!--/ FULL ROW EXAMPLE -->
+
+        <div class="row"><!-- Row of columns-->
+
+            <div class="col-md-6"><!-- /.col (left) -->
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Property Photos</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+                            <ol class="carousel-indicators">
+                                {% for pic in property.photos %}
+                                    <li data-target="#carousel-example-generic" data-slide-to="{{loop.index}}" class="active"></li>
+                                {% endfor %}
+                            </ol>
+                            <div class="carousel-inner">
+                                {% for pic in property.photos %}
+                                    <div {% if loop.index0 == 0 %} class="item active" {% else %} class="item" {% endif %} >
+                                        <img src="{{ pic.path }}" alt="Slide {{loop.index}}">
+                                        <div class="carousel-caption">
+                                          {{pic.description}}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                              <span class="fa fa-angle-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                              <span class="fa fa-angle-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col (left) -->
+
+            <div class="col-md-6"><!-- /col (right) -->
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Property Details</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <dl class="dl-horizontal">
+                            <dt>Type</dt><dd>{{property.type}}</dd>
+                            <dt>Lot</dt><dd>{{property.lotNumber}}</dd>
+                            <dt>Status</dt><dd>{{property.status}}</dd>
+                            <dt>Ownership</dt><dd>{{property.ownership}}</dd>
+                            <dt>Is Occupied</dt><dd>{% if property.isOccupied == 1 %}Occupied{% else %}Vacant {% endif %} </dd>
+                            <dt>Occupied By</dt><dd>{{property.occupiedBy}}</dd>
+                            <dt>Is Rental</dt><dd>{% if property.isRental == 1 %}<span class="text-red">Yes</span>{% else %}<span class="text-green">No</span>{% endif %}</dd>
+                            <dt>Color</dt><dd>{{property.color}}</dd>
+                            <dt>Date Built</dt><dd>{{property.dateBuilt|date('M j, Y')}}</dd>
+                            <dt>Auditors Pin</dt><dd><a href="{{property.auditorsPin}}" target='_blank'>Licking County Document</a></dd>
+                            <dt>Sale Price</dt><dd>${{property.lastSalePrice|number_format(2, '.', ',')}}</dd>
+                            <dt>Sale Date</dt><dd>{{property.lastSaleDate|date('M j, Y')}}</dd>
+                            <dt>Has Lien</dt><dd>{% if property.hasHoaLien == 1 %}<span class="text-red">Lien(s) Filed</span>{% else %}<span class="text-green">No Liens</span>{% endif %}</dd>
+                            <dt>In Arrears</dt><dd>{% if property.inArrears == 1 %}<span class="text-red">In Arrears</span>{% else %}<span class="text-green">Not in Arrears</span>{% endif %}</dd>
+                        </dl>
+                  </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col (right) -->
+
+        </div><!-- /.row of columns-->
+
+        <div class="row"><!-- Row of columns-->
+
+            <div class="col-md-6"><!-- /.col (left) -->
+
+                <div class="box box-default collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Mortgage Holders  <span class="badge">{{homeowners|length}}</span> </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% for owner in homeowners %}
+                            <dl class="dl-horizontal">
+                                    <dt></dt><dd>{{loop.index}}</dd>
+                                    <dt>Name</dt><dd>{{owner.honorific}} {{owner.fullname}}</dd>
+                                    <dt>Owner for:</dt><dd>{{ ('now'|date('Y') - owner.occupyDate|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - owner.occupyDate|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }} years</dd>
+                                    <dt>Profile</dt><dd><a href='#'>View</a></dd>
+                                    <dt>Photos</dt><dd><a href="#" data-toggle="modal" data-target="#ownerPhotoShow_{{loop.index}}" name="Photos"  title="Photos">Photos</a></dd>
+                            </dl>
+                            <div class="modal modal-info" id="ownerPhotoShow_{{loop.index}}" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Photos</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="box box-default">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Photos of {{owner.firstname}}</h3>
+                                                </div><!-- box header End -->
+                                                <div class="box-body"><!-- box body start -->
+                                                    <div id="owner-carousel-{{owner.firstname}}" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                        <ol class="carousel-indicators">
+                                                            {% for pic in owner.photos %}
+                                                                <li data-target="#owner-carousel-{{owner.firstname}}" data-slide-to="{{loop.index}}" class="active"></li>
+                                                            {% endfor %}
+                                                        </ol>
+                                                        <div class="carousel-inner">
+                                                            {% for pic in owner.photos %}
+                                                                <div {% if loop.index0 == 0 %} class="item active" {% else %} class="item" {% endif %} >
+                                                                    <img src="{{ pic.path }}" alt="Slide {{loop.index}}" >
+                                                                    <div class="carousel-caption">
+                                                                      {{pic.description}}
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <a class="left carousel-control" href="#owner-carousel-{{owner.firstname}}" data-slide="prev">
+                                                          <span class="fa fa-angle-left"></span>
+                                                        </a>
+                                                        <a class="right carousel-control" href="#owner-carousel-{{owner.firstname}}" data-slide="next">
+                                                          <span class="fa fa-angle-right"></span>
+                                                        </a>
+                                                    </div>
+                                                </div><!--/box body end -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline  pull-left" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div>
+                            </div>                                    
+                            
+                        {% endfor %}
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col (left) -->
+
+            <div class="col-md-6"><!-- /col (right) -->
+
+                <div class="box box-default collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Other Occupants  <span class="badge">{{dependents|length}}</span> </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% for dependent in dependents %}
+                            <dl class="dl-horizontal">
+                                <dt></dt><dd>{{loop.index}}</dd>
+                                <dt>Name</dt><dd>{{dependent.firstname}}</dd>
+                                <dt>Relation</dt><dd>{{dependent.type}}</dd>
+                                <dt>Age</dt><dd>{{ ('now'|date('Y') - dependent.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - dependent.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }}</dd>
+                                <dt>Profile</dt><dd>No Profile Available</dd>
+                                <dt>Public Photos</dt><dd><a href=''>Popup Carousel</a></dd>
+                            </dl>
+                        {% endfor %}
+                  </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col (right) -->
+
+        </div><!-- /.row of columns-->
+
+        <div class="row"><!-- Row of columns-->
+
+            <div class="col-md-6"><!-- /.col (left) -->
+                
+                <div class="box box-default collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Pets <span class="badge">2</span> </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% for owner in homeowners %}
+                            {% for pet in owner.getPets %}
+                                <dl class="dl-horizontal">
+                                    <dt>Name</dt><dd>{{pet.name}}</dd>
+                                    <dt>Gender</dt><dd>{{pet.gender}}</dd>
+                                    <dt>Type</dt><dd>{{pet.type}}</dd>
+                                    <dt>Breed</dt><dd>{{pet.breed}}</dd>
+                                    <dt>Color</dt><dd>{{pet.color}}</dd>
+                                    <dt>Pics</dt><dd><a href="">Popup Carousel</a></dd>
+                                </dl>
+                            {% endfor%}
+                        {% endfor%}
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+                
+            </div><!-- /.col (left) -->
+
+            <div class="col-md-6"><!-- /col (right) -->
+
+                <div class="box box-default collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Vehicles  <span class="badge">2</span> </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% for owner in homeowners %}
+                            {% for car in owner.getVehicles %}
+                                <dl class="dl-horizontal">
+                                    <dt>Make</dt><dd>{{car.make}}</dd>
+                                    <dt>Model</dt><dd>{{car.model}}</dd>
+                                    <dt>Year</dt><dd>{{car.year}}</dd>
+                                    <dt>Color</dt><dd>{{car.color}}</dd>
+                                    <dt>Pics</dt><dd><a href="">Popup Carousel</a></dd>
+                                </dl>
+                            {% endfor%}
+                        {% endfor%}
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col (right) -->
+
+        </div><!-- /.row of columns-->
+
+    </section><!--/main content -->
+        
+{% endblock %}

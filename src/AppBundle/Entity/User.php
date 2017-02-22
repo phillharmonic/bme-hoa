@@ -110,13 +110,19 @@ class User extends BaseUser
     protected $vacate_date;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Pets", inversedBy="user", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Property", inversedBy="users", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $properties;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pets", mappedBy="user", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $pets;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dependents", inversedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Dependents", mappedBy="user", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $dependents;
@@ -134,13 +140,13 @@ class User extends BaseUser
     protected $vehicles;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Complaint", inversedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Complaint", mappedBy="user", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $complaints;    
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", inversedBy="user", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", mappedBy="user", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $term;   
@@ -152,10 +158,15 @@ class User extends BaseUser
     
     //use this one:
     /**
-     * @ORM\ManyToOne(targetEntity="Account", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Account", inversedBy="users")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     protected $account;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Profile", mappedBy="user")
+     */
+    protected $profile;    
     
     /**
     * @ORM\Column(type="string", nullable=true)
@@ -163,8 +174,8 @@ class User extends BaseUser
     protected $employer; 
 
     /**
-    * @ORM\Column(type="string", nullable=true)
-    */
+     * @ORM\Column(type="string", nullable=true)
+     */
     protected $race;
 
     /**
@@ -311,13 +322,24 @@ class User extends BaseUser
     * @ORM\Column(type="boolean", nullable=true)
     */
     protected $linkedIn_protected;    
+    
+    /**
+    * @ORM\Column(type="boolean", nullable=true)
+    */
+    protected $primaryHouseholdContact;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contact", inversedBy="user")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $contact; 
 
     
     public function getTrusteeTitle(){
 //        $honorific = $user->getHonorific();
 //        $roles = $user->getRoles();
 //        $role = (in_array('ROLE_PRESIDENT', $roles)) ? 'President' : 'Nope';
-        return "Mr. President";
+        return "President";
     }
     
     /**
@@ -841,74 +863,6 @@ class User extends BaseUser
     }
 
     /**
-     * Add pet
-     *
-     * @param \AppBundle\Entity\Pets $pet
-     *
-     * @return User
-     */
-    public function addPet(\AppBundle\Entity\Pets $pet)
-    {
-        $this->pets[] = $pet;
-
-        return $this;
-    }
-
-    /**
-     * Remove pet
-     *
-     * @param \AppBundle\Entity\Pets $pet
-     */
-    public function removePet(\AppBundle\Entity\Pets $pet)
-    {
-        $this->pets->removeElement($pet);
-    }
-
-    /**
-     * Get pets
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPets()
-    {
-        return $this->pets;
-    }
-
-    /**
-     * Add dependent
-     *
-     * @param \AppBundle\Entity\Dependents $dependent
-     *
-     * @return User
-     */
-    public function addDependent(\AppBundle\Entity\Dependents $dependent)
-    {
-        $this->dependents[] = $dependent;
-
-        return $this;
-    }
-
-    /**
-     * Remove dependent
-     *
-     * @param \AppBundle\Entity\Dependents $dependent
-     */
-    public function removeDependent(\AppBundle\Entity\Dependents $dependent)
-    {
-        $this->dependents->removeElement($dependent);
-    }
-
-    /**
-     * Get dependents
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDependents()
-    {
-        return $this->dependents;
-    }
-
-    /**
      * Add photo
      *
      * @param \AppBundle\Entity\Photos $photo
@@ -974,40 +928,6 @@ class User extends BaseUser
     public function getVehicles()
     {
         return $this->vehicles;
-    }
-
-    /**
-     * Add complaint
-     *
-     * @param \AppBundle\Entity\Complaint $complaint
-     *
-     * @return User
-     */
-    public function addComplaint(\AppBundle\Entity\Complaint $complaint)
-    {
-        $this->complaints[] = $complaint;
-
-        return $this;
-    }
-
-    /**
-     * Remove complaint
-     *
-     * @param \AppBundle\Entity\Complaint $complaint
-     */
-    public function removeComplaint(\AppBundle\Entity\Complaint $complaint)
-    {
-        $this->complaints->removeElement($complaint);
-    }
-
-    /**
-     * Get complaints
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComplaints()
-    {
-        return $this->complaints;
     }
 
     /**
@@ -1810,5 +1730,261 @@ class User extends BaseUser
     public function getLinkedInProtected()
     {
         return $this->linkedIn_protected;
+    }
+
+    /**
+     * Add complaint
+     *
+     * @param \AppBundle\Entity\Complaint $complaint
+     *
+     * @return User
+     */
+    public function addComplaint(\AppBundle\Entity\Complaint $complaint)
+    {
+        $this->complaints[] = $complaint;
+
+        return $this;
+    }
+
+    /**
+     * Remove complaint
+     *
+     * @param \AppBundle\Entity\Complaint $complaint
+     */
+    public function removeComplaint(\AppBundle\Entity\Complaint $complaint)
+    {
+        $this->complaints->removeElement($complaint);
+    }
+
+    /**
+     * Get complaints
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComplaints()
+    {
+        return $this->complaints;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param \AppBundle\Entity\Profile $profile
+     *
+     * @return User
+     */
+    public function setProfile(\AppBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \AppBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Set primaryHouseholdContact
+     *
+     * @param boolean $primaryHouseholdContact
+     *
+     * @return User
+     */
+    public function setPrimaryHouseholdContact($primaryHouseholdContact)
+    {
+        $this->primaryHouseholdContact = $primaryHouseholdContact;
+
+        return $this;
+    }
+
+    /**
+     * Get primaryHouseholdContact
+     *
+     * @return boolean
+     */
+    public function getPrimaryHouseholdContact()
+    {
+        return $this->primaryHouseholdContact;
+    }
+
+    /**
+     * Set lienHolder
+     *
+     * @param \AppBundle\Entity\User $lienHolder
+     *
+     * @return User
+     */
+    public function setLienHolder(\AppBundle\Entity\User $lienHolder = null)
+    {
+        $this->lienHolder = $lienHolder;
+
+        return $this;
+    }
+
+    /**
+     * Get lienHolder
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getLienHolder()
+    {
+        return $this->lienHolder;
+    }
+
+    /**
+     * Set contact
+     *
+     * @param \AppBundle\Entity\Contact $contact
+     *
+     * @return User
+     */
+    public function setContact(\AppBundle\Entity\Contact $contact = null)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \AppBundle\Entity\Contact
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * Add property
+     *
+     * @param \AppBundle\Entity\Property $properties
+     *
+     * @return User
+     */
+    public function addProperties(\AppBundle\Entity\Property $properties)
+    {
+        $this->properties[] = $properties;
+
+        return $this;
+    }
+
+    /**
+     * Remove property
+     *
+     * @param \AppBundle\Entity\Property $properties
+     */
+    public function removeProperties(\AppBundle\Entity\Property $properties)
+    {
+        $this->properties->removeElement($properties);
+    }
+
+    /**
+     * Get property
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * Add property
+     *
+     * @param \AppBundle\Entity\Property $property
+     *
+     * @return User
+     */
+    public function addProperty(\AppBundle\Entity\Property $property)
+    {
+        $this->properties[] = $property;
+
+        return $this;
+    }
+
+    /**
+     * Remove property
+     *
+     * @param \AppBundle\Entity\Property $property
+     */
+    public function removeProperty(\AppBundle\Entity\Property $property)
+    {
+        $this->properties->removeElement($property);
+    }
+
+    /**
+     * Add pet
+     *
+     * @param \AppBundle\Entity\Pets $pet
+     *
+     * @return User
+     */
+    public function addPet(\AppBundle\Entity\Pets $pet)
+    {
+        $this->pets[] = $pet;
+
+        return $this;
+    }
+
+    /**
+     * Remove pet
+     *
+     * @param \AppBundle\Entity\Pets $pet
+     */
+    public function removePet(\AppBundle\Entity\Pets $pet)
+    {
+        $this->pets->removeElement($pet);
+    }
+
+    /**
+     * Get pets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPets()
+    {
+        return $this->pets;
+    }
+
+    /**
+     * Add dependent
+     *
+     * @param \AppBundle\Entity\Dependents $dependent
+     *
+     * @return User
+     */
+    public function addDependent(\AppBundle\Entity\Dependents $dependent)
+    {
+        $this->dependents[] = $dependent;
+
+        return $this;
+    }
+
+    /**
+     * Remove dependent
+     *
+     * @param \AppBundle\Entity\Dependents $dependent
+     */
+    public function removeDependent(\AppBundle\Entity\Dependents $dependent)
+    {
+        $this->dependents->removeElement($dependent);
+    }
+
+    /**
+     * Get dependents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDependents()
+    {
+        return $this->dependents;
     }
 }

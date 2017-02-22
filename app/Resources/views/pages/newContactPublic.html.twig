@@ -1,30 +1,49 @@
-{% extends 'alt-layout.html.twig' %}
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
 {% block title %}Contact Us{% endblock %}
 {% block pageheader %}<h1><span class="glyphicon glyphicon-envelope">&nbsp;</span>Contact Us | <small><small>SEND EMAIL TO BOARD & MGT CO.</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-    {# BREADCRUMB #}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
-        <li class="breadcrumb-item">Contact Us</li>
-    </ol>
-    {# PAGE SUMMARY #}        
-    <h3><small>NEW</small></h3>
-    <hr style="padding: 0; margin:0;">
-    <h2>EMAIL</h2>    
-    {# SECURITY #}  
-    <h5>
-        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
-    </h5>
-    <hr>
-    {# CONTENT #}
-    {% form_theme form 'form/bootstrap_3_layout.html.twig' %}
-    <div class="col-md-10">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}   
-        </br></br> 
-    </div>
     
+    <div class="row"  style="background-color: white;">
+    
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6" style="background-color: #eeeeee;">
+            <section class="content-header"><!-- content header -->
+                <h1>Contact Us</h1><!--/heading -->
+                <h5>
+                    <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+                    <span style="">Public</span><span class="glyphicon glyphicon-remove" style="padding:0 5px;"></span>
+                    <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+                </h5>
+                <ol class="breadcrumb"><!--breadcrumb -->
+                    <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+                    <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+                    <li class="breadcrumb-item">Email</li>
+                </ol><!--/breadcrumb -->
+            </section><!--/content header -->
+
+            <section class="content"><!-- main content -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">New</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}   
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </section>
+                    
+        </div>
+
+        <div class="col-md-3"></div>
+    
+    </div>
+        
 {% endblock %}

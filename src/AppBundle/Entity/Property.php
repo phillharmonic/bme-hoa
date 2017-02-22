@@ -53,6 +53,21 @@ class Property
     protected $status; //Owner Resides, For Sale, Rental, Bank Owned, HUD Owned, Builder Owned, In Foreclosure
     
     /**
+     * @ORM\Column(type="string", length=25)
+     */
+    protected $ownership;    
+    
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    protected $occupiedBy;       
+    
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $isRental;
+    
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $color;
@@ -73,13 +88,19 @@ class Property
     protected $street;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="user", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="properties", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
-    protected $user;
+    protected $users;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", inversedBy="photos", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Account", inversedBy="property", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $accounts;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Photos", inversedBy="property", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $photos;
@@ -99,6 +120,36 @@ class Property
      */    
     protected $last_sale_date;
     
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lotSize;
+    
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $sqFeet;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $numBedrooms;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $numBathrooms;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Improvements", mappedBy="property", cascade={"persist"}))
+     */
+    protected $improvements;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Contact", mappedBy="property", cascade={"persist"}))
+     */
+    protected $contacts;
+    
     
     /**
      * Constructor
@@ -107,6 +158,8 @@ class Property
     {
         $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->improvements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->accounts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getOccupationStatusString(){
@@ -135,15 +188,14 @@ class Property
     
     public function getCurrentOwners(){
         //need to make sure it's the curent residents
-        $users = $this->getUser();
-        $newerCriteria = Criteria::create()->where(Criteria::expr()->gt("vacateDate", null));
-        $users->matching($newerCriteria);
-        
-        $num = count($users);
+        $users = $this->getUsers();        
+        $num = count($users); //return $num;
         $names = "";
         if($num > 1){
             foreach($users as $owner){
-                $names .= $owner->getFullname().' and ';
+                if(is_null($owner->getVacateDate())){
+                    $names .= $owner->getFullname().' and ';
+                }
             }
             $names =  rtrim($names, " and");
         }
@@ -460,13 +512,13 @@ class Property
     /**
      * Add user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \AppBundle\Entity\User $users
      *
      * @return Property
      */
-    public function addUser(\AppBundle\Entity\User $user)
+    public function addUsers(\AppBundle\Entity\User $users)
     {
-        $this->user[] = $user;
+        $this->users[] = $users;
 
         return $this;
     }
@@ -474,11 +526,11 @@ class Property
     /**
      * Remove user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \AppBundle\Entity\User $users
      */
-    public function removeUser(\AppBundle\Entity\User $user)
+    public function removeUsers(\AppBundle\Entity\User $users)
     {
-        $this->user->removeElement($user);
+        $this->user->removeElement($users);
     }
 
     /**
@@ -486,9 +538,9 @@ class Property
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUser()
+    public function getUsers()
     {
-        return $this->user;
+        return $this->users;
     }
 
     /**
@@ -561,5 +613,325 @@ class Property
     public function getLastSaleDate()
     {
         return $this->last_sale_date;
+    }
+
+    /**
+     * Set ownership
+     *
+     * @param string $ownership
+     *
+     * @return Property
+     */
+    public function setOwnership($ownership)
+    {
+        $this->ownership = $ownership;
+
+        return $this;
+    }
+
+    /**
+     * Get ownership
+     *
+     * @return string
+     */
+    public function getOwnership()
+    {
+        return $this->ownership;
+    }
+
+    /**
+     * Set occupiedBy
+     *
+     * @param string $occupiedBy
+     *
+     * @return Property
+     */
+    public function setOccupiedBy($occupiedBy)
+    {
+        $this->occupiedBy = $occupiedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get occupiedBy
+     *
+     * @return string
+     */
+    public function getOccupiedBy()
+    {
+        return $this->occupiedBy;
+    }
+
+    /**
+     * Set isRental
+     *
+     * @param boolean $isRental
+     *
+     * @return Property
+     */
+    public function setIsRental($isRental)
+    {
+        $this->isRental = $isRental;
+
+        return $this;
+    }
+
+    /**
+     * Get isRental
+     *
+     * @return boolean
+     */
+    public function getIsRental()
+    {
+        return $this->isRental;
+    }
+
+    /**
+     * Set lotSize
+     *
+     * @param string $lotSize
+     *
+     * @return Property
+     */
+    public function setLotSize($lotSize)
+    {
+        $this->lotSize = $lotSize;
+
+        return $this;
+    }
+
+    /**
+     * Get lotSize
+     *
+     * @return string
+     */
+    public function getLotSize()
+    {
+        return $this->lotSize;
+    }
+
+    /**
+     * Set sqFeet
+     *
+     * @param string $sqFeet
+     *
+     * @return Property
+     */
+    public function setSqFeet($sqFeet)
+    {
+        $this->sqFeet = $sqFeet;
+
+        return $this;
+    }
+
+    /**
+     * Get sqFeet
+     *
+     * @return string
+     */
+    public function getSqFeet()
+    {
+        return $this->sqFeet;
+    }
+
+    /**
+     * Set numBedrooms
+     *
+     * @param integer $numBedrooms
+     *
+     * @return Property
+     */
+    public function setNumBedrooms($numBedrooms)
+    {
+        $this->numBedrooms = $numBedrooms;
+
+        return $this;
+    }
+
+    /**
+     * Get numBedrooms
+     *
+     * @return integer
+     */
+    public function getNumBedrooms()
+    {
+        return $this->numBedrooms;
+    }
+
+    /**
+     * Set numBathrooms
+     *
+     * @param integer $numBathrooms
+     *
+     * @return Property
+     */
+    public function setNumBathrooms($numBathrooms)
+    {
+        $this->numBathrooms = $numBathrooms;
+
+        return $this;
+    }
+
+    /**
+     * Get numBathrooms
+     *
+     * @return integer
+     */
+    public function getNumBathrooms()
+    {
+        return $this->numBathrooms;
+    }
+
+    /**
+     * Add improvement
+     *
+     * @param \AppBundle\Entity\Improvements $improvement
+     *
+     * @return Property
+     */
+    public function addImprovement(\AppBundle\Entity\Improvements $improvement)
+    {
+        $this->improvements[] = $improvement;
+
+        return $this;
+    }
+
+    /**
+     * Remove improvement
+     *
+     * @param \AppBundle\Entity\Improvements $improvement
+     */
+    public function removeImprovement(\AppBundle\Entity\Improvements $improvement)
+    {
+        $this->improvements->removeElement($improvement);
+    }
+
+    /**
+     * Get improvements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImprovements()
+    {
+        return $this->improvements;
+    }
+
+    /**
+     * Add lienHolder
+     *
+     * @param \AppBundle\Entity\LienHolder $lienHolder
+     *
+     * @return Property
+     */
+    public function addLienHolder(\AppBundle\Entity\LienHolder $lienHolder)
+    {
+        $this->lienHolders[] = $lienHolder;
+
+        return $this;
+    }
+
+    /**
+     * Remove lienHolder
+     *
+     * @param \AppBundle\Entity\LienHolder $lienHolder
+     */
+    public function removeLienHolder(\AppBundle\Entity\LienHolder $lienHolder)
+    {
+        $this->lienHolders->removeElement($lienHolder);
+    }
+
+    /**
+     * Get lienHolders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLienHolders()
+    {
+        return $this->lienHolders;
+    }
+
+    /**
+     * Add contact
+     *
+     * @param \AppBundle\Entity\LienHolder $contact
+     *
+     * @return Property
+     */
+    public function addContact(\AppBundle\Entity\LienHolder $contact)
+    {
+        $this->contacts[] = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Remove contact
+     *
+     * @param \AppBundle\Entity\LienHolder $contact
+     */
+    public function removeContact(\AppBundle\Entity\LienHolder $contact)
+    {
+        $this->contacts->removeElement($contact);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Property
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    
+
+    /**
+     * Set accounts
+     *
+     * @param \AppBundle\Entity\Account $accounts
+     *
+     * @return Property
+     */
+    public function setAccounts(\AppBundle\Entity\Account $accounts = null)
+    {
+        $this->accounts = $accounts;
+
+        return $this;
+    }
+
+    /**
+     * Get accounts
+     *
+     * @return \AppBundle\Entity\Account
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
     }
 }

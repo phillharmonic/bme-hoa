@@ -1,0 +1,338 @@
+{% extends 'AdminLTE_CustomSidebar.html.twig' %}
+{% block title %}{{currentYear}} Q-{{quarter}} A/R{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Finances | <small><small>{{currentYear}} Quarter {{quarter}}</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    {% block sidebar %} {{ include('sidebars/financeSidebar.html.twig', {'fiscalYears' : fiscalYears } ) }}{% endblock %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+            <h1>Accounts Receivable <small>{{currentYear}} Q{{quarter}} </small></h1><!--/heading -->
+            <h5>
+                <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+                <span style="">Public</span><span class="glyphicon glyphicon-remove" style="padding:0 5px;"></span>
+                <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+            </h5>
+            <ol class="breadcrumb"><!--breadcrumb -->
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Finances Home</li>
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp; <a href="{{ path('indexFinanceProtected', {'year' : currentYear } ) }}">{{currentYear}}</a></li>
+                <li class="breadcrumb-item active"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;{{currentYear}} Q{{quarter}} Accounts Receivable</li>
+            </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content (includes space for sidebar) -->    
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <!-- Custom Tabs -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li><a href="{{path('indexFinanceProtected', {'year' : currentYear } )}}">{{currentYear}}</a></li>
+                            <li><a href="{{path('incomeStatementFinanceProtected', {'year' : currentYear, 'quarter' : quarter } )}}">Q{{quarter}} Inc Stmt</a></li>
+                            <li><a href="{{path('balanceSheetFinanceProtected', {'year' : currentYear, 'quarter' : quarter } )}}">Q{{quarter}} Bal Sheet</a></li>
+                            <li class="active"><a href="#">Q{{quarter}} A/R</a></li>
+                            <li><a href="{{path('accountsPayableFinanceProtected', {'year' : currentYear, 'quarter' : quarter } )}}">Q{{quarter}} A/P</a></li>
+                        </ul>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+
+                                <style>
+                                    #accounts-payable .dbul{border-bottom: double 6px; }
+                                    #accounts-payable .bul{border-bottom: solid 3px; }
+                                    #accounts-payable table{border-collapse: separate; border-spacing: 10px 5px; }
+                                    #accounts-payable .money{float: left}
+                                    #accounts-payable tr{text-align: right}
+                                    #accounts-payable th{text-align: right;}
+                                    #accounts-payable .tab-1{padding-left: 2em;  text-align: left;}
+                                    #accounts-payable .tab-2{padding-left: 4em;  text-align: left;}
+                                    #accounts-payable .tab-3{padding-left: 6em;  text-align: left;}
+                                    #accounts-payable th:nth-child(1) { width: 25%; text-align: left; }  
+                                    #accounts-payable th:nth-child(2) { width: 12.5%; }  
+                                    #accounts-payable th:nth-child(3) { width: 12.5%; }  
+                                    #accounts-payable th:nth-child(4) { width: 12.5%; }  
+                                    #accounts-payable th:nth-child(5) { width: 12.5%; }  
+                                    #accounts-payable th:nth-child(6) { width: 12.5%; }  
+                                    #accounts-payable th:nth-child(7) { width: 12.5%; }  
+                                    #accounts-payable td:nth-child(1) { width: 25%; text-align: left; }  
+                                    #accounts-payable td:nth-child(2) { width: 12.5%; }  
+                                    #accounts-payable td:nth-child(3) { width: 12.5%; }  
+                                    #accounts-payable td:nth-child(4) { width: 12.5%; }  
+                                    #accounts-payable td:nth-child(5) { width: 12.5%; }  
+                                    #accounts-payable td:nth-child(6) { width: 12.5%; }  
+                                    #accounts-payable td:nth-child(7) { width: 12.5%; }  
+                                </style>
+
+                                <div class="table-responsive">
+                                    <h4>For the Period Ended April 30, {{currentYear}}</h4></br>
+                                    <table id="accounts-payable" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>1-30</th>
+                                                <th>31-60</th>
+                                                <th>61-90</th>
+                                                <th>> 90</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="tab-1">100CL - (CLOSED) Flaig/Moore</td>
+                                                <td>-288.39</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>-288.39</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1">114SF - HUD</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>-275.00</td>
+                                                <td>-275.00</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1">108SB - (t)HOLLIS</td>
+                                                <td>-20.00</td>
+                                                <td>-20.00</td>
+                                                <td>-80.00</td>
+                                                <td>-110.00</td>
+                                                <td>-230.00</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1">103SB - (r)American Homes for Rent</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>-24.00</td>
+                                                <td>-24.00</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1">147SF - Abbington</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>-6.72</td>
+                                                <td>-6.72</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1">158SF - Moss/Neville</td>
+                                                <td>0.00</td>
+                                                <td>-1.61</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>-1.61</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PREPAID FEES</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>-825.72</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>112BM - Ryder</strong></td>
+                                                <td>0.08</td>
+                                                <td>0.07</td>
+                                                <td>13.39</td>
+                                                <td>0.00</td>
+                                                <td>13.54</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>101LH - Dials/Worthman</strong></td>
+                                                <td>0.16</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>0.00</td>
+                                                <td>25.50</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>187BM - (pp)Warr/Phadphom</strong></td>
+                                                <td>0.64</td>
+                                                <td>0.86</td>
+                                                <td>2.16</td>
+                                                <td>75.00</td>
+                                                <td>78.66</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>112LH - Byrd</strong></td>
+                                                <td>11.86</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>129.91</td>
+                                                <td>167.11</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>188SF - Pischl</strong></td>
+                                                <td>275.00</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>275.00</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>147BM - Hughett</strong></td>
+                                                <td>17.61</td>
+                                                <td>0.00</td>
+                                                <td>0.00</td>
+                                                <td>275.00</td>
+                                                <td>292.61</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>155BM - (pp)Jones</strong></td>
+                                                <td>12.33</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>255.00</td>
+                                                <td>292.67</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>120BM - Lara</strong></td>
+                                                <td>12.50</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>275.00</td>
+                                                <td>312.84</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>168SF - Upperman</strong></td>
+                                                <td>12.50</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>275.00</td>
+                                                <td>312.84</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>183BM - Van Horn</strong></td>
+                                                <td>12.50</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>275.00</td>
+                                                <td>312.84</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>111LH - Middlebrooks</strong></td>
+                                                <td>12.50</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>275.00</td>
+                                                <td>312.84</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>164SF - (pp)Carter</strong></td>
+                                                <td>12.50</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>275.00</td>
+                                                <td>312.84</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>135SF - (l)Scott</strong></td>
+                                                <td>22.50</td>
+                                                <td>11.95</td>
+                                                <td>13.39</td>
+                                                <td>275.00</td>
+                                                <td>322.84</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>126SF - (pp)Lanier</strong></td>
+                                                <td>2.85</td>
+                                                <td>12.89</td>
+                                                <td>4.07</td>
+                                                <td>354.32</td>
+                                                <td>374.13</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>144BM - DiSario</strong></td>
+                                                <td>33.09</td>
+                                                <td>32.11</td>
+                                                <td>33.21</td>
+                                                <td>489.19</td>
+                                                <td>587.60</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>122SF - (f-assoc/l)Williams</strong></td>
+                                                <td>39.85</td>
+                                                <td>136.87</td>
+                                                <td>39.89</td>
+                                                <td>1,199.77</td>
+                                                <td>1,416.38</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>159BM - (l/cl)Williams</strong></td>
+                                                <td>40.57</td>
+                                                <td>107.72</td>
+                                                <td>41.05</td>
+                                                <td>1,394.48</td>
+                                                <td>1,583.82</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tab-1"><strong>115LH - (cc/f-bnk/l)Deem</strong></td>
+                                                <td>43.66</td>
+                                                <td>40.65</td>
+                                                <td>45.17</td>
+                                                <td>1,755.53</td>
+                                                <td>1,885.01</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>OUTSTANDING FEES DUE:</strong></td>
+                                                <td class="bul"></td>
+                                                <td class="bul"></td>
+                                                <td class="bul"></td>
+                                                <td class="bul"></td>
+                                                <td class="bul"></td>
+                                                <td class="bul"><STRONG>8,879.07</STRONG></td>
+                                            </tr>
+                                            <tr>
+                                                <td>TOTAL</td>
+                                                <td class="dbul"></td>
+                                                <td class="dbul"></td>
+                                                <td class="dbul"></td>
+                                                <td class="dbul"></td>
+                                                <td class="dbul"></td>
+                                                <td class="dbul">8,053.35</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}    

@@ -64,19 +64,19 @@ class MinutesController extends Controller{
     
     /**
      * @Route(
-     *      "/protected/minutes/home", 
-     *      name="homeMinutesProtected",
+     *      "/protected/minutes/index", 
+     *      name="indexMinutesProtected",
      *      requirements={
      *      }
      * )
      */       
-    public function homeMinutesProtectedAction()
+    public function indexMinutesProtectedAction()
     {        
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
         
-        return $this->render('minutes/homeMinutesProtected.html.twig', array(
+        return $this->render('minutes/indexMinutesProtected.html.twig', array(
         ));
     }
     

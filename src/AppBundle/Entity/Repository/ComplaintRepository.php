@@ -10,6 +10,12 @@ use Doctrine\Common\Collections\Criteria;
  */
 class ComplaintRepository extends \Doctrine\ORM\EntityRepository
 {
+    //override default findall and sort by timestamp:
+    public function findAll()
+    {
+        return $this->findBy(array(), array('timestamp' => 'DESC'));
+    }
+    
     public function getAll(){
         $qb = $this->createQueryBuilder('c')->select('c');
 //        $qb->getQuery()->getResult();

@@ -25,7 +25,7 @@ class Term
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", mappedBy="term", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="term", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     protected $user;  

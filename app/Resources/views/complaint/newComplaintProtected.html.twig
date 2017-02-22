@@ -1,47 +1,68 @@
-{% extends 'alt-layout.html.twig' %}
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
 {% block title %}Log Complaint{% endblock %}
 {% block pageheader %}<h1><span class="glyphicon glyphicon-envelope">&nbsp;</span>Log Complaint | <small><small>BECOME AN INFORMANT</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-    {# BREADCRUMB #}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
-        <li class="breadcrumb-item">Log Complaint</li>
-    </ol>
-    {# PAGE SUMMARY #}        
-    <h3><small>NEW</small></h3>
-    <hr style="padding: 0; margin:0;">
-    <h2>Complaint</h2>    
-    {# SECURITY #}  
-    <h5>
-        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-remove" style="padding:0 5px;"></span>
-        <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
-    </h5>
-    <hr>
-    {# CONTENT #}
-    {% form_theme form 'form/bootstrap_3_layout.html.twig' %}
-    <div class="col-md-10">
-        {{ form_start(form) }}
-        {{ form_row(form.type) }}
-        {{ form_row(form.defendent_name) }}
-        {{ form_row(form.defendent_address) }}
-        {{ form_row(form.reg_violated) }}
-        {{ form_row(form.details) }}
-        <h3><small>Add Picture</small></h3>
-        <hr>
-        <div style="padding-left: 10%" class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
-            {% for picture in form.photos %}
-                <section>
-                    {{ form_row(picture.name) }}
-                    {{ form_row(picture.description) }}
-                    {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
-                    {{ form_row(picture.public) }}
-                </section>
-            {% endfor %}
+    
+    <div class="row"  style="background-color: white;">
+    
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6" style="background-color: #eeeeee;">
+            <section class="content-header"><!-- content header -->
+                <h1>Complaint</h1><!--/heading -->
+                <h5>
+                    <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+                    <span style="">Public</span><span class="glyphicon glyphicon-remove" style="padding:0 5px;"></span>
+                    <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+                </h5>
+                <ol class="breadcrumb"><!--breadcrumb -->
+                    <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+                    <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+                    <li class="breadcrumb-item">Log Complaint</li>
+                </ol><!--/breadcrumb -->
+            </section><!--/content header -->
+
+            <section class="content"><!-- main content -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">New</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% form_theme form 'form/AdminLTE_layout.html.twig' %}
+                        <div class="col-md-12">
+                            {{ form_start(form) }}
+                            {{ form_row(form.type) }}
+                            {{ form_row(form.defendent_name) }}
+                            {{ form_row(form.defendent_address) }}
+                            {{ form_row(form.reg_violated) }}
+                            {{ form_row(form.details) }}
+                            <h3><small>Add Picture</small></h3>
+                            <hr>
+                            <div style="padding-left: 10%" class="images" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+                                {% for picture in form.photos %}
+                                    <section>
+                                        {{ form_row(picture.name) }}
+                                        {{ form_row(picture.description) }}
+                                        {{ form_row(picture.path, { 'attr': {'class': 'img_path'} }) }}
+                                        {{ form_row(picture.public) }}
+                                    </section>
+                                {% endfor %}
+                            </div>
+                            {{ form_row(form.save) }}
+                            {{ form_end(form) }}   
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </section>
+                            
         </div>
-        {{ form_row(form.save) }}
-        {{ form_end(form) }}   
-        </br></br> 
+
+        <div class="col-md-3"></div>
+        
     </div>
-{% endblock %}
+{% endblock %}    
+    

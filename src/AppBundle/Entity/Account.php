@@ -37,10 +37,10 @@ class Account
     private $users;   
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Property", inversedBy="property", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Property", mappedBy="accounts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */    
-    private $property; //a property can have many accounts (previous owners), but an account can have only one property; One-To-Many, Unidirectional with Join Table
+    private $property; //a property can have many accounts (previous owners), but an account can have only one property; One-To-Many, Bidirectional with Join Table
     
     /**
      * @ORM\Column(type="integer")
@@ -124,41 +124,6 @@ class Account
     public function getBalance()
     {
         return $this->balance;
-    }
-
-
-    /**
-     * Add property
-     *
-     * @param \AppBundle\Entity\Property $property
-     *
-     * @return Account
-     */
-    public function addProperty(\AppBundle\Entity\Property $property)
-    {
-        $this->property[] = $property;
-
-        return $this;
-    }
-
-    /**
-     * Remove property
-     *
-     * @param \AppBundle\Entity\Property $property
-     */
-    public function removeProperty(\AppBundle\Entity\Property $property)
-    {
-        $this->property->removeElement($property);
-    }
-
-    /**
-     * Get property
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProperty()
-    {
-        return $this->property;
     }
 
     /**
@@ -301,5 +266,39 @@ class Account
                 $this->id.'-'.
                 $date->format('d').
                 $date->format('H');
+    }
+
+    /**
+     * Add property
+     *
+     * @param \AppBundle\Entity\Property $property
+     *
+     * @return Account
+     */
+    public function addProperty(\AppBundle\Entity\Property $property)
+    {
+        $this->property[] = $property;
+
+        return $this;
+    }
+
+    /**
+     * Remove property
+     *
+     * @param \AppBundle\Entity\Property $property
+     */
+    public function removeProperty(\AppBundle\Entity\Property $property)
+    {
+        $this->property->removeElement($property);
+    }
+
+    /**
+     * Get property
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProperty()
+    {
+        return $this->property;
     }
 }

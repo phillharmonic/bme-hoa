@@ -1,14 +1,94 @@
-<ul class="nav nav-pills nav-stacked flex-column">
-    <li {% if app.request.attributes.get( '_route' ) == 'homeLegalPublic' %} class="active"{% endif %}><a title="Fully Amended" href="{{path('homeLegalPublic')}}">Legal Home</a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'currentRestrictionsLegalPublic' %} class="active"{% endif %}><a href="{{path('currentRestrictionsLegalPublic')}}" > Current Restrictions </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'originalRestrictionsLegalPublic' %} class="active"{% endif %}><a href="{{path('originalRestrictionsLegalPublic')}}" > Original Restrictions </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'amendment1LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment1LegalPublic')}}" > Amendment 1 </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'amendment2LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment2LegalPublic')}}" > Amendment 2 </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'amendment3LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment3LegalPublic')}}" > Amendment 3 </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'amendment4LegalPublic' %} class="active"{% endif %}><a href="{{path('amendment4LegalPublic')}}" > Amendment 4 </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'regulationsLegalPublic' %} class="active"{% endif %}><a href="{{path('regulationsLegalPublic')}}" > Regulations </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'managementLegalPublic' %} class="active"{% endif %}><a href="{{path('managementLegalPublic')}}" > Managment </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'lawncareLegalPublic' %} class="active"{% endif %}><a href="{{path('lawncareLegalPublic')}}" target="_blank" > Lawncare </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'landscapingLegalPublic' %} class="active"{% endif %}><a href="{{path('landscapingLegalPublic')}}" target="_blank" > Landscaping </a></li>
-    <li {% if app.request.attributes.get( '_route' ) == 'pondsLegalPublic' %} class="active" {% else %}{% endif %}><a href="{{path('pondsLegalPublic')}}" target="_blank" > Ponds </a></li>
-</ul>
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar"  style="padding-top: 15px;">
+      
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">Legal Menu</li>
+            <li {% if route == 'homeLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a href="{{path('homeLegalPublic')}}">
+                    <i class="fa fa-home"></i>
+                    <span>Legal Home</span>
+                </a>
+            </li>
+            <li {% if route == 'currentRestrictionsLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Current Restrictions" href="{{path('currentRestrictionsLegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Current Restrictions</span>
+                </a>
+            </li>
+            <li {% if route == 'originalRestrictionsLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Original Restrictions" href="{{path('originalRestrictionsLegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Original Restrictions</span>
+                </a>
+            </li>
+            <li {% if route == 'amendment1LegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Amendment 1" href="{{path('amendment1LegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Amendment 1</span>
+                </a>
+            </li>
+            <li {% if route == 'amendment2LegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Amendment 2" href="{{path('amendment2LegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Amendment 2</span>
+                </a>
+            </li>
+            <li {% if route == 'amendment3LegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Amendment 3" href="{{path('amendment3LegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Amendment 3</span>
+                </a>
+            </li>
+            <li {% if route == 'amendment4LegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Amendment 4" href="{{path('amendment4LegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Amendment 4</span>
+                </a>
+            </li>
+            <li {% if route == 'regulationsLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Regulations" href="{{path('regulationsLegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Regulations</span>
+                </a>
+            </li>
+            <li {% if route == 'managementLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Managment" href="{{path('managementLegalPublic')}}">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Managment</span>
+                </a>
+            </li>
+            <li {% if route == 'lawncareLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Lawncare" href="{{path('lawncareLegalPublic')}}" target="_blank">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Lawncare</span>
+                </a>
+            </li>
+            <li {% if route == 'landscapingLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Landscaping" href="{{path('landscapingLegalPublic')}}" target="_blank">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Landscaping</span>
+                </a>
+            </li>
+            <li {% if route == 'pondsLegalPublic' %}class="treeview active" {% else %}class="treeview"{% endif %}>
+                <a title="Ponds" href="{{path('pondsLegalPublic')}}" target="_blank">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Ponds</span>
+                </a>
+            </li>
+        </ul>
+    </section>            
+</aside>

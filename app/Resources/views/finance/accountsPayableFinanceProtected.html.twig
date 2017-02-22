@@ -1,0 +1,104 @@
+{% extends 'AdminLTE_CustomSidebar.html.twig' %}
+{% block title %}{{currentYear}} Q-{{quarter}} A/P{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-file">&nbsp;</span>Finances | <small><small>{{currentYear}} Quarter {{quarter}}</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block content %}
+    
+    {% block sidebar %} {{ include('sidebars/financeSidebar.html.twig', {'fiscalYears' : fiscalYears } ) }}{% endblock %}
+    
+    <div class="content-wrapper"><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+            <h1>Accounts Payable <small>{{currentYear}} Q{{quarter}} </small></h1><!--/heading -->
+            <h5>
+                <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+                <span style="">Public</span><span class="glyphicon glyphicon-remove" style="padding:0 5px;"></span>
+                <span style="">Protected</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
+            </h5>
+            <ol class="breadcrumb"><!--breadcrumb -->
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Finances Home</li>
+                <li class="breadcrumb-item"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp; <a href="{{ path('indexFinanceProtected', {'year' : currentYear } ) }}">{{currentYear}}</a></li>
+                <li class="breadcrumb-item active"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;{{currentYear}} Q{{quarter}} Accounts Payable</li>
+            </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+        <section class="content"><!-- main content (includes space for sidebar) -->    
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <!-- Custom Tabs -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li><a href="{{path('indexFinanceProtected', {'year' : currentYear } )}}">{{currentYear}}</a></li>
+                            <li><a href="{{path('incomeStatementFinanceProtected', {'year' : currentYear, 'quarter' : quarter } )}}">Q{{quarter}} Inc Stmt</a></li>
+                            <li><a href="{{path('balanceSheetFinanceProtected', {'year' : currentYear, 'quarter' : quarter } )}}">Q{{quarter}} Bal Sheet</a></li>
+                            <li><a href="{{path('accountsReceivableFinanceProtected', {'year' : currentYear, 'quarter' : quarter } )}}">Q{{quarter}} A/R</a></li>
+                            <li class="active"><a href="#">Q{{quarter}} A/P</a></li>
+                        </ul>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                
+                                <style>
+                                    #accounts-receivable .dbul{border-bottom: double 6px; }
+                                    #accounts-receivable .bul{border-bottom: solid 1px; }
+                                    #accounts-receivable table{border-collapse: separate; border-spacing: 10px 5px; }
+                                    #accounts-receivable .money{float: left}
+                                    #accounts-receivable tr{text-align: right}
+                                    #accounts-receivable th{text-align: right;}
+                                    #accounts-receivable .tab-1{padding-left: 2em;  text-align: left;}
+                                    #accounts-receivable .tab-2{padding-left: 4em;  text-align: left;}
+                                    #accounts-receivable .tab-3{padding-left: 6em;  text-align: left;}
+                                    #accounts-receivable th:nth-child(1) { width: 25%; text-align: left; }  
+                                    #accounts-receivable th:nth-child(2) { width: 12.5%; }  
+                                    #accounts-receivable th:nth-child(3) { width: 12.5%; }  
+                                    #accounts-receivable th:nth-child(4) { width: 12.5%; }  
+                                    #accounts-receivable th:nth-child(5) { width: 12.5%; }  
+                                    #accounts-receivable th:nth-child(6) { width: 12.5%; }  
+                                    #accounts-receivable th:nth-child(7) { width: 12.5%; }  
+                                    #accounts-receivable td:nth-child(1) { width: 25%; text-align: left; }  
+                                    #accounts-receivable td:nth-child(2) { width: 12.5%; }  
+                                    #accounts-receivable td:nth-child(3) { width: 12.5%; }  
+                                    #accounts-receivable td:nth-child(4) { width: 12.5%; }  
+                                    #accounts-receivable td:nth-child(5) { width: 12.5%; }  
+                                    #accounts-receivable td:nth-child(6) { width: 12.5%; }  
+                                    #accounts-receivable td:nth-child(7) { width: 12.5%; }  
+                                </style>        
+
+                                <div class="table-responsive">
+                                    <h4>For the Period Ended April 30, {{currentYear}}</h4></br>
+                                    <table id="accounts-receivable" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="bul">Current</th>
+                                                <th class="bul">1-30</th>
+                                                <th class="bul">31-60</th>
+                                                <th class="bul">61-90</th>
+                                                <th class="bul">> 90</th>
+                                                <th class="bul">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>TOTAL</td>
+                                                <td class="dbul">0.00</td>
+                                                <td class="dbul">0.00</td>
+                                                <td class="dbul">0.00</td>
+                                                <td class="dbul">0.00</td>
+                                                <td class="dbul">0.00</td>
+                                                <td class="dbul">0.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}    
+        

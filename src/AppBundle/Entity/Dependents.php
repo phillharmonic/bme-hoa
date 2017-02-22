@@ -67,7 +67,7 @@ class Dependents
     protected $photos;
     
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="dependents")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -316,6 +316,7 @@ class Dependents
         return $this->photos;
     }
 
+
     /**
      * Set user
      *
@@ -339,5 +340,4 @@ class Dependents
     {
         return $this->user;
     }
-    
 }

@@ -23,7 +23,7 @@ class Action
     protected $id;
     
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Complaint", mappedBy="action")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Complaint", mappedBy="actions")
      */
     protected $complaints;    
     

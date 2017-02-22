@@ -1,4 +1,4 @@
-{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
@@ -6,35 +6,58 @@
 {% block title %}Board of Directors{% endblock %}
 {% block pageheader %}<h1><span class="glyphicon glyphicon-th-large">&nbsp;</span>Board | <small><small>YOUR CURRENT BOARD OF DIRECTORS</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-    {# BREADCRUMB #}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Board of Directors </li>
-        <li class="breadcrumb-item active">Current Board</li>
-    </ol>
-    {# PAGE SUMMARY #}        
-    <h3><small>SHOW</small></h3>
-    <hr style="padding: 0; margin:0;">
-    <h2>Board of Directors</h2>    
-    <h5>
-        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
-    </h5>
-    <hr>
+        
+    <section class="content-header"><!-- content header -->
+        <h1>BME Board of Directors</h1><!--/heading -->
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+        </h5>
+        <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Board of Directors </li>
+            <li class="breadcrumb-item active">Current Board</li>
+        </ol><!--/breadcrumb -->
+    </section><!--/content header -->
+
+    <section class="content"><!-- main content -->
     
     {% if bods is not null %}  {# collection of users entity #}
         {%  for bod in bods %}  {# a user entity #}
-            {%  for term in bod.term %}{# each term entity #}<h5 style='padding-top: 20px; margin-bottom: -15px;'><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;TERM [{{ loop.index }}]&nbsp;: {{ term.startDate|date('F Y') }} to PRESENT</h5><hr>
-                <h3>{{term.trusteePosition}}&nbsp;&nbsp;|&nbsp;&nbsp;{%endfor%}
-                {{ bod.honorific }} {{ bod.firstname }} {{bod.mi}}. {{bod.lastname}}</h3>
-            {%  for term in bod.term %}{% for pic in term.photos|slice(0, 1) %}<img class="img-responsive" src='{{ pic.path }}' style="max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;" />{% endfor %}
-                    <h4 style=" padding-top: 8px;">Introduction</h4>
-                    <p style="white-space: pre-wrap;">{{ term.aboutme }}</p>
-            <p>Sincerely,</p>
-            <p style='font-family: Yellowtail; font-size: 16pt; '>{%endfor%}{{ bod.firstname }} {{bod.mi}} {{bod.lastname}}</p>
-            <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:{{bod.email}}">email</a>  </p>
-            <hr>
+            
+            <div class="box box-default"><!-- FULL ROW EXAMPLE -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ bod.honorific }} {{ bod.firstname }} {{bod.mi}}. {{bod.lastname}}<small></small></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body"><!--.box-body start -->
+                    {# each term entity #}
+                    {%  for term in bod.term %}
+                        <h4><strong>{{term.trusteePosition}}</strong></h4>
+                        <h5>
+                            {{ term.startDate|date('F Y') }} to PRESENT
+                        </h5>
+                        {% for pic in term.photos|slice(0, 1) %}
+                            <img class="img-responsive" src='{{ pic.path }}' style="max-width:350px; float: left; margin-right: 10px; margin-bottom: 0px; margin-top: 8px;" />
+                        {% endfor %}
+                            <h4 style=" padding-top: 8px;">Introduction</h4>
+                            <p style="white-space: pre-wrap;">{{ term.aboutme }}</p>
+                        <p>Sincerely,</p>
+                        <p style='font-family: Yellowtail; font-size: 16pt; '>
+                            {{ bod.firstname }} {{bod.mi}} {{bod.lastname}}</p>
+                        <p>If you have questions or concerns, please feel free to contact directly: <a style='padding-left: 5px' href="mailto:{{bod.email}}">email</a>  </p>
+                    {%endfor%}
+                </div><!-- /.box-body end-->
+                    
+            </div><!--/ FULL ROW EXAMPLE -->
+            
         {% endfor %}
     {% endif %}
+
+    </section>
+        
 {% endblock %}

@@ -274,7 +274,7 @@ class AccountController extends Controller
         
         // Residents of Property by Property Association & Vacate Date (not by user defined address):
         $currentOwners = new ArrayCollection();
-        foreach($property->getUser() as $owner){
+        foreach($property->getUsers() as $owner){
             if($owner->getVacateDate() == null){
                 $currentOwners[] = $owner;
             }

@@ -1,38 +1,61 @@
-{% extends 'alt-layout-no-sidebar.html.twig' %}
+{% extends 'AdminLTE_CustomSidebar.html.twig' %}
 {% block title %}BME HOA Homepage{% endblock %}
-{% block pageheader %}<h1><span class="glyphicon glyphicon-home">&nbsp;</span>Homepage | <small><small>THE LATEST NEWS & ANNOUNCEMENTS</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-home">&nbsp;</span>Homepage | <small><small>NEWS</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
     
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</li>
-    </ol>
-    <h3><small>INDEX</small></h3>
-    <hr style="padding: 0; margin:0;">
-    <h2>Annoucements</h2>    
-    <h5>
-        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
-    </h5>
-    <hr>
+    <!-- Left side column. contains the logo and sidebar -->
+    {% block sidebar %} {% include('sidebars/blogSidebar.html.twig') %} {% endblock %}
+    <!-- /.sidebar -->
     
-    {% for blog in pagination %}
-        <h3><small><a href="{{path('showBlogPublic', {'id': blog.id} )}}">POST {{blog.id}}</a> of {{ pagination.getTotalItemCount }}</small></h3>
-        <h3>{{ blog.title|upper }}</h3>    
-        <h5><span class="glyphicon glyphicon-time"></span> Posted by {{blog.user.fullname}}, <time datetime="{{ blog.created|date('c') }}">{{ blog.created|date('l, F j, Y') }}</time>.</h5>
-        <h5>
-            {% set tags = blog.tags|split(', ') %}
-            {% for tag in tags %}
-                <span class="label label-{{ random(['danger', 'warning', 'success', 'default', 'primary', 'info']) }}">{{tag}}</span> 
-            {% endfor %}
-        </h5><br >
-        <p style="white-space: pre-wrap; min-height: 150px; display: inline-block;"><img src="{{ asset(['../web/uploads/blog_images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" style="max-width: 250px; float: left; padding-right: 10px; padding-bottom: 5px;" />{%if blog.blog|length > 2000 %}{{ blog.blog|slice(0, 2000) }}... <a href="{{path('showBlogPublic', {'id': blog.id} )}}" >see more</a>{% else %}{{ blog.blog }}{% endif %}</p>
-        <a href='{{path('newCommentProtected', {'id': blog.id} )}}'>- Add Comment</a>
-        <section>
-            <h3><span class="badge" style="margin-top: -5px;">{{blog.comments|length}}</span>&nbsp;&nbsp;Comments&nbsp;&nbsp;<small><a data-toggle="collapse" href="#blog_{{blog.id}}">view</a></small></h3><hr>
-            <section id="blog_{{blog.id}}" class="collapse" >{% include 'comment/index.html.twig' with { 'comments': blog } %}</section>
-        </section>
-    {% endfor %}
-    <div class="navigation">{{ knp_pagination_render(pagination) }}</div>
-    
+    <div class="content-wrapper" style='background-color: #eeeeee;'><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1><!-- heading -->
+            News & Announcements
+            <h5>
+                <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+                <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+            </h5>
+          </h1><!--/heading -->
+          <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</a></li>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
+
+            <section class="content"><!-- main content (includes space for sidebar) -->
+                
+                {% for blog in pagination %}
+                    <div class="box box-default"><!-- FULL ROW EXAMPLE -->
+                        <div class="box-header with-border">
+                            <h5>{{ blog.title|upper }} <small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> {{ blog.created|date('M j, Y') }}</small></h5>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body"><!--.box-body start -->
+                            <h5>
+                                {% set tags = blog.tags|split(', ') %}
+                                {% for tag in tags %}
+                                    <span class="label label-{{ random(['danger', 'warning', 'success', 'default', 'primary', 'info']) }}">{{tag}}</span> 
+                                {% endfor %}
+                            </h5>
+                            <h5>Posted by {{blog.user.fullname}} - BME {{app.user.trusteeTitle }}</h5>
+                            <br/>
+                            <p style="white-space: pre-wrap; min-height: 150px; display: inline-block;"><img src="{{ asset(['../web/uploads/blog_images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" style="max-width: 250px; float: left; padding-right: 10px; padding-bottom: 5px;" />{%if blog.blog|length > 2000 %}{{ blog.blog|slice(0, 2000) }}... <a href="{{path('showBlogPublic', {'id': blog.id} )}}" >see more</a>{% else %}{{ blog.blog }}{% endif %}</p>
+                        </div><!-- /.box-body end-->
+                        <div class="box-footer">
+                            <a data-toggle="collapse" href="#blog_{{blog.id}}">Comments</a>
+                            <span class="badge" style="margin-top: -5px;">{{blog.comments|length}}</span>
+                            <span class="pull-right"><a href="{{path('newCommentProtected', {'id': blog.id} )}}"><i class="fa fa-plus"></i> Add Comment</a></span>
+                            <section id="blog_{{blog.id}}" class="collapse" >
+                                {% include 'comment/index.html.twig' with { 'comments': blog } %}
+                            </section>
+                        </div>
+                    </div><!--/ FULL ROW EXAMPLE -->
+                {% endfor %}
+                <div class="navigation">{{ knp_pagination_render(pagination) }}</div>
+            </section>
+    </div>
 
 {% endblock %}

@@ -5,66 +5,80 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class LegalController extends Controller
 {
-    
+    public function legalSubmenuAction($route){
+        return $this->render('sidebars/legalSidebar.html.twig', array(
+            'route' => $route,
+        ));
+    }
     /**
      * @Route("/public/legal/original-restrictions", name="originalRestrictionsLegalPublic")
      */
-    public function originalRestrictionsLegalPublicAction(){
-        return $this->render('legal/originalRestrictionsLegalPublic.html.twig');
+    public function originalRestrictionsLegalPublicAction(Request $request){
+        return $this->render('legal/originalRestrictionsLegalPublic.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }
     
     /**
      * @Route("/public/legal/regulations", name="regulationsLegalPublic")
      */
-    public function regulationsLegalPublicAction(){
-        return $this->render('legal/regulationsLegalPublic.html.twig');
+    public function regulationsLegalPublicAction(Request $request){
+        return $this->render('legal/regulationsLegalPublic.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }
     
     /**
      * @Route("/public/legal/landscape", name="landscapingLegalPublic")
      */
-    public function landscapingLegalPublicAction(){
+    public function landscapingLegalPublicAction(Request $request){
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/WINNSCAPES.pdf');
     }
     
     /**
      * @Route("/public/legal/lawncare", name="lawncareLegalPublic")
      */
-    public function lawncareLegalPublicAction(){
+    public function lawncareLegalPublicAction(Request $request){
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/CREATIVE.pdf');
     }
     
     /**
      * @Route("/public/legal/ponds", name="pondsLegalPublic")
      */
-    public function pondsLegalPublicAction(){
+    public function pondsLegalPublicAction(Request $request){
         return new BinaryFileResponse('bundles/main/files/brandymilllegaldocscontracts/AUQADOC.pdf');
     }
     
     /**
      * @Route("/public/legal/management", name="managementLegalPublic")
      */
-    public function managementLegalPublicAction(){
-        return $this->render('legal/managementLegalPublic.html.twig');
+    public function managementLegalPublicAction(Request $request){
+        return $this->render('legal/managementLegalPublic.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }
     
     /**
      * @Route("/public/legal/current-restrictions", name="currentRestrictionsLegalPublic")
      */
-    public function currentRestrictionsLegalPublicAction(){
-        return $this->render('legal/currentRestrictionsLegalPublic.html.twig');
+    public function currentRestrictionsLegalPublicAction(Request $request){
+        return $this->render('legal/currentRestrictionsLegalPublic.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }
     
     /**
      * @Route("/public/legal/home", name="homeLegalPublic")
      */
-    public function homeLegalPublicAction()
+    public function homeLegalPublicAction(Request $request)
     {
         return $this->render('legal/homeLegalPublic.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
         ));        
     }
     
@@ -72,28 +86,37 @@ class LegalController extends Controller
     /**
      * @Route("/public/legal/amendment-1", name="amendment1LegalPublic")
      */
-    public function amendment1LegalPublicAction(){
-        return $this->render('legal/amendment-1.html.twig');
+    public function amendment1LegalPublicAction(Request $request){
+        return $this->render('legal/amendment-1.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }    
     /**
      * @Route("/public/legal/amendment-2", name="amendment2LegalPublic")
      */    
-    public function amendment2LegalPublicAction(){
-        return $this->render('legal/amendment-2.html.twig');
+    public function amendment2LegalPublicAction(Request $request){
+        return $this->render('legal/amendment-2.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }
     
     /**
      * @Route("/public/legal/amendment-3", name="amendment3LegalPublic")
      */
-    public function amendment3LegalPublicAction(){
-        return $this->render('legal/amendment-3.html.twig');
+    public function amendment3LegalPublicAction(Request $request){
+        return $this->render('legal/amendment-3.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));        
     }
     
     /**
      * @Route("/public/legal/amendment-4", name="amendment4LegalPublic")
      */    
-    public function amendment4LegalPublicAction(){
-        return $this->render('legal/amendment-4.html.twig');
+    public function amendment4LegalPublicAction(Request $request){
+        
+        return $this->render('legal/amendment-4.html.twig', array(
+            'route'    =>  $request->attributes->get('_route'),
+        ));
     }    
     
     /**

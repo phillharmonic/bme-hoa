@@ -1,5 +1,22 @@
 {% set title = blog.title %}{% set blog_id = blog.id %}
+{% if blog.comments is defined %}
+    {% set comment_ar = blog.comments %} 
+{% elseif comments is defined %}
+    {% set comment_ar = comments %} 
+{% endif %}
+<br/><br/>
+{% for comment in comment_ar %}
+    <blockquote class="blockquote">
+        <p class="mb-0" style="font-size: 10pt; color: grey;">{{ comment.comment }}</p>
+        <footer class="blockquote-footer bg-gray-light">{{ comment.created|date('M j, Y') }}: <cite> {{ comment.user.fullname }}</cite>
+            <span class="pull-right"><i class="fa fa-reply"></i> <a href="">Reply</a></reply></span>
+        </footer>
+    </blockquote>
+{% endfor %}
 
+<button type="button" class="btn btn-default btn-block btn-sm bg-blue-gradient"><span style="color: white;">Load More</span></button>
+
+{#
 <div style="
     display: flex;
     flex-direction: column;
@@ -25,7 +42,7 @@
                             <p id="comment_{{comment.id}}" class="collapse" >
                                 {{ comment.comment }}
                             </p>
-                            {#<a data-toggle="collapse" href="#more_{{loop.index}}" >...more</a>#}
+                            {#<a data-toggle="collapse" href="#more_{{loop.index}}" >...more</a>
                         </div>
                     {%else%}
                         <p>{{ comment.comment }} </p>
@@ -41,6 +58,6 @@
     </div>
     <div class="col-md-6"></div>
 </div>
-<hr>
+<hr>#}
 
     

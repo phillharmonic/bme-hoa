@@ -1,49 +1,68 @@
-{% extends 'alt-layout.html.twig' %}
+{% extends 'AdminLTE_CustomSidebar.html.twig' %}
 {% block title %}Legal Home{% endblock %}
 {% block pageheader %}<h1><span class="glyphicon glyphicon-home">&nbsp;</span>Legal | <small><small>HOMEPAGE</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-    {% block breadcrumb %} 
-        <ol class="breadcrumb">
+    
+    {% block sidebar %} 
+        {{ render(controller('AppBundle:Legal:legalSubmenu', 
+            { 
+                'route': route
+            })) 
+        }} 
+    {% endblock %}
+    
+    <div class="content-wrapper" style='background-color: #eeeeee;'><!-- content wrapper; contains page content -->
+
+        <section class="content-header"><!-- content header -->
+          <h1>Legal</h1><!--/heading -->
+            <h5>
+                <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+                <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+            </h5>
+          <ol class="breadcrumb"><!--breadcrumb -->
             <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
             <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; HOA </li>
             <li class="breadcrumb-item active"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Legal Home</li>
-        </ol>
-    {% endblock %}   
-    <div class="col-md-3">{% block sidebar %} {{ include('sidebars/legalSidebar.html.twig') }} {% endblock %}</div>
-    <div class="col-md-9">
-    {# PAGE SUMMARY #}        
-        <div class="col-md-6" style="padding: 0; margin: 0;"><h3><small>HOME</small></h3></div>
-        <div class="col-md-6" style="text-align: right"></div>
-        </br></br><hr>
-        <h2>Legal</h2>    
-        {# SECURITY #}  
-        <h5>
-            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
-        </h5>
-        <hr>
-        {# CONTENT #}
-        <p>Brandy Mill Homeowner's Association's legal affairs are currently represented by:</p>
-        <BLOCKQUOTE><strong> Reese, Pyle, Drake & Meyer, PLL</strong>
-            </br>36 N 2nd St, P.O. 919
-            </br>Newark, OH 43058-0919
-            </br>Phone: (740) 345-3431
-            </br><a href='http://www.rpdm.com/' target='blank'>www.rpdm.com</a>
-        </BLOCKQUOTE>
+          </ol><!--/breadcrumb -->
+        </section><!--/content header -->
 
-        <p style='padding-left: 10px;'>The menu to the left has links to all the Association's legal documents.  We consult with the
-        attorneys for the following reasons:
-        <p>
+            <section class="content"><!-- main content (includes space for sidebar) -->
 
-        <ul style='padding-left: 50px;'>
-            <li>Interpretation of the CCRs</li>
-            <li>Amendment of the CCRs</li>
-            <li>Filing legal documents with the various courts, such as</li>
-            <ul style='padding-left: 12px;'>
-                <li>Liens</li>
-                <li>Foreclosures</li>
-            </ul>
-            <li>Collections</li>
-        </ul>
-    </div>
+                <div class="box box-default"><!-- FULL ROW EXAMPLE -->
+                    <div class="box-header with-border">
+                        <h5>HOME</h5>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body"><!--.box-body start -->
+
+                        {# CONTENT #}
+                        <p>Brandy Mill Homeowner's Association's legal affairs are currently represented by:</p>
+                        <BLOCKQUOTE><strong> Reese, Pyle, Drake & Meyer, PLL</strong>
+                            </br>36 N 2nd St, P.O. 919
+                            </br>Newark, OH 43058-0919
+                            </br>Phone: (740) 345-3431
+                            </br><a href='http://www.rpdm.com/' target='blank'>www.rpdm.com</a>
+                        </BLOCKQUOTE>
+
+                        <p style='padding-left: 10px;'>The menu to the left has links to all the Association's legal documents.  We consult with the
+                        attorneys for the following reasons:
+                        <p>
+
+                        <ul style='padding-left: 50px;'>
+                            <li>Interpretation of the CCRs</li>
+                            <li>Amendment of the CCRs</li>
+                            <li>Filing legal documents with the various courts, such as</li>
+                            <ul style='padding-left: 12px;'>
+                                <li>Liens</li>
+                                <li>Foreclosures</li>
+                            </ul>
+                            <li>Collections</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
 {% endblock %}

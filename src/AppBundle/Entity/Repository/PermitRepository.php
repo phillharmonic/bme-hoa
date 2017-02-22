@@ -10,6 +10,12 @@ namespace AppBundle\Entity\Repository;
  */
 class PermitRepository extends \Doctrine\ORM\EntityRepository
 {
+    //override default findall and sort by timestamp:
+    public function findAll()
+    {
+        return $this->findBy(array(), array('submit_date' => 'DESC'));
+    }
+    
     public function getSortedActionsForPermit($permit){
         $qb = $this->createQueryBuilder('p')
                     ->select('p', 'a')

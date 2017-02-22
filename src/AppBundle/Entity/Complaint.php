@@ -24,9 +24,13 @@ class Complaint
      */
     protected $id;
     
+//    /**
+//     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="complaints", cascade={"persist"})
+//     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+//     */
+    
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="complaints", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="complaints")
      */
     protected $user;    
     
@@ -84,9 +88,8 @@ class Complaint
     protected $date_updated;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Action", inversedBy="complaints", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
-     * 
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Action", inversedBy="complaints")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $actions;
     
@@ -371,40 +374,6 @@ class Complaint
     }
 
     /**
-     * Add user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Complaint
-     */
-    public function addUser(\AppBundle\Entity\User $user)
-    {
-        $this->user[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \AppBundle\Entity\User $user
-     */
-    public function removeUser(\AppBundle\Entity\User $user)
-    {
-        $this->user->removeElement($user);
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Add action
      *
      * @param \AppBundle\Entity\Action $action
@@ -470,5 +439,29 @@ class Complaint
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Complaint
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

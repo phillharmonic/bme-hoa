@@ -87,9 +87,9 @@
                             {% endif %}
                         </a>
                     </li><li>
-                    {% if property.user is not empty %}
+                    {% if property.users is not empty %}
                         {% set arr ={} %}
-                            {% for key,user in property.user %}
+                            {% for key,user in property.users %}
                               {% set arr = arr|merge({(key~'_'): user.fullname}) %}
                             {% endfor %}
                         {{ arr|join(', ') }}

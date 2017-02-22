@@ -56,6 +56,7 @@ class PropertyForm extends AbstractType {
             'attr' => array('style' => 'width: 50px')
         ));
         
+        // property is either occupied or vacant.
         $builder->add('isOccupied', CheckboxType::class, array(
             'required' => false
         ));
@@ -64,20 +65,48 @@ class PropertyForm extends AbstractType {
             'attr' => array('style' => 'width: 50px')
         ));
         
+        $builder->add('ownership', ChoiceType::class, array(
+            'required' => true,
+            'placeholder'   => 'Choose an option',
+            'choices'  => array(
+                'Private'           => 'Private',
+                'HOA'               => 'HOA',
+                'Bank'              => 'Bank',
+                'HUD'               => 'HUD',
+                'Builder'           => 'Builder',
+                'Rental Company'    => 'Rental',
+                'City'              => 'City',
+                'Insurance'         => 'Insurance'
+            ),
+        ));
+        
         $builder->add('status', ChoiceType::class, array(
             'required' => true,
             'placeholder'   => 'Choose an option',
             'choices'  => array(
-                'Owner Resides'   => 'Owner Resides',
-                'For Sale'        => 'For Sale',
-                'Rental'          => 'Rental',
-                'HOA Owned'       => 'HOA Owned',
-                'Bank Owned'      => 'Bank Owned',
-                'HUD Owned'       => 'HUD Owned',
-                'Builder Owned'   => 'Builder Owned',
-                'In Foreclosure'  => 'In Foreclosure'
+                'Maintained'        => 'Maintained',
+                'For Sale'          => 'For Sale',
+                'Under Constuction' => 'Under Constuction',
+                'In Foreclosure'    => 'In Foreclosure',
+                'Sheriffs Sale'     => 'Sheriffs Sale',
+                'Rehab project'     => 'Rehab project',
+                'Dilapidated'       => 'Dilapidated',
+                'Condemned'         => 'Condemned'
             ),
-//            'choices_as_values' => true,
+        ));
+        
+        $builder->add('occupiedBy', ChoiceType::class, array(
+            'required' => true,
+            'placeholder'   => 'Choose an option',
+            'choices'  => array(
+                'Owner'                 => 'Owner',
+                'Renters'               => 'Renters',
+                'Relation of owner'     => 'Relation of owner'
+            ),
+        ));
+        
+        $builder->add('isRental', CheckboxType::class, array(
+            'required' => false
         ));
         
         $builder->add('street', ChoiceType::class, array(

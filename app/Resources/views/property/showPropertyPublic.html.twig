@@ -1,558 +1,1158 @@
-{% extends 'alt-layout-no-sidebar.html.twig' %}
-{% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css'    />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <style>
-        .profile-teaser-left {
-        float: left; width: 20%; margin-right: 1%;
-    }
-    .profile-img img {
-        width: 100%; height: auto;
-    }
-
-    .profile-teaser-main {
-        float: left; width: 79%;
-    }
-
-    .info { display: inline-block; margin-right: 10px; color: #777; }
-    .info span { font-weight: bold; }
-</style>
-{% endblock%}
-{% block title %}Show Property {{property.id}}{% endblock %}
-{% block pageheader %}<h1><span class="glyphicon glyphicon-th-large">&nbsp;</span>Property | <small><small>THE DETAILS OF THE PROPERTY & RESIDENTS</small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
+{% extends 'AdminLTE_NoSidebar.html.twig' %}
+{% block stylesheets %} {{ parent() }} 
+    <link href="{{ asset('bundles/main/css/profile.css') }}" rel="stylesheet">
+    <link href="{{ asset('AdminLTE/plugins/ionslider/ion.rangeSlider.css') }}" rel="stylesheet">
+    <link href="{{ asset('AdminLTE/plugins/ionslider/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %} {{ parent() }} 
+    <script type="text/javascript" src="{{ asset('AdminLTE/plugins/ionslider/ion.rangeSlider.min_1.js') }}" ></script>
+    <script>
+        $(function () {
+            $("#avgNationally").ionRangeSlider({
+                type: "double",
+                grid: false,
+                min: {{comps.minValue}},
+                max: {{comps.maxValue}},
+                from: 0,
+                to: {{comps.avgNationally}},
+                prefix: "$",
+                from_fixed: true,
+                to_fixed: true
+            });        
+            $("#avgState").ionRangeSlider({
+                type: "double",
+                grid: false,
+                min: {{comps.minValue}},
+                max: {{comps.maxValue}},
+                from: 0,
+                to: {{comps.avgState}},
+                prefix: "$",
+                from_fixed: true,
+                to_fixed: true
+            });        
+            $("#avgCounty").ionRangeSlider({
+                type: "double",
+                grid: false,
+                min: {{comps.minValue}},
+                max: {{comps.maxValue}},
+                from: 0,
+                to: {{comps.avgCounty}},
+                prefix: "$",
+                from_fixed: true,
+                to_fixed: true
+            });        
+            $("#avgTownship").ionRangeSlider({
+                type: "double",
+                grid: false,
+                min: {{comps.minValue}},
+                max: {{comps.maxValue}},
+                from: 0,
+                to: {{comps.avgTownship}},
+                prefix: "$",
+                from_fixed: true,
+                to_fixed: true
+            });       
+            $("#avgNeighborhood").ionRangeSlider({
+                type: "double",
+                grid: false,
+                min: {{comps.minValue}},
+                max: {{comps.maxValue}},
+                from: 0,
+                to: {{comps.avgNeighborhood}},
+                prefix: "$",
+                from_fixed: true,
+                to_fixed: true
+            });       
+        });
+    </script>
+{% endblock %}
+{% block title %}{{property.houseNumber}} {{property.street}}{% endblock %}
+{% block pageheader %}<h1><span class="glyphicon glyphicon-home"> </span> Property | <small><small>DETAILS </small></small></h1><p>Brandy Mill Estates Homeowners Association</p>{% endblock %}
 {% block content %}
-    {# BREADCRUMB #}
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-home"></span>&nbsp; <a href="{{ path('home') }}">Homepage</a></li>
-        <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
-        <li class="breadcrumb-item"><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
-        <li class="breadcrumb-item active">{{property.houseNumber}} {{property.street}}</li>
-    </ol>
-    {# PAGE SUMMARY #}        
-    <h3><small>SHOW</small></h3>
-    <hr style="padding: 0; margin:0;">
-    <h2>{{property.houseNumber}} {{property.street}}</h2>    
-    <h5>
-        <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
-        <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span>
-    </h5>
-    <hr>
-    
+    <section class="content-header"><!-- content header -->
+        <h1>{{property.houseNumber}} {{property.street}}</h1><!--/heading -->
+        <h5>
+            <span class="glyphicon glyphicon-lock" style="padding-right: 5px;"></span><span style="padding-right: 5px;">Security Level</span><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>&nbsp;:&nbsp;&nbsp;
+            <span style="">Public</span><span class="glyphicon glyphicon-ok" style="padding:0 5px;"></span> 
+        </h5>
+        <ol class="breadcrumb"><!--breadcrumb -->
+            <li class="breadcrumb-item"><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Homepage</a></li>
+            <li class="breadcrumb-item"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp; Community </li>
+            <li class="breadcrumb-item"><a href="{{ path('indexPropertiesPublic') }}">Properties</a></li>
+            <li class="breadcrumb-item active">{{property.houseNumber}} {{property.street}}</li>
+        </ol><!--/breadcrumb -->
+    </section><!--/content header -->
 
-    
-    <div class="row" style='padding: 15px;'>
-        <div class="list-group" >
-            <div class="list-group-item clearfix" >
-                <div class="profile-teaser-left">
-                    <div class="profile-img">
-                        <div id="myCarousel_property" class="carousel slide" data-ride="carousel" data-interval="false">
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                {% for pic in property.photos %}
-                                    <div {% if loop.index0 == 0 %} class="item active" {% else %} class="item" {% endif %} >
-                                        <img src='{{ pic.path }}' class="img-responsive margin" alt="Image" />
-                                        <div class="carousel-caption"></div>
-                                    </div>
-                                {% endfor %}  
-                                <!-- Left and right controls -->
-                                <a class="left carousel-control" href="#myCarousel_property" role="button" data-slide="prev">
-                                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#myCarousel_property" role="button" data-slide="next">
-                                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-teaser-main" style="font-size: 1.2em; background-color: #eee; padding: 10px;">
-                    <h4><small>PROPERTY SUMMARY</small></h4><hr style='border-color: #777'>
-                    <div class="profile-info" >
-                        <p >{{ property.blurb|raw }}</p>
-                        <hr style='border-color: #777'>
-                        <div class="info"><span class="">Type:</span> {{property.type}}</div>
-                        <div class="info"><span class="">Lot:</span> {{property.lotNumber}}</div>
-                        <div class="info"><span class="">Status:</span> {{property.status}}</div>
-                        <div class="info"><span class="">Color:</span> {{property.color}}</div>
-                        <div class="info"><span class="">Occupied:</span> {{property.isOccupied}}</div>
-                        <div class="info"><span class="">HOA Lien:</span> {{property.hasHoaLien}}</div>
-                        <div class="info"><span class="">In Arrears:</span> {{property.inArrears}}</div>
-                        <div class="info"><span class="">Date Built:</span> {{property.dateBuilt|date('M j, Y')}}</div>
-                        <div class="info"><span class="">Last Sold:</span> {{property.lastSaleDate|date('M j, Y')}}</div>
-                        <div class="info"><span class="">Sale Price</span> ${{property.lastSalePrice|number_format(2, '.', ',')}}</div>
-                        <div class="info"><span class="">Licking County Auditor's Office:</span>&nbsp;&nbsp;<a href="{{property.auditorsPin}}" target='_blank'>document</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% for owner in homeowners %}
-    <div class="row" style='padding: 15px;' >
-        <div class="list-group" >
-            <div class="list-group-item clearfix" >
-                <div class="profile-teaser-left">
-                    <div class="profile-img">
-                        <div id="myCarousel_homeowner_{{loop.index}}" class="carousel slide" data-ride="carousel" data-interval="false">
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                {% for pic in owner.photos %}
-                                    <div {% if loop.index0 == 0 %} class="item active" {% else %} class="item" {% endif %} >
-                                        <img src='{{ pic.path }}' class="img-responsive margin" alt="Image" />
-                                        <div class="carousel-caption"></div>
-                                    </div>
-                                {% endfor %}  
-                                <!-- Left and right controls -->
-                                <a class="left carousel-control" href="#myCarousel_homeowner_{{loop.index}}" role="button" data-slide="prev">
-                                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#myCarousel_homeowner_{{loop.index}}" role="button" data-slide="next">
-                                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-teaser-main" style="font-size: 1.2em; background-color: #eee; padding: 10px;">
-                    <h4><small>HOMEOWNER {{loop.index}} SUMMARY</small></h4><hr style='border-color: #777'>
-                    <div class="profile-info" >
-                        <p >{{ owner.blurb|raw }}</p>
-                        <p style='white-space: pre-wrap'>{{ owner.bio }}</p>
-                        <hr style='border-color: #777'>
-                        <div class="info"><span class="">Name:</span> {{owner.honorific}} {{owner.fullname}}</div>
-                        <div class="info"><span class="">Age:</span> {{ ('now'|date('Y') - owner.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - owner.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }} </div>
-                        <div class="info"><span class="">Gender:</span> {{owner.gender}} </div>
-                        <div class="info"><span class="">Race:</span> {{owner.race}} </div>
-                        <div class="info"><span class="">Birthday:</span> {{owner.bday|date('M j, Y')}} </div>
-                        <div class="info"><span class="">Occupation:</span> {{owner.occupation}} </div>
-                        <div class="info"><span class="">Employer:</span> {{owner.employer}} </div>
-                        <div class="info"><span class="">Spouse:</span> {{owner.getUsersSpouse.firstname}} {{owner.getUsersSpouse.mi}}. {{owner.getUsersSpouse.lastname}} </div>
-                        <div class="info"><span class="">Dependents:</span> ({{owner.getDepsLessSpouse|length}}):&nbsp;
-                        {% for dep in owner.getDepsLessSpouse %}{% if loop.last %}{{dep.type}}: {{dep.firstname}}{% else %}{{dep.type}}: {{dep.firstname}},&nbsp;{% endif %}{% endfor %}
-                        </div>
-                        <div class="info"><span class="">Pets:</span> ({{owner.getPets|length}}):&nbsp;
-                            {% for pet in owner.getPets %}{% if loop.last %}{{pet.type}}{% else %}{{pet.type}},&nbsp;{% endif %}{% endfor %}
-                        </div>
-                        <div class="info"><span class="">Vehicles:</span>  ({{owner.getVehicles|length}}):&nbsp;
-                            {% for car in owner.getVehicles %}{% if loop.last %}{{car.make}} {{car.model}}{% else %}{{car.make}} {{car.model}},&nbsp;{% endif %}{% endfor %}
-                        </div>
-                        <hr style='border-color: #777'>
-                        <a href="{{owner.facebook}}" class="btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                        <a href="{{owner.twitter}}" class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                        <a href="{{owner.google}}" class="btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
-                        <a href="{{owner.linkedin}}" class="btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                        <h5><small>EMAIL: <a href='mailto:{{owner.email}}?Subject=Hello%20from%20BME'>{{owner.email}}</a></small></h5>
-                        <h5><small>HOME: {{owner.homephone|phone}}</small></h5>
-                        <h5><small>CELL: {{owner.cellphone|phone}}</small></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-    
-    {% for dependent in dependents %}
-    <div class="row" style='padding: 15px;' >
-        <div class="list-group" >
-            <div class="list-group-item clearfix" >
-                <div class="profile-teaser-left">
-                    <div class="profile-img">
-                        <div id="myCarousel_dependent_{{loop.index}}" class="carousel slide" data-ride="carousel" data-interval="false">
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                {% for pic in dependent.photos %}
-                                    <div {% if loop.index0 == 0 %} class="item active" {% else %} class="item" {% endif %} >
-                                        <img src='{{ pic.path }}' class="img-responsive margin" alt="Image" />
-                                        <div class="carousel-caption"></div>
-                                    </div>
-                                {% endfor %}  
-                                <!-- Left and right controls -->
-                                <a class="left carousel-control" href="#myCarousel_dependent_{{loop.index}}" role="button" data-slide="prev">
-                                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#myCarousel_dependent_{{loop.index}}" role="button" data-slide="next">
-                                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-teaser-main" style="font-size: 1.2em; background-color: #EBEBEB; padding: 10px;">
-                    <h4><small>DEPENDENT {{loop.index}} SUMMARY</small></h4><hr style='border-color: #777'>
-                    <div class="profile-info" >
-                        <p >
-                            {# owner.blurb|raw #}  
-                        </p><hr style='border-color: #777'>
-                        <div class="info"><span class="">Name:</span> {{dependent.firstname}}</div>
-                        <div class="info"><span class="">Age:</span> {{ ('now'|date('Y') - dependent.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - dependent.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }} </div>
-                        <div class="info"><span class="">Gender:</span> {{dependent.gender}} </div>
-                        <div class="info"><span class="">Race:</span> CAUCASION </div>
-                        <div class="info"><span class="">Birthday:</span> {{dependent.bday|date('M D Y')}} </div>
-                        <hr style='border-color: #777'>
-                        <a class="btn btn-social-icon btn-twitter"><span class="fa fa-twitter"></span></a>
-                        <a class="btn btn-social-icon btn-facebook"><span class="fa fa-facebook"></span></a>
-                        <a class="btn btn-social-icon btn-google"><span class="fa fa-google"></span></a>
-                        <a class="btn btn-social-icon btn-linkedin"><span class="fa fa-linkedin"></span></a>
-                        <h5><small>EMAIL: <a href='mailto:{#dependent.email#}?Subject=Hello%20from%20BME'>EMAIL</a></small></h5>
-                        <h5><small>CELL: {{dependent.cellphone|phone}}</small></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-    {# PAGE CONTENTS #}  
-    
-        {#
-            Design: I want 3 columns, and as many rows as necessary.  No blank contents on any row, except last.  Each content
-            will summarize each of: property, homeower(s), dependent(s), pet(s), car(s).  
-    
-            1) count items
-            2) divide count by 3 = rows to create
-            3) slice the array into arrays = the row count
-        #}
-    
-    {% set props = testAr.props|length%} 
-    {% set homeowners = testAr.homeowners|length%} 
-    {% set spouses = testAr.spouse|length%} 
-    {% set kids = testAr.kids|length %}  
-    {% set pets = testAr.pets|length%}  
-    {% set cars = testAr.cars|length%}  
-    {% set objSum = props + homeowners + spouses + kids + pets + cars %}
-    {% set rows = objSum / 3 %}
-    {% set rows = rows|round(0, 'ceil')%}
-    
-    {% set data = {} %}
-    {% for i in 1..rows %}
-       {# * row {{ i }} </br> #}
-        {% set data = {'key': i} %}
-    {% endfor %}
-    
-    {#
-    Property Count: {{props}}   </br>
-    Homeowner Count: {{homeowners}}   </br>
-    Spouse Count: {{spouses}}   </br>
-    Kid Count: {{kids}}  </br>
-    Pet Count: {{pets}}  </br>
-    Car Count: {{cars}}  </br>
-    Sum of Objects: {{objSum}}</br>
-    Number of Rows Needed: {{rows}}  </br>
-    {{dump(data)}}
-    {{dump(testAr)}}
-    
-    
-    <div class="container-fluid bg-3 text-center">    
-        {% for i in 1..rows %}
-            * row {{ i }}
-            <div class="row">
-                <div class="col-sm-4">
-                    <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                    <p>row_{{i}} cell_{{i}} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                <div class="col-sm-4"> 
-                    <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                    <p>row_{{i}} cell_{{i+i}} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                <div class="col-sm-4"> 
-                    <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-                    <p>row_{{i}} cell_{{i+i+i}} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-    #}
-    
-    {#
-        TODO:   This page is currently listing EVERYTHING about the property AND it's current resident(s).  The current resident(s) need to have control
-                over what is shared:
-                    - PUBLICLY
-                    - Logged in & authenticated users (users that are assigned a HOMEOWNER_ROLE
-                
-                Each role needs to show/hide information permitted/denied by current resident... which requires an update to the USER entity, adding the following:
-                
-                _ispubic = allows the information to be shared publicly
-                _ispermitted = allows the information to be shared to authenticated users assigned to the HOMEOWNER_ROLE
-    
-                    - spouse_ispublic
-                    - spouse_ispermitted
-                    - dependents_ispublic
-                    - dependents_ispermitted
-                    - pets_ispublic
-                    - pets_ispermitted
-                    - vehicles_ispublic
-                    - vehicles_ispermitted
-                    - bio (a family summary)
-                    - bio_ispublic
-                    - bio_ispermitted
-                    - bday_ispublic
-                    - bday_permitted
-                    - maritalstatus_ispublic
-                    - maritalstatus_ispermitted        
-                    - phonenumbers_ispublic
-                    - phonenumbers_ispermitted
-                    - occupation_ispublic
-                    - occupation_ispermitted
-    #}
-    
+    <!-- start: Content -->
+    <div id="content" class="col-md-12">
+
+        <div class="row profile">
             
-{#
-    
-    <h3>{{ property.houseNumber }} {{ property.street }}</h3>
-    <span class="label label-success"><a id="a-buttons" href="#" target="_blank" title="Edit photos for {{ property.houseNumber }} {{ property.street }}">Edit Photos</a></span>
-    <hr class="invisible"> 
-    <div class="row">
-        <div class="col-md-6">
-            <div class='content'>
-                <div class="typeface_courier">
-                    <p><label class="text-right">ID</label>{{ property.id }}</p>
-                    <p><label class="text-right">Type</label>{{ property.type }}</p>
-                    <p><label class="text-right">Lot Number</label>{{ property.lotNumber }}</p>
-                    <p><label class="text-right">Status</label>{{ property.status }}</p>
-                    <p><label class="text-right">Color</label>{{ property.color }}</p>
-                    <p><label class="text-right">Is Occupied</label>{{ property.isOccupied ? 'Yes':'No' }} </p>
-                    <p><label class="text-right">Has HOA Lien</label>{{ property.hasHoaLien ? 'Yes':'No' }}</p>
-                    <p><label class="text-right">In Arrears</label>{{  property.inArrears ? 'Yes':'No' }}</p>
-                    <p><label class="text-right">Date Built</label>{{ property.dateBuilt|date('m-d-y') }}</p>
-                </div>
-            </div>
-        </div>
-                
-        <div class="col-md-6">
-            {% for pic in property.photos|slice(0, 1) %}
-                <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
-            {% endfor %} 
-        </div>
-                
-    </div>
-    <hr>
-    {% if homeowners is not null%}     
-        {% for owner in homeowners %}  
-            <h4><small>{{ owner.fullname|upper }}</small></h4>
-            <h3>Homeowner {{ loop.index }}</h3>
-            <span class="label label-success"><a id="a-buttons" href="{{ path('personalAccountEdit', {'id' : owner.id}) }}" target="_blank" title="Edit {{ owner.firstname }}">Edit {{ owner.firstname }}</a></span>
-            <hr class="invisible"> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class='content'>
-                        <div class="typeface_courier">
-                            <p><label class="text-right">Name</label>{{ owner.fullname }}</p>
-                            <p><label class="text-right">Gender</label>{{ owner.gender }}</p>
-                            <p><label class="text-right">Birthday</label>{{ owner.bday|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - owner.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - owner.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
-                            <p><label class="text-right">Marital Status</label>{{ owner.maritalStatus }}</p>
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="col-xs-7 col-sm-12">
+                        <img class="profile-image" src="http://www.thelogconnection.com/stock-plans/_renderings/Bavarian_Dream.jpg" />
+                    </div>
+                    <div class="col-xs-5 col-sm-12">
+                        <h4 class="with-med-padding">Status</h4>
+                        
+                        <ul class="profile-details">
+                            <li>
+                                <div><i class="fa fa-circle-o"></i> </div>{{property.status}} & {% if property.isOccupied == 1%}Occupied by {{ property.occupiedBy }} {%else%} <span class="text-red">VACANT</span>{%endif%}
+                            </li>
+                        </ul>	
+                        
+                        <h4 class="with-med-padding">Residents</h4>
+                        
+                            <ul class="profile-details">
+                                {% for resident in property.contacts %}
+                                    {% if resident.isCurrentLienholder %}
+                                    <li>
+                                        <div><i class="fa fa-user" {% if resident.isPrimaryContact == true %}style="color: black"{%endif%}></i> </div>
+                                            {{resident.honorific}} {{resident.firstname}} {% if resident.mi%}{{resident.mi}}. {%endif%}{{resident.lastname}}
+                                        <br/>
+                                        {% if resident.user.profile is not null %}
+                                            <a href="{{path('showProfilePublic', { 'id' : resident.user.id, 'propId' : resident.property.id })}}">view profile</a>
+                                        {% else %}
+                                            no profile
+                                        {% endif %}
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>		
+                            
+                        <h4 class="with-med-padding">Contact Information</h4>
 
-                            {% for dependent in owner.dependents %}
-                                {% if dependent.spouse == true %}
-                                    <p><label class="text-right">Spouse</label>{{ dependent.firstname }} {{ dependent.lastname }} ({{ dependent.gender }})</p>
-                                {% endif %}
+                        <ul class="profile-details">
+                            <li>
+                                <div><i class="fa fa-phone"></i> phone</div>
+                                {% for resident in property.contacts %}
+                                    {% if resident.isPrimaryContact == true %}
+                                        {# PUBLIC #}
+                                        {% if resident.user.profile.profilePublic == true %}
+                                            {{resident.homephone|phone}}
+                                        {# PROTECTED #}
+                                        {% elseif is_granted('IS_AUTHENTICATED_FULLY') and resident.user.profile.profileProtected == true %}
+                                            {% if is_granted('ROLE_HOMEOWNER') or  is_granted('ROLE_ADMIN') %}
+                                                {{resident.homephone|phone}}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li>
+                                <div><i class="fa fa-tablet"></i> mobile phone</div>
+                                {% for resident in property.contacts %}
+                                    {% if resident.isPrimaryContact == true %}
+                                        {# PUBLIC #}
+                                        {% if resident.user.profile.profilePublic == true %}
+                                            {{resident.cellphone|phone}}
+                                        {# PROTECTED #}
+                                        {% elseif is_granted('IS_AUTHENTICATED_FULLY') and resident.user.profile.profileProtected == true %}
+                                            {% if is_granted('ROLE_HOMEOWNER') or  is_granted('ROLE_ADMIN') %}
+                                                {{resident.cellphone|phone}}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}               
+                            </li>
+                            <li>
+                                <div><i class="fa fa-envelope"></i> e-mail</div>
+                                {% for resident in property.contacts %}
+                                    {% if resident.isPrimaryContact == true %}
+                                        {# PUBLIC #}
+                                        {% if resident.user.profile.profilePublic == true %}
+                                            <a href="mailto:{{resident.primaryEmail}}?Subject=BME%20HOA%20Inquiry">{{resident.primaryEmail}}</a>
+                                        {# PROTECTED #}
+                                        {% elseif is_granted('IS_AUTHENTICATED_FULLY') and resident.user.profile.profileProtected == true %}
+                                            {% if is_granted('ROLE_HOMEOWNER') or  is_granted('ROLE_ADMIN') %}
+                                                <a href="mailto:{{resident.primaryEmail}}?Subject=BME%20HOA%20Inquiry">{{resident.primaryEmail}}</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}     
+                            </li>
+                            <li>
+                                <div><i class="fa fa-map-marker"></i> address</div>
+                                {{property.housenumber}} {{property.street}}<br/>
+                                {{settings.city|capitalize}}, {{settings.stateAbrv|upper}} {{settings.zipCode}}<br/>
+                                United States of America
+                            </li>
+                        </ul>
+                                
+                        <h4 class="with-med-padding">Map</h4>
+                        <div class="" style="padding-left: 10px">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m13!1m11!1m3!1d387.8554541155463!2d-82.64418046181706!3d39.96054885768154!2m2!1f0!2f2.9020464911813932!3m2!1i1024!2i768!4f20!5e1!3m2!1sen!2sus!4v1487273833139" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+                        </div>        
+                        
+                    </div>	
+                                
+                </div><!--/row-->	
+                
+            </div><!--/col-->
+
+            <div class="col-sm-9">
+
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#property" data-toggle="tab">Property</a></li>
+                    <li><a href="#lien-holders" data-toggle="tab">Lien Holders</a></li>
+                    <li><a href="#mortgage-holders" data-toggle="tab">Mortgage Holders</a></li>
+                    <li><a href="#occupants" data-toggle="tab">Occupants</a></li>
+                    <li><a href="#photos" data-toggle="tab">Photos</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="property">
+
+                        <div class="row">
+
+                            <div class="col-sm-5">
+                                <h2>Overview</h2>
+                                <p>{{ property.blurb|raw }}</p>
+                                <h2>{{comps.year}} Comps</h2>
+                                <div class="content">
+                                    <div class="ionslider">
+                                        <input id="avgNationally" />
+                                        <p>Average Property Value Nationally</p>
+                                    </div>
+                                    <div class="ionslider">
+                                        <input id="avgState" />
+                                        <p>Average {{settings.state|upper}} Property Value</p>
+                                    </div>
+                                    <div class="ionslider">
+                                        <input id="avgCounty" />
+                                        <p>Average {{settings.county|upper}} COUNTY OHIO Property Value</p>
+                                    </div>
+                                    <div class="ionslider">
+                                        <input id="avgTownship" />
+                                        <p>Average {{settings.township|upper}} OHIO Property Value</p>
+                                    </div>
+                                    <div class="ionslider">
+                                        <input id="avgNeighborhood" />
+                                        <p>Average {{settings.hoaAbrv}} Property Value</p>
+                                    </div>
+                                </div>
+                                
+                                
+                                <h2>{{settings.city|capitalize}}, {{settings.stateAbrv|upper}}</h2>
+                                <p style="white-space: pre-wrap">{{settings.cityBlurb}}</p>
+                                
+                                
+                                <h2>School Districts</h2>
+                                {% for school in schoolDistricts %}
+                                    <h3><small><a href="{{school.schoolDistrictLink}}">{{school.schoolDistrict}}</a></small></h3>
+                                    <div class="content">
+                                        <div class="row">
+                                            <p>Achievement: <code>{{school.achievementScore|number_format(1, '.', ',')}}% </code>&nbsp;&nbsp;&nbsp;<span class="pull-right badge {% if school.achievementGrade == 'a' %}bg-green{% elseif school.achievementGrade == 'b' %}bg-light-blue{% elseif school.achievementGrade == 'c' %}bg-orange{% elseif school.achievementGrade == 'd' %}bg-red{% elseif school.achievementGrade == 'f' %}bg-black{% endif %}">Grade: {{school.achievementGrade|upper}}</span></p>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="{{school.achievementScore}}" aria-valuemin="0" aria-valuemax="100" style="width: {{school.achievementScore}}%">
+                                                    <span class="sr-only">{{school.achievementScore}}% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                            <p>Gap Closing: <code>{{school.gapScore|number_format(1, '.', ',')}}% </code>&nbsp;&nbsp;&nbsp;<span class="pull-right badge {% if school.gapGrade == 'a' %}bg-green{% elseif school.gapGrade == 'b' %}bg-light-blue{% elseif school.gapGrade == 'c' %}bg-orange{% elseif school.gapGrade == 'd' %}bg-red{% elseif school.gapGrade == 'f' %}bg-black{% endif %}">Grade: {{school.gapGrade|upper}}</span></p>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="{{school.gapScore|number_format(1, '.', ',')}}" aria-valuemin="0" aria-valuemax="100" style="width: {{school.gapScore|number_format(1, '.', ',')}}7%">
+                                                    <span class="sr-only">{{school.gapScore|number_format(1, '.', ',')}}% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                            <p>K-3 Literacy: <code>{{school.literacyScore|number_format(1, '.', ',')}}% </code>&nbsp;&nbsp;&nbsp;<span class="pull-right badge {% if school.literacyGrade == 'a' %}bg-green{% elseif school.literacyGrade == 'b' %}bg-light-blue{% elseif school.literacyGrade == 'c' %}bg-orange{% elseif school.literacyGrade == 'd' %}bg-red{% elseif school.literacyGrade == 'f' %}bg-black{% endif %}">Grade: {{school.literacyGrade|upper}}</span></p>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="{{school.literacyScore|number_format(1, '.', ',')}}" aria-valuemin="0" aria-valuemax="100" style="width: {{school.literacyScore|number_format(1, '.', ',')}}%">
+                                                    <span class="sr-only">{{school.literacyScore|number_format(1, '.', ',')}}% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                            <p>Progress: <code>{{school.progressScore|number_format(1, '.', ',')}}0% </code>&nbsp;&nbsp;&nbsp;<span class="pull-right badge {% if school.progressGrade == 'a' %}bg-green{% elseif school.progressGrade == 'b' %}bg-light-blue{% elseif school.progressGrade == 'c' %}bg-orange{% elseif school.progressGrade == 'd' %}bg-red{% elseif school.progressGrade == 'f' %}bg-black{% endif %}">Grade: {{school.progressGrade|upper}}</span></p>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="{{school.progressScore|number_format(1, '.', ',')}}" aria-valuemin="0" aria-valuemax="100" style="width: {{school.progressScore|number_format(1, '.', ',')}}%">
+                                                    <span class="sr-only">{{school.progressScore|number_format(1, '.', ',')}}% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                            <p>Graduation Rate: <code>{{school.gradRateScore|number_format(1, '.', ',')}}% </code>&nbsp;&nbsp;&nbsp;<span class="pull-right badge {% if school.gradRateGrade == 'a' %}bg-green{% elseif school.gradRateGrade == 'b' %}bg-light-blue{% elseif school.gradRateGrade == 'c' %}bg-orange{% elseif school.gradRateGrade == 'd' %}bg-red{% elseif school.gradRateGrade == 'f' %}bg-black{% endif %}">Grade: {{school.gradRateGrade|upper}}</span></p>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="{{school.gradRateScore|number_format(1, '.', ',')}}" aria-valuemin="0" aria-valuemax="100" style="width: {{school.gradRateScore|number_format(1, '.', ',')}}%">
+                                                    <span class="sr-only">{{school.gradRateScore|number_format(1, '.', ',')}}% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                            <p>Prepared for Success: <code>{{school.successScore|number_format(1, '.', ',')}}% </code>&nbsp;&nbsp;&nbsp;<span class="pull-right badge {% if school.successGrade == 'a' %}bg-green{% elseif school.successGrade == 'b' %}bg-light-blue{% elseif school.successGrade == 'c' %}bg-orange{% elseif school.successGrade == 'd' %}bg-red{% elseif school.successGrade == 'f' %}bg-black{% endif %}">Grade: {{school.successGrade|upper}}</span></p>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-default progress-bar-striped" role="progressbar" aria-valuenow="{{school.successScore|number_format(1, '.', ',')}}" aria-valuemin="0" aria-valuemax="100" style="width: {{school.successScore|number_format(1, '.', ',')}}%">
+                                                    <span class="sr-only">{{school.successScore|number_format(1, '.', ',')}}% Complete (success)</span>
+                                                </div>
+                                            </div>
+                                        </div><!--/row-->
+                                    </div>
+                                {% endfor %}
+                            </div><!--/col-->
+
+                            <div class="col-sm-7">
+                                <h2>Details</h2>
+                                <dl class="dl-horizontal">
+                                    <div><dt>Type</dt><dd>{{property.type}}</dd></div>
+                                    <div class="alt"><dt>Lot</dt><dd>{{property.lotNumber}}</dd></div>
+                                    <div><dt>Status</dt><dd>{{property.status}}</dd></div>
+                                    <div class="alt"><dt>Ownership</dt><dd>{{property.ownership}}</dd></div>
+                                    <div><dt>Is Occupied</dt><dd>{% if property.isOccupied == 1 %}Occupied{% else %}Vacant {% endif %} </dd></div>
+                                    <div class="alt"><dt>Occupied By</dt><dd>{{property.occupiedBy}}</dd></div>
+                                    <div><dt>Is Rental</dt><dd>{% if property.isRental == 1 %}<span class="text-red">Yes</span>{% else %}<span class="text-green">No</span>{% endif %}</dd></div>
+                                    <div class="alt"><dt>Color</dt><dd>{{property.color}}</dd></div>
+                                    <div><dt>Date Built</dt><dd>{{property.dateBuilt|date('M j, Y')}}</dd></div>
+                                    <div class="alt"><dt>Auditors Pin</dt><dd><a href="{{property.auditorsPin}}" target='_blank'>Licking County Document</a></dd></div>
+                                    <div><dt>Sale Price</dt><dd>${{property.lastSalePrice|number_format(2, '.', ',')}}</dd></div>
+                                    <div class="alt"><dt>Sale Date</dt><dd>{{property.lastSaleDate|date('M j, Y')}}</dd></div>
+                                    <div><dt>Has Lien</dt><dd>{% if property.hasHoaLien == 1 %}<span class="text-red">Lien(s) Filed</span>{% else %}<span class="text-green">No Liens</span>{% endif %}</dd></div>
+                                    <div class="alt"><dt>In Arrears</dt><dd>{% if property.inArrears == 1 %}<span class="text-red">In Arrears</span>{% else %}<span class="text-green">Not in Arrears</span>{% endif %}</dd></div>
+                                    <div><dt>Lot Size</dt><dd>{{property.lotSize}}</dd></div>
+                                    <div class="alt"><dt>Interior</dt><dd>{{property.sqFeet}} square feet</dd></div>
+                                    <div><dt>Bedrooms</dt><dd>{{property.numBedrooms}} Beds</dd></div>
+                                    <div class="alt"><dt>Bathrooms</dt><dd>{{property.numBathrooms}} Baths</dd></div>
+                                </dl>
+                                <h2>Exterior Improvements</h2>
+                                    <dl class="dl-horizontal">
+                                        {% for improvement in exteriorImprovements %}
+                                            <div {% if loop.index is odd %}class="alt" {% endif %} ><dt>{{improvement.improvement}}</dt><dd>{{improvement.improvementDate|date('F Y')}}</dd></div>
+                                        {% endfor %}
+                                    </dl>
+                                <h2>Interior Improvements</h2>
+                                    <dl class="dl-horizontal">
+                                        {% for improvement in interiorImprovements %}
+                                            <div {% if loop.index is odd %}class="alt" {% endif %}><dt>{{improvement.improvement}}</dt><dd>{{improvement.improvementDate|date('F Y')}}</dd></div>
+                                        {% endfor %}
+                                    </dl>
+                            </div><!--/col-->
+
+                        </div><!--/row-->		
+
+                    </div>
+                                
+                    <div class="tab-pane" id="lien-holders">
+                        <ul class="friends-list clearfix"></ul>
+                        <blockquote>
+                            <b>ABOUT</b><ul class="friends-list clearfix"></ul>
+                            <p><small> Lien Holder data is collected & maintained by {{settings.hoaName}} Homeowners Association.  These are the official contacts for the property
+                                and all official communications regarding HOA business (billing statements, notices, assessments, etc...) are routed to the individual(s) 
+                                or business(es) listed herein.  It is critically important that this information is up to date and reliable.</small>
+                            </p>
+                            <p><small>
+                                If changes to lien holder information is required, it must be made by the HOA or the Management Company: {{settings.mgtCoName}}.  You may submit 
+                                those requests <a href="{{path('newContactPublic')}}">here</a>.  Lastly, a confirmed renter or other chief-occupant (adult) may also request to 
+                                have a COPY of any official communication sent to the lien holder; however, such requests must be approved by the lien holder of record.</small>
+                            </p>
+                        </blockquote>
+                        <ul class="friends-list clearfix"></ul>
+                            <div class="row">
+                                {% for lienholder in property.contacts %}
+                                    {% if lienholder.isCurrentLienholder and lienholder.relationToProperty == 'lienholder' or lienholder.relationToProperty == 'co-lienholder' %}
+                                        <div class="col-md-6">
+                                            <!-- Custom Tabs -->
+                                            <div class="nav-tabs-custom">
+                                              <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#tab_1_{{loop.index}}" data-toggle="tab"><i class="fa fa-file-text" title="Primary Contact"></i></a></li>
+                                                    <li><a href="#tab_5_{{loop.index}}" data-toggle="tab"><i class="fa fa-th-large"></i></a></li>
+                                                    <li><a href="#tab_2_{{loop.index}}" data-toggle="tab"><i class="fa fa-phone"></i></a></li>
+                                                    <li><a href="#tab_3_{{loop.index}}" data-toggle="tab"><i class="fa fa-envelope"></i></a></li>
+                                                    <li><a href="#tab_4_{{loop.index}}" data-toggle="tab"><i class="fa fa-bank"></i></a></li>
+                                              </ul>
+                                              <div class="tab-content">
+                                                <div class="tab-pane active" id="tab_1_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if lienholder.gender == 'male' %}
+                                                                        {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif lienholder.gender == 'female' %}
+                                                                         {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>{{lienholder.honorific}} {{lienholder.firstname}} {{lienholder.mi}}. {{lienholder.lastname}} </strong> 
+                                                                {% if lienholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                 <br/>
+                                                                {{lienholder.contactAddress}}<br/>{{lienholder.contactCity}}, {{lienholder.contactState}} {{lienholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div><dt>Lienholder</dt><dd>{{lienholder.occupationStatus|capitalize}}</dd></div>
+                                                        <div class="alt"><dt>Date Lien Aquired</dt><dd>{{lienholder.datePossessed|date('M j, Y')}}</dd></div>
+                                                        <div><dt>Date Lien Sold</dt><dd>In Current Possession</dd></div>
+                                                        <div class="alt"><dt>Primary contact</dt><dd>{% if lienholder.isPrimaryContact == true %}Yes{% else %}No{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_2_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if lienholder.gender == 'male' %}
+                                                                        {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif lienholder.gender == 'female' %}
+                                                                         {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>{{lienholder.honorific}} {{lienholder.firstname}} {{lienholder.mi}}. {{lienholder.lastname}} </strong> 
+                                                                {% if lienholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{lienholder.contactAddress}}<br/>{{lienholder.contactCity}}, {{lienholder.contactState}} {{lienholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Cell Phone</dt><dd>{{lienholder.cellphone|phone}}</dd></div>
+                                                        <div><dt>Home Phone</dt><dd>{{lienholder.homephone|phone}}</dd></div>
+                                                        <div class="alt"><dt>Business Phone</dt><dd>{{lienholder.businessphone|phone}}</dd></div>
+                                                        <div><dt>Fax</dt><dd>{{lienholder.fax|phone}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_3_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if lienholder.gender == 'male' %}
+                                                                        {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif lienholder.gender == 'female' %}
+                                                                         {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>{{lienholder.honorific}} {{lienholder.firstname}} {{lienholder.mi}}. {{lienholder.lastname}} </strong> 
+                                                                {% if lienholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{lienholder.contactAddress}}<br/>{{lienholder.contactCity}}, {{lienholder.contactState}} {{lienholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Primary Email</dt><dd>{{lienholder.primaryEmail}}</dd></div>
+                                                        <div><dt>Secondary Email</dt><dd>{{lienholder.secondaryEmail}}</dd></div>
+                                                        <div class="alt"><dt>Business Email</dt><dd>{{lienholder.businessEmail}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_4_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if lienholder.gender == 'male' %}
+                                                                        {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif lienholder.gender == 'female' %}
+                                                                         {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>{{lienholder.honorific}} {{lienholder.firstname}} {{lienholder.mi}}. {{lienholder.lastname}} </strong> 
+                                                                {% if lienholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{lienholder.contactAddress}}<br/>{{lienholder.contactCity}}, {{lienholder.contactState}} {{lienholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Doing Business As</dt><dd>{% if lienholder.dba == true %}Yes{%else%}No{%endif%}</dd></div>
+                                                        <div><dt>Business Name</dt><dd>{{lienholder.contactBusinessName}}</dd></div>
+                                                        <div class="alt"><dt>Point of Contact</dt><dd>{{lienholder.pointOfContact}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_5_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if lienholder.gender == 'male' %}
+                                                                        {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif lienholder.gender == 'female' %}
+                                                                         {% if lienholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>{{lienholder.honorific}} {{lienholder.firstname}} {{lienholder.mi}}. {{lienholder.lastname}} </strong> 
+                                                                {% if lienholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                 <br/>
+                                                                {{lienholder.contactAddress}}<br/>{{lienholder.contactCity}}, {{lienholder.contactState}} {{lienholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Gender</dt><dd>{{lienholder.gender|capitalize}}</dd></div>
+                                                        <div><dt>Race</dt><dd>{{lienholder.race|capitalize}}</dd></div>
+                                                        <div class="alt"><dt>Marital Status</dt><dd>{{lienholder.maritalStatus|capitalize}}</dd></div>
+                                                        <div><dt>Current Lienholder</dt><dd>{% if lienholder.isCurrentLienholder == true %}Yes{% else %}No{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                              </div>
+                                              <!-- /.tab-content -->
+                                            </div>
+                                            <!-- nav-tabs-custom -->
+                                        </div>
+                                            <!-- end: col -->
+                                    {% endif %}
+                                {% endfor %}
+                            </div>  
+                    </div>
+                            
+                    <div class="tab-pane" id="mortgage-holders">
+                        <ul class="friends-list clearfix"></ul>
+                        <blockquote>
+                            <b>ABOUT</b><ul class="friends-list clearfix"></ul>
+                            <p><small>Mortgage Holder data is collected & maintained by {{settings.hoaName}} Homeowners Association.  A mortgage holder is a person or company that has a right to enforce a mortgage loan agreement. The mortgage loan consists of a promissory note and a security interest, which is the actual mortgage or, in some states, a deed of trust. The mortgage holder is the person with the legal right to enforce repayment under the notes or foreclosure under the security interest.</small>
+                            </p>
+                            <p><small>
+                                A mortgage loan consists of two components, including a promise to repay the money borrowed and a lien in real property to secure that promise. Mortgage holders can generally enforce repayment of the mortgage loan by demanding payment under the note, and if that doesn't work, by enforcing the lien through a foreclosure sale of the collateral under the security interest.</small>
+                            </p>
+                            <p><small>
+                                If changes to mortgage holder information is required, it must be made by the HOA or the Management Company: {{settings.mgtCoName}}.  You may submit 
+                                those requests <a href="{{path('newContactPublic')}}">here</a>. No official communications from the HOA are sent to the mortgage holder unless there are no
+                                lien holders on record; in which case, all official HOA business communications revert to the mortgage holder of record.
+                                </small>
+                            </p>
+                        </blockquote>
+                        <ul class="friends-list clearfix"></ul>
+                            <div class="row">
+                                {% for mortgageholder in property.contacts %}
+                                    {% if mortgageholder.relationToProperty == 'mortgage-holder' %}
+                                        <div class="col-md-6">
+                                            <!-- Custom Tabs -->
+                                            <div class="nav-tabs-custom">
+                                              <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#mortgage_tab_1_{{loop.index}}" data-toggle="tab"><i class="fa fa-file-text" title="Primary Contact"></i></a></li>
+                                                    <li><a href="#mortgage_tab_5_{{loop.index}}" data-toggle="tab"><i class="fa fa-th-large"></i></a></li>
+                                                    <li><a href="#mortgage_tab_2_{{loop.index}}" data-toggle="tab"><i class="fa fa-phone"></i></a></li>
+                                                    <li><a href="#mortgage_tab_3_{{loop.index}}" data-toggle="tab"><i class="fa fa-envelope"></i></a></li>
+                                                    <li><a href="#mortgage_tab_4_{{loop.index}}" data-toggle="tab"><i class="fa fa-bank"></i></a></li>
+                                              </ul>
+                                              <div class="tab-content">
+                                                <div class="tab-pane active" id="mortgage_tab_1_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if mortgageholder.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif mortgageholder.gender == 'male' %}
+                                                                        {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif mortgageholder.gender == 'female' %}
+                                                                         {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if mortgageholder.dba == true %}
+                                                                        {{mortgageholder.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{mortgageholder.honorific}} {{mortgageholder.firstname}} {{mortgageholder.mi~'.'}} {{mortgageholder.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if mortgageholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                 <br/>
+                                                                {{mortgageholder.contactAddress}}<br/>{{mortgageholder.contactCity}}, {{mortgageholder.contactState}} {{mortgageholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div><dt>Mortgage Holder</dt><dd>{{mortgageholder.occupationStatus|capitalize}}</dd></div>
+                                                        <div class="alt"><dt>Deed Aquired</dt><dd>{{mortgageholder.datePossessed|date('M j, Y')}}</dd></div>
+                                                        <div><dt>Deed Status</dt><dd>In current possession of deed</dd></div>
+                                                        <div class="alt"><dt>Primary contact</dt><dd>{% if mortgageholder.isPrimaryContact == true %}Yes{% else %}No{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_2_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if mortgageholder.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif mortgageholder.gender == 'male' %}
+                                                                        {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif mortgageholder.gender == 'female' %}
+                                                                         {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if mortgageholder.dba == true %}
+                                                                        {{mortgageholder.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{mortgageholder.honorific}} {{mortgageholder.firstname}} {{mortgageholder.mi~'.'}} {{mortgageholder.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if mortgageholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{mortgageholder.contactAddress}}<br/>{{mortgageholder.contactCity}}, {{mortgageholder.contactState}} {{mortgageholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Cell Phone</dt><dd>{% if mortgageholder.cellphone %}{{mortgageholder.cellphone|phone}}{% endif %}</dd></div>
+                                                        <div><dt>Home Phone</dt><dd>{% if mortgageholder.homephone %}{{mortgageholder.homephone|phone}}{% endif %}</dd></div>
+                                                        <div class="alt"><dt>Business Phone</dt><dd>{% if mortgageholder.businessphone %}{{mortgageholder.businessphone|phone}}{% endif %}</dd></div>
+                                                        <div><dt>Fax</dt><dd>{% if mortgageholder.fax %}{{mortgageholder.fax|phone}}{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_3_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if mortgageholder.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif mortgageholder.gender == 'male' %}
+                                                                        {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif mortgageholder.gender == 'female' %}
+                                                                         {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if mortgageholder.dba == true %}
+                                                                        {{mortgageholder.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{mortgageholder.honorific}} {{mortgageholder.firstname}} {{mortgageholder.mi~'.'}} {{mortgageholder.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if mortgageholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{mortgageholder.contactAddress}}<br/>{{mortgageholder.contactCity}}, {{mortgageholder.contactState}} {{mortgageholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Primary Email</dt><dd>{{mortgageholder.primaryEmail}}</dd></div>
+                                                        <div><dt>Secondary Email</dt><dd>{{mortgageholder.secondaryEmail}}</dd></div>
+                                                        <div class="alt"><dt>Business Email</dt><dd>{{mortgageholder.businessEmail}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_4_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if mortgageholder.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif mortgageholder.gender == 'male' %}
+                                                                        {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif mortgageholder.gender == 'female' %}
+                                                                         {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if mortgageholder.dba == true %}
+                                                                        {{mortgageholder.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{mortgageholder.honorific}} {{mortgageholder.firstname}} {{mortgageholder.mi~'.'}} {{mortgageholder.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if mortgageholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{mortgageholder.contactAddress}}<br/>{{mortgageholder.contactCity}}, {{mortgageholder.contactState}} {{mortgageholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Doing Business As</dt><dd>{% if mortgageholder.dba == true %}Yes{%else%}No{%endif%}</dd></div>
+                                                        <div><dt>Business Name</dt><dd>{{mortgageholder.contactBusinessName}}</dd></div>
+                                                        <div class="alt"><dt>Point of Contact</dt><dd>{{mortgageholder.pointOfContact}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_5_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if mortgageholder.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif mortgageholder.gender == 'male' %}
+                                                                        {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif mortgageholder.gender == 'female' %}
+                                                                         {% if mortgageholder.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if mortgageholder.dba == true %}
+                                                                        {{mortgageholder.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{mortgageholder.honorific}} {{mortgageholder.firstname}} {{mortgageholder.mi~'.'}} {{mortgageholder.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if mortgageholder.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                 <br/>
+                                                                {{mortgageholder.contactAddress}}<br/>{{mortgageholder.contactCity}}, {{mortgageholder.contactState}} {{mortgageholder.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Gender</dt><dd>{{mortgageholder.gender|capitalize}}</dd></div>
+                                                        <div><dt>Race</dt><dd>{{mortgageholder.race|capitalize}}</dd></div>
+                                                        <div class="alt"><dt>Marital Status</dt><dd>{{mortgageholder.maritalStatus|capitalize}}</dd></div>
+                                                        <div><dt>Current Lienholder</dt><dd>{% if mortgageholder.isCurrentLienholder == true %}Yes{% else %}No{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                              </div>
+                                              <!-- /.tab-content -->
+                                            </div>
+                                            <!-- nav-tabs-custom -->
+                                        </div>
+                                            <!-- end: col -->
+                                    {% endif %}
+                                {% endfor %}
+                            </div> 
+                    </div>
+                                
+                    <div class="tab-pane" id="occupants">
+                        <ul class="friends-list clearfix"></ul>
+                        <blockquote>
+                            <b>ABOUT</b><ul class="friends-list clearfix"></ul>
+                            <p><small>Occupant data is collected & maintained by {{settings.hoaName}} Homeowners Association.  An occupant is a person that makes residence at the property.</small>
+                            </p>
+                            <p><small>
+                                If changes to occupant information is required, it must be made by the HOA or the Management Company: {{settings.mgtCoName}}.  You may submit 
+                                those requests <a href="{{path('newContactPublic')}}">here</a>. Official communications from the HOA are typically sent to the lien holder unless there are no
+                                lien holders on record; in which case, all official HOA business communications revert to the mortgage holder of record.  Lastly, a confirmed renter or other chief-occupant (adult) may also request to 
+                                have a COPY of any official communication sent to the lien holder (or mortgage holder if required); however, such requests must be approved by the lien holder (or mortgage holder if required) of record.
+                                </small>
+                            </p>
+                        </blockquote>
+                        <ul class="friends-list clearfix"></ul>
+                            <div class="row">
+                                {% for occupant in property.contacts %}
+                                    {% if occupant.occupationStatus == 'occupies the property' %}
+                                        <div class="col-md-6">
+                                            <!-- Custom Tabs -->
+                                            <div class="nav-tabs-custom">
+                                              <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#mortgage_tab_1_{{loop.index}}" data-toggle="tab"><i class="fa fa-file-text" title="Primary Contact"></i></a></li>
+                                                    <li><a href="#mortgage_tab_5_{{loop.index}}" data-toggle="tab"><i class="fa fa-th-large"></i></a></li>
+                                                    <li><a href="#mortgage_tab_2_{{loop.index}}" data-toggle="tab"><i class="fa fa-phone"></i></a></li>
+                                                    <li><a href="#mortgage_tab_3_{{loop.index}}" data-toggle="tab"><i class="fa fa-envelope"></i></a></li>
+                                                    <li><a href="#mortgage_tab_4_{{loop.index}}" data-toggle="tab"><i class="fa fa-bank"></i></a></li>
+                                              </ul>
+                                              <div class="tab-content">
+                                                <div class="tab-pane active" id="mortgage_tab_1_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if occupant.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif occupant.gender == 'male' %}
+                                                                        {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif occupant.gender == 'female' %}
+                                                                         {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if occupant.dba == true %}
+                                                                        {{occupant.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{occupant.honorific}} {{occupant.firstname}} {{occupant.mi~'.'}} {{occupant.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if occupant.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                 <br/>
+                                                                {{occupant.contactAddress}}<br/>{{occupant.contactCity}}, {{occupant.contactState}} {{occupant.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Occupation Status</dt><dd>{{occupant.occupationStatus|capitalize}}</dd></div>
+                                                        <div><dt>Occupant Type</dt><dd>{{occupant.relationToProperty|capitalize}}</dd></div>
+                                                        {% if occupant.relationToProperty == 'lienholder-relation' %}
+                                                            <div class="alt"><dt>Relation</dt><dd>{{occupant.specificRelation|capitalize}}</dd></div>
+                                                        {% endif %}
+                                                        <div class="alt"><dt>Deed Aquired</dt><dd>{{occupant.datePossessed|date('M j, Y')}}</dd></div>
+                                                        <div><dt>Primary contact</dt><dd>{% if occupant.isPrimaryContact == true %}Yes{% else %}No{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_2_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if occupant.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif occupant.gender == 'male' %}
+                                                                        {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif occupant.gender == 'female' %}
+                                                                         {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if occupant.dba == true %}
+                                                                        {{occupant.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{occupant.honorific}} {{occupant.firstname}} {{occupant.mi~'.'}} {{occupant.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if occupant.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{occupant.contactAddress}}<br/>{{occupant.contactCity}}, {{occupant.contactState}} {{occupant.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Cell Phone</dt><dd>{% if occupant.cellphone %}{{occupant.cellphone|phone}}{% endif %}</dd></div>
+                                                        <div><dt>Home Phone</dt><dd>{% if occupant.homephone %}{{occupant.homephone|phone}}{% endif %}</dd></div>
+                                                        <div class="alt"><dt>Business Phone</dt><dd>{% if occupant.businessphone %}{{occupant.businessphone|phone}}{% endif %}</dd></div>
+                                                        <div><dt>Fax</dt><dd>{% if occupant.fax %}{{occupant.fax|phone}}{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_3_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if occupant.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif occupant.gender == 'male' %}
+                                                                        {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif occupant.gender == 'female' %}
+                                                                         {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if occupant.dba == true %}
+                                                                        {{occupant.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{occupant.honorific}} {{occupant.firstname}} {{occupant.mi~'.'}} {{occupant.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if occupant.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{occupant.contactAddress}}<br/>{{occupant.contactCity}}, {{occupant.contactState}} {{occupant.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Primary Email</dt><dd>{{occupant.primaryEmail}}</dd></div>
+                                                        <div><dt>Secondary Email</dt><dd>{{occupant.secondaryEmail}}</dd></div>
+                                                        <div class="alt"><dt>Business Email</dt><dd>{{occupant.businessEmail}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_4_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if occupant.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif occupant.gender == 'male' %}
+                                                                        {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif occupant.gender == 'female' %}
+                                                                         {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if occupant.dba == true %}
+                                                                        {{occupant.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{occupant.honorific}} {{occupant.firstname}} {{occupant.mi~'.'}} {{occupant.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if occupant.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                <br/>
+                                                                {{occupant.contactAddress}}<br/>{{occupant.contactCity}}, {{occupant.contactState}} {{occupant.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Doing Business As</dt><dd>{% if occupant.dba == true %}Yes{%else%}No{%endif%}</dd></div>
+                                                        <div><dt>Business Name</dt><dd>{{occupant.contactBusinessName}}</dd></div>
+                                                        <div class="alt"><dt>Point of Contact</dt><dd>{{occupant.pointOfContact}}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="mortgage_tab_5_{{loop.index}}">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="
+                                                                     {% if occupant.dba == true %}
+                                                                         {{asset('bundles/main/images/bank.png') }}
+                                                                     {% elseif occupant.gender == 'male' %}
+                                                                        {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_male.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/male_user.png') }}
+                                                                        {% endif %}
+                                                                     {% elseif occupant.gender == 'female' %}
+                                                                         {% if occupant.race == 'black' %}
+                                                                            {{asset('bundles/main/images/black_female.jpg') }}
+                                                                        {% else %}
+                                                                            {{asset('bundles/main/images/female_user.png') }}
+                                                                        {% endif %}
+                                                                     {% else %}
+                                                                         {{asset('bundles/main/images/anon_user.png') }}
+                                                                     {% endif %}" 
+                                                                     style="border:1px solid lightgray; padding: 10px; height: 75px; width: 75px; align: right;" />
+                                                            </td>
+                                                            <td style="padding-left: 15px;">
+                                                                <strong>
+                                                                    {% if occupant.dba == true %}
+                                                                        {{occupant.contactBusinessName}}
+                                                                    {% else %}
+                                                                        {{occupant.honorific}} {{occupant.firstname}} {{occupant.mi~'.'}} {{occupant.lastname}} 
+                                                                    {% endif %}
+                                                                </strong> 
+                                                                {% if occupant.isPrimaryContact == true %}
+                                                                    <i class="fa fa-circle" title="Primary Contact"></i>
+                                                                {% endif %}
+                                                                 <br/>
+                                                                {{occupant.contactAddress}}<br/>{{occupant.contactCity}}, {{occupant.contactState}} {{occupant.contactZip}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <hr>
+                                                    <dl class="dl-horizontal">
+                                                        <div class="alt"><dt>Gender</dt><dd>{{occupant.gender|capitalize}}</dd></div>
+                                                        <div><dt>Race</dt><dd>{{occupant.race|capitalize}}</dd></div>
+                                                        <div class="alt"><dt>Marital Status</dt><dd>{{occupant.maritalStatus|capitalize}}</dd></div>
+                                                        <div><dt>Current Lienholder</dt><dd>{% if occupant.isCurrentLienholder == true %}Yes{% else %}No{% endif %}</dd></div>
+                                                    </dl>
+                                                </div>
+                                                <!-- /.tab-pane -->
+                                              </div>
+                                              <!-- /.tab-content -->
+                                            </div>
+                                            <!-- nav-tabs-custom -->
+                                        </div>
+                                            <!-- end: col -->
+                                    {% endif %}
+                                {% endfor %}
+                            </div> 
+                    </div>
+                                    
+                    <div class="tab-pane" id="photos">
+                        <div class="row">
+                            {% for pic in property.photos %}
+                                <div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
+                                    <img class="img-thumbnail" src="{{ pic.path }}" alt="Slide {{loop.index}}">
+                                </div>
                             {% endfor %}
-
-                            <p><label class="text-right">Occupation</label>{{ owner.occupation }}</p>
-                            <p><label class="text-right">Cellphone</label>{{ owner.cellphone|phone }}</p>
-                            <p><label class="text-right">Homephone</label>{{ owner.homephone|phone }} </p>
-                            <p><label class="text-right">Date Occupied</label>{{ owner.occupyDate|date('M d Y')|upper }}  ({{ ('now'|date('Y') - owner.occupyDate|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - owner.occupyDate|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }} years) </p>
-
-                            {% for role in owner.roles %}
-                                <p><label class="text-right">Acct. Privlege({{loop.index}})</label>{{role}}</p>
-                            {% endfor %}
-
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-6">
-                    {% for pic in owner.photos|slice(0, 1) %}
-                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
-                    {% endfor %} 
-                </div>
+                </div><!-- end: tab-content-->	
 
-            </div>
-            <hr>
-        {% endfor %}
-    {% endif %}
+            </div><!-- end: col-sm-9 -->		
+
+        </div><!-- end: row profile -->
     
-    {% if spouses is not null%}      
-        {% for spouse in spouses %}  
-            <h4><small>{{ spouse.firstname|upper }}</small></h4>
-            <h3>{{ spouse.user.firstname}}'s {{ spouse.type }} </h3>
-            <span class="label label-success"><a id="a-buttons" href="{{ path('personalAccountEdit', {'id' : spouse.id}) }}" target="_blank" title="Edit {{ spouse.firstname }}">Edit {{ spouse.firstname }}</a></span>
-            <hr class="invisible"> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class='content'>
-                        <div class="typeface_courier">
-                            <p><label class="text-right">Name</label>{{ spouse.firstname }} {{ spouse.mi }} {{ spouse.lastname }}</p>
-                            <p><label class="text-right">Gender</label>{{ spouse.gender }}</p>
-                            <p><label class="text-right">Birthday</label>{{ spouse.bday|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - spouse.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - spouse.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
-                            <p><label class="text-right">Cellphone</label>{{ spouse.cellphone|phone }}</p>
-                            <p><label class="text-right">Spouse</label>{{ spouse.user.fullname }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    {% for pic in spouse.photos|slice(0, 1) %}
-                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
-                    {% endfor %} 
-                </div>
-
-            </div>
-            <hr>
-        {% endfor %}
-    {% endif %}    
-    
-    {% if dependents is not null%}      
-        {% for child in dependents %}  
-            <h4><small>{{ child.firstname|upper }}</small></h4>
-            <h3>{{ child.user.firstname}}'s {{ child.type }} </h3>
-            <span class="label label-success"><a id="a-buttons" href="{{ path('personalAccountEdit', {'id' : child.id}) }}" target="_blank" title="Edit {{ child.firstname }}">Edit {{ child.firstname }}</a></span>
-            <hr class="invisible"> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class='content'>
-                        <div class="typeface_courier">
-                            <p><label class="text-right">Name</label>{{ child.firstname }} {{ child.mi }} {{ child.lastname }}</p>
-                            <p><label class="text-right">Gender</label>{{ child.gender }}</p>
-                            <p><label class="text-right">Birthday</label>{{ child.bday|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - child.bday|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - child.bday|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
-                            <p><label class="text-right">Cellphone</label>{{ child.cellphone|phone }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    {% for pic in child.photos|slice(0, 1) %}
-                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
-                    {% endfor %} 
-                </div>
-
-            </div>
-            <hr>
-        {% endfor %}
-    {% endif %}     
-    
-    {% if pets is not null%}      
-        {% for pet in pets %}  
-            <h4><small>{{ pet.name|upper }}</small></h4>
-            <h3>{{ pet.user.firstname}}'s {{ pet.type }} </h3>
-            <hr class="invisible"> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class='content'>
-                        <div class="typeface_courier">
-                            <p><label class="text-right">Name</label>{{ pet.name }}</p>
-                            <p><label class="text-right">Gender</label>{{ pet.gender }}</p>
-                            <p><label class="text-right">Birthday</label>{{ pet.born|date('M d Y')|upper }}  (AGE: {{ ('now'|date('Y') - pet.born|date('Y') - 1) + ('now'|date('2010-m-d')|date('U') - pet.born|date('2010-m-d')|date('U') >= 0 ? 1 : 0) }})</p>
-                            <p><label class="text-right">Color</label>{{ pet.color }}</p>
-                            <p><label class="text-right">Breed</label>{{ pet.breed }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    {% for pic in pet.photos|slice(0, 1) %}
-                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
-                    {% endfor %} 
-                </div>
-
-            </div>
-            <hr>
-        {% endfor %}
-    {% endif %}
-    
-    {% if vehicles is not null%}      
-        {% for vhcl in vehicles %}  
-            <h4><small>{{ vhcl.make|upper }} {{ vhcl.model|upper }}</small></h4>
-            <h3>{{ vhcl.user.0.firstname}}'s Vehicle </h3>
-            <hr class="invisible"> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class='content'>
-                        <div class="typeface_courier">
-                            <p><label class="text-right">Make</label>{{ vhcl.make }}</p>
-                            <p><label class="text-right">Model</label>{{ vhcl.model }}</p>
-                            <p><label class="text-right">Year</label>{{ vhcl.year }}</p>
-                            <p><label class="text-right">Color</label>{{ vhcl.color }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    {% for pic in vhcl.photos|slice(0, 1) %}
-                        <img src='{{ pic.path }}' class="img-responsive img-rounded pull-left" />
-                    {% endfor %} 
-                </div>
-
-            </div>
-            <hr>
-        {% endfor %}
-    {% endif %}    
-    
-    {# dump(test) }}
-    
-    {#
-    <div class="section-header"><h1>Homeowner</h1></div>
-    <div class="section-header"><h6>Summary</h6></div>
-    <div class='content'>
-        <div class="left">
-            <div class="typeface_courier">
-                <p>{{ homeowner.honorific }} {{ homeowner.firstname }} {{ homeowner.lastname }}</p>
-                <p>{{ homeowner.housenumber }} {{ homeowner.street }}</p>
-                <p>Etna, Ohio 43062</p>
-            </div>
-            
-        </div>
-        <div class="right">
-            <div class="typeface_courier">
-                {% if spouse is not null%}                           
-                    <p>{{spouse.type}}:  {{spouse.firstname}} {{spouse.lastname}}</p>
-                {% endif %}
-                {% if dependents is not null%}  
-                    {% for dependent in dependents %}
-                        <p>{{dependent.type}}:  {{dependent.firstname}} </p>
-                    {% endfor %}
-                {% endif %}
-                {% if pets is not null%}  
-                    {% for pet in pets %}
-                        <p>{{pet.type}}:  {{pet.name}} </p>
-                    {% endfor %}
-                {% endif %}
-                {% if vehicles is not null%}  
-                    {% for vehicle in vehicles %}
-                        <p>Vehicle: {{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</p>
-                    {% endfor %}
-                {% endif %}
-            </div> 
-        </div>
-        
-    </div>
-    <div class="section-header"><h6>Property Photos</h6></div>
-    <div>
-        {% if property.photos is not empty %}
-                <div style='width: 100%; position: relative;' >
-                    <div id="property_{{property.id}}">
-                        {% for pic in property.photos %}
-                            <a href='{{ pic.path }}'><img src="{{ pic.path }}" alt="{{ pic.description }}" /></a>
-                        {% endfor %}
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    $( function() {
-                        $( '#property_{{property.id}}' ).jGallery({ 
-                            mode: 'slider',                                    
-                            width: '92%'
-                        });
-                    } );
-                </script>   
-                <div style='padding-bottom: 30px;  width: 100%'></div>   
-            {% endif %}
-    </div>
-    #}
-                
-    
-    
+    </div><!-- end: Content -->
 {% endblock %}

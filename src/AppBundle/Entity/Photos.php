@@ -43,21 +43,31 @@ class Photos
     
     /**
      * Many Photos have Many Terms.
-     * @ORM\ManyToMany(targetEntity="Term", mappedBy="photos")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Term", mappedBy="photos")
      */    
     private $terms;
     
     /**
      * Many Photos have Many complaints.
-     * @ORM\ManyToMany(targetEntity="Complaint", mappedBy="photos")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Complaint", mappedBy="photos")
      */    
     private $complaint;
     
     /**
      * Many Photos have Many vehicles.
-     * @ORM\ManyToMany(targetEntity="Complaint", mappedBy="photos")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Vehicles", mappedBy="photos")
      */    
     private $vehicles;    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile", inversedBy="photos")
+     */
+    protected $profile;      
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Property", mappedBy="photos")
+     */
+    protected $property;       
     
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -313,5 +323,63 @@ class Photos
     public function getVehicles()
     {
         return $this->vehicles;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param \AppBundle\Entity\Profile $profile
+     *
+     * @return Photos
+     */
+    public function setProfile(\AppBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \AppBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Add property
+     *
+     * @param \AppBundle\Entity\Property $property
+     *
+     * @return Photos
+     */
+    public function addProperty(\AppBundle\Entity\Property $property)
+    {
+        $this->property[] = $property;
+
+        return $this;
+    }
+
+    /**
+     * Remove property
+     *
+     * @param \AppBundle\Entity\Property $property
+     */
+    public function removeProperty(\AppBundle\Entity\Property $property)
+    {
+        $this->property->removeElement($property);
+    }
+
+    /**
+     * Get property
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProperty()
+    {
+        return $this->property;
     }
 }
